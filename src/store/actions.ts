@@ -63,6 +63,7 @@ const actions: ActionTree<StateInterface, StateInterface> = {
             window.location.reload();
           });
         } else {
+          // TODO auto network change and add to Metamask if doesn't exist.
           commit('connectFailed', `Change network to ${config.network.name}`);
         }
       } catch(err) {
