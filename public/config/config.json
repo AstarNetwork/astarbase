@@ -1,0 +1,9 @@
+{
+  "mintContractAddress": "0x406bC9Fd7D3Bfcb6b0d102FdE21BFF7E5E9F2b9A",
+  "astarBaseContractAddress": "",
+  "network": {
+    "name": "Shiden",
+    "symbol": "SDN",
+    "id": 336
+  }
+}
