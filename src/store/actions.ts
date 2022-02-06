@@ -73,6 +73,9 @@ const actions: ActionTree<StateInterface, StateInterface> = {
     } else {
       commit('connectFailed', 'Install Metamask first.');
     }
+  },
+  setError({commit}, errorMessage: string) {
+    commit('setError', errorMessage);
   }
 };
 

@@ -26,12 +26,19 @@ export default defineComponent({
 
     const mint = () => {
       const contract = (mintContract.value) as Contract;
-      console.log('contract', mintContractAddress.value, contract);
       contract?.methods
         .mint('1')
         .send({
           to: mintContractAddress.value,
           from: account.value,
+        })
+        .once("error", (err: Error) => {
+          console.log(err);
+          store.dispatch('setError', err.message);
+        })
+        .then((receipt: any) => {
+          console.log(receipt);
+          //TODO check if data reload is required
         });
     }
 

@@ -13,6 +13,7 @@ export interface Mutations<S = StateInterface> {
   connectFailed(state: S, errorMessage: string): void;
   connectSuccess(state: S, payload: ConnectPayload): void;
   changeAccount(state: S, account: string): void;
+  setError(state: S, errorMessage: string): void;
 }
 
 const mutation: MutationTree<StateInterface> & Mutations = {
@@ -33,6 +34,9 @@ const mutation: MutationTree<StateInterface> & Mutations = {
   },
   changeAccount(state, account) {
     state.account = account;
+  },
+  setError(state, errorMessage) {
+    state.errorMessage = errorMessage;
   }
 }
 
