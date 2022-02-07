@@ -4,6 +4,9 @@ export type Config = {
   network: {
     name: string,
     symbol: string,
-    id: number
+    id: number,
+    decimals: number,
+    rpcUrl: string,
+    blockExplorerUrl: string
   }
 }

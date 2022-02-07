@@ -5,6 +5,48 @@ import { StateInterface } from './index';
 import { Config } from '../types/config';
 import { ConnectPayload } from './mutations';
 
+const UNRECOGNIZED_CHAIN_ID_ERROR_CODE = 4902;
+
+/**
+ * Switches to network given by chainConfig or creates a new network configuration.
+ * @param ethereum Web3 provider.
+ * @param chainConfig Network configuration.
+ */
+const switchNetwork = async (ethereum: any, chainConfig: Config) => {
+  const networkId: number = await ethereum.request({
+    method: "net_version",
+  });
+  const chainIdHex = `0x${chainConfig.network.id.toString(16)}`;
+
+  if (networkId != chainConfig.network.id) {
+    try {
+      await ethereum.request({
+        method: "wallet_switchEthereumChain",
+        params: [{ chainId: chainIdHex }]
+      });
+    } catch (error) {
+      if (error.code == UNRECOGNIZED_CHAIN_ID_ERROR_CODE ) {
+        await ethereum.request({
+          method: "wallet_addEthereumChain",
+          params: [
+            {
+              chainId: chainIdHex,
+              chainName: chainConfig.network.name,
+              rpcUrls: [chainConfig.network.rpcUrl],
+              nativeCurrency: {
+                name: chainConfig.network.name,
+                symbol: chainConfig.network.symbol,
+                decimals: chainConfig.network.decimals,
+              },
+              blockExplorerUrls: [chainConfig.network.blockExplorerUrl],
+            },
+          ],
+        });
+      }
+    }
+  }
+}
+
 const actions: ActionTree<StateInterface, StateInterface> = {
   async connect({ commit }) {
     const { ethereum } = window as any;
@@ -25,47 +67,43 @@ const actions: ActionTree<StateInterface, StateInterface> = {
       const web3 = new Web3(ethereum);
 
       try {
-        // Metamask accounts and network id
+        // Get Metamask accounts and network id
         const accounts = await ethereum.request({
           method: 'eth_requestAccounts'
         });
-        const networkId: number = await ethereum.request({
-          method: "net_version",
-        });
+
+        // Switch network or create a new configuration if needed.
+        await switchNetwork(ethereum, config);
         
-        if (networkId == config.network.id) {
-          const abiResponse = await fetch("/config/mint_abi.json", {
-            headers: {
-              "Content-Type": "application/json",
-              Accept: "application/json",
-            },
-          });
-          const abi = await abiResponse.json();
+        // Create a minting contract instance
+        const abiResponse = await fetch("/config/mint_abi.json", {
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+        });
+        const abi = await abiResponse.json();
 
-          const mintContract = new web3.eth.Contract(
-            abi,
-            config.mintContractAddress
-          );
+        const mintContract = new web3.eth.Contract(
+          abi,
+          config.mintContractAddress
+        );
 
-          // TODO create Astar base contract here and put it to vuex
+        // TODO create Astar base contract here and put it to vuex
 
-          commit('connectSuccess', {
-            account: accounts[0],
-            mintContract,
-            mintContractAddress: config.mintContractAddress,
-          } as ConnectPayload);
+        commit('connectSuccess', {
+          account: accounts[0],
+          mintContract,
+          mintContractAddress: config.mintContractAddress,
+        } as ConnectPayload);
 
-          // Register listeners
-          ethereum.on("accountsChanged", (accounts: string[]) => {
-            commit('changeAccount', accounts[0]);
-          });
-          ethereum.on("chainChanged", () => {
-            window.location.reload();
-          });
-        } else {
-          // TODO auto network change and add to Metamask if doesn't exist.
-          commit('connectFailed', `Change network to ${config.network.name}`);
-        }
+        // Register listeners
+        ethereum.on("accountsChanged", (accounts: string[]) => {
+          commit('changeAccount', accounts[0]);
+        });
+        ethereum.on("chainChanged", async () => {
+          await switchNetwork(ethereum, config);
+        });
       } catch(err) {
         commit('connectFailed', err);
       }

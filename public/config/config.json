@@ -4,6 +4,9 @@
   "network": {
     "name": "Shiden",
     "symbol": "SDN",
-    "id": 336
+    "id": 336,
+    "decimals": 18,
+    "rpcUrl": "https://rpc.shiden.astar.network:8545",
+    "blockExplorerUrl": "https://blockscout.com/shiden"
   }
 }
