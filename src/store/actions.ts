@@ -25,7 +25,7 @@ const switchNetwork = async (ethereum: any, chainConfig: Config) => {
         method: "wallet_switchEthereumChain",
         params: [{ chainId: chainIdHex }]
       });
-    } catch (error) {
+    } catch (error: any) {
       if (error.code == UNRECOGNIZED_CHAIN_ID_ERROR_CODE ) {
         await ethereum.request({
           method: "wallet_addEthereumChain",
