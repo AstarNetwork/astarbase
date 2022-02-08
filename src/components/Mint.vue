@@ -1,6 +1,7 @@
 <template>
   <div>
     <button v-if="!isConnected" @click="connect()">Connect</button>
+    <button v-if="isConnected" @click="disconnect()">Disconnect</button>
     <button v-if="isConnected" @click="mint()">Mint</button>
     <div>{{ errorMessage }}</div>
   </div>
@@ -22,6 +23,10 @@ export default defineComponent({
 
     const connect = () => {
       store.dispatch('connect');
+    }
+
+    const disconnect = () => {
+      store.dispatch('disconnect');
     }
 
     const mint = () => {
@@ -46,6 +51,7 @@ export default defineComponent({
       errorMessage,
       isConnected,
       connect,
+      disconnect,
       mint
     }
   },

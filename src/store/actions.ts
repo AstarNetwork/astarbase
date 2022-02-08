@@ -8,7 +8,7 @@ import { ConnectPayload } from './mutations';
 const UNRECOGNIZED_CHAIN_ID_ERROR_CODE = 4902;
 
 /**
- * Switches to network given by chainConfig or creates a new network configuration.
+ * Switches to network given by chainConfig or creates a new network configuration if needed.
  * @param ethereum Web3 provider.
  * @param chainConfig Network configuration.
  */
@@ -16,9 +16,10 @@ const switchNetwork = async (ethereum: any, chainConfig: Config) => {
   const networkId: number = await ethereum.request({
     method: "net_version",
   });
-  const chainIdHex = `0x${chainConfig.network.id.toString(16)}`;
 
   if (networkId != chainConfig.network.id) {
+    const chainIdHex = `0x${chainConfig.network.id.toString(16)}`;
+
     try {
       await ethereum.request({
         method: "wallet_switchEthereumChain",
@@ -101,8 +102,17 @@ const actions: ActionTree<StateInterface, StateInterface> = {
         ethereum.on("accountsChanged", (accounts: string[]) => {
           commit('changeAccount', accounts[0]);
         });
+
         ethereum.on("chainChanged", async () => {
-          await switchNetwork(ethereum, config);
+          // Avoid reloading window in case when new network configuration is 
+          // aded to the wallet.
+          const networkId: number = await ethereum.request({
+            method: "net_version",
+          });
+        
+          if (networkId != config.network.id) {
+            window.location.reload();
+          }
         });
       } catch(err) {
         commit('connectFailed', err);
@@ -114,6 +124,9 @@ const actions: ActionTree<StateInterface, StateInterface> = {
   },
   setError({commit}, errorMessage: string) {
     commit('setError', errorMessage);
+  },
+  async disconnect({ commit }) {
+    commit('changeAccount', '');
   }
 };
 
