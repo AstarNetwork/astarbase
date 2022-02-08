@@ -105,7 +105,7 @@ const actions: ActionTree<StateInterface, StateInterface> = {
 
         ethereum.on("chainChanged", async () => {
           // Avoid reloading window in case when new network configuration is 
-          // aded to the wallet.
+          // aded to the wallet, otherwise reload window.
           const networkId: number = await ethereum.request({
             method: "net_version",
           });
