@@ -1,4 +1,4 @@
-import { LOCAL_STORAGE } from '@/env';
+import { LOCAL_STORAGE } from '../../env';
 import { web3Enable } from '@polkadot/extension-dapp';
 import { SubstrateAccount } from '../index';
 
@@ -11,7 +11,7 @@ export const getInjectedExtensions = async (): Promise<any[]> => {
 
 export const getSelectedAccount = (accounts: SubstrateAccount[]) => {
   try {
-    const selectedAddress = localStorage.getItem(
+    const selectedAddress = window.localStorage.getItem(
       LOCAL_STORAGE.SELECTED_ADDRESS
     );
     if (selectedAddress === 'Ethereum Extension') {

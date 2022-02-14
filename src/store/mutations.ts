@@ -1,4 +1,4 @@
-import { SubstrateAccount } from '@/wallet';
+import { SubstrateAccount } from '../wallet';
 import { MutationTree } from 'vuex';
 import { Contract } from 'web3-eth-contract';
 import { ConnectionType, StateInterface } from './index';

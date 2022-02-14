@@ -5,7 +5,7 @@ import { Contract } from 'web3-eth-contract';
 import mutations from './mutations';
 import getters from './getters';
 import actions from './actions';
-import { endpointKey } from '@/config';
+import { endpointKey } from '../config';
 
 export type ConnectionType = 'connected' | 'connecting' | 'offline';
 

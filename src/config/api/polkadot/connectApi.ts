@@ -1,6 +1,6 @@
-import { objToArray } from '@/common';
-import { providerEndpoints } from '@/config';
-import { getInjectedExtensions } from '@/wallet/utils';
+import { objToArray } from '../../../common';
+import { providerEndpoints } from '../../..//config';
+import { getInjectedExtensions } from '../../..//wallet/utils';
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import { web3Accounts } from '@polkadot/extension-dapp';
 import type { InjectedExtension } from '@polkadot/extension-inject/types';
