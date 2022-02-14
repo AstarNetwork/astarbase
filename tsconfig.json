@@ -1,23 +1,30 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
-    "esModuleInterop": true,
-    "target": "es2015",
-    "lib": ["es6"],
-    "moduleResolution": "node",
-    "sourceMap": true,
-    "outDir": "dist",
+    "target": "esnext",
+    "module": "esnext",
     "strict": true,
-    "strictNullChecks": true,
-    "rootDir": ".",
-    "resolveJsonModule": true,
-    "emitDecoratorMetadata": true,
+    "jsx": "preserve",
+    "importHelpers": true,
+    "moduleResolution": "node",
     "experimentalDecorators": true,
-    // we set this to false because of TypeORM entity decorators
-    "strictPropertyInitialization": false,
-    "removeComments": true
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": true,
+    "baseUrl": ".",
+    "types": ["webpack-env"],
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
   },
-  "lib": ["es2015"],
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "build", "dist", "tests", "public"]
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "tests/**/*.ts",
+    "tests/**/*.tsx"
+  ],
+  "exclude": ["node_modules"]
 }
