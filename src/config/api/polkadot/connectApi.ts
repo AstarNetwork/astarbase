@@ -72,7 +72,7 @@ export async function connectApi(
     },
   });
 
-  store.commit('general/setCurrentNetworkStatus', 'connecting');
+  store.commit('setCurrentNetworkStatus', 'connecting');
 
   api.on('error', (error: Error) => console.error(error.message));
   try {
@@ -104,14 +104,14 @@ export async function connectApi(
           };
         });
 
-        store.commit('general/setSubstrateAccounts', accountMap);
+        store.commit('setSubstrateAccounts', accountMap);
       }
     });
 
-    store.commit('general/setCurrentNetworkStatus', 'connected');
+    store.commit('setCurrentNetworkStatus', 'connected');
   } catch (err) {
     console.error(err);
-    store.commit('general/setCurrentNetworkStatus', 'offline');
+    store.commit('setCurrentNetworkStatus', 'offline');
   }
 
   return {
