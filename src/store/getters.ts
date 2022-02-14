@@ -1,6 +1,7 @@
+import { SubstrateAccount } from './../wallet/index';
 import { GetterTree } from 'vuex';
 import { Contract } from 'web3-eth-contract';
-import { StateInterface } from './index'
+import { StateInterface } from './index';
 
 export interface Getters<S = StateInterface> {
   isMetamaskConnected(state: S): boolean;
@@ -8,6 +9,9 @@ export interface Getters<S = StateInterface> {
   mintContract(state: S): Contract | undefined;
   mintContractAddress(state: S): string;
   account(state: S): string;
+  substrateAccounts(state: S): SubstrateAccount[];
+  networkStatus(state: S): string;
+  networkIdx(state: S): number;
 }
 
 const getters: GetterTree<StateInterface, StateInterface> & Getters = {
@@ -16,6 +20,9 @@ const getters: GetterTree<StateInterface, StateInterface> & Getters = {
   mintContract: (state) => state.mintContract,
   mintContractAddress: (state) => state.mintContractAddress,
   account: (state) => state.account,
-}
+  substrateAccounts: (state) => state.substrateAccounts,
+  networkStatus: (state) => state.currentNetworkStatus,
+  networkIdx: (state) => state.currentNetworkIdx,
+};
 
 export default getters;

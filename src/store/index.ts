@@ -1,17 +1,24 @@
+import { SubstrateAccount } from './../wallet/index';
 import { Store, createStore, useStore as vuexUseStore } from 'vuex';
 import { InjectionKey } from 'vue';
 import { Contract } from 'web3-eth-contract';
 import mutations from './mutations';
 import getters from './getters';
 import actions from './actions';
+import { endpointKey } from '@/config';
+
+export type ConnectionType = 'connected' | 'connecting' | 'offline';
 
 // declare store state
 export interface StateInterface {
-  errorMessage: string,
-  isLoading: boolean,
-  account: string,
-  mintContract: Contract | undefined,
-  mintContractAddress: string
+  errorMessage: string;
+  isLoading: boolean;
+  account: string;
+  mintContract: Contract | undefined;
+  mintContractAddress: string;
+  currentNetworkStatus: ConnectionType;
+  currentNetworkIdx: number;
+  substrateAccounts: SubstrateAccount[];
 }
 
 // provide typings for `this.$store`
@@ -31,10 +38,13 @@ export const store = createStore<StateInterface>({
     account: '',
     mintContract: undefined,
     mintContractAddress: '',
+    substrateAccounts: [],
+    currentNetworkIdx: endpointKey.SHIDEN,
+    currentNetworkStatus: 'connecting',
   },
   mutations,
   getters,
-  actions
+  actions,
 });
 
 export function useStore() {

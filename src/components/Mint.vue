@@ -8,56 +8,60 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from 'vue';
-import { Contract } from 'web3-eth-contract'; 
-import { useStore } from '../store';
+import { computed, defineComponent } from "vue";
+import { Contract } from "web3-eth-contract";
+import { useStore } from "../store";
+import { useConnectApi } from "../hooks";
 
 export default defineComponent({
   setup() {
     const store = useStore();
-    const errorMessage = computed(() => store.getters['errorMessage']);
-    const isConnected = computed(() => store.getters['isMetamaskConnected']);
-    const mintContract = computed(() => store.getters['mintContract']);
-    const mintContractAddress = computed(() => store.getters['mintContractAddress']);
-    const account = computed(() => store.getters['account']);
+    const errorMessage = computed(() => store.getters["errorMessage"]);
+    const isConnected = computed(() => store.getters["isMetamaskConnected"]);
+    const mintContract = computed(() => store.getters["mintContract"]);
+    const mintContractAddress = computed(
+      () => store.getters["mintContractAddress"]
+    );
+    const account = computed(() => store.getters["account"]);
+
+    useConnectApi();
 
     const connect = () => {
-      store.dispatch('connect');
-    }
+      store.dispatch("connect");
+    };
 
     const disconnect = () => {
-      store.dispatch('disconnect');
-    }
+      store.dispatch("disconnect");
+    };
 
     const mint = () => {
-      const contract = (mintContract.value) as Contract;
+      const contract = mintContract.value as Contract;
       contract?.methods
-        .mint('1')
+        .mint("1")
         .send({
           to: mintContractAddress.value,
           from: account.value,
         })
         .once("error", (err: Error) => {
           console.log(err);
-          store.dispatch('setError', err.message);
+          store.dispatch("setError", err.message);
         })
         .then((receipt: any) => {
           console.log(receipt);
           //TODO check if data reload is required
         });
-    }
+    };
 
     return {
       errorMessage,
       isConnected,
       connect,
       disconnect,
-      mint
-    }
+      mint,
+    };
   },
 });
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-</style>
+<style scoped></style>

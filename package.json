@@ -8,6 +8,18 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@polkadot/api": "^6.8.1",
+    "@polkadot/api-contract": "^6.8.1",
+    "@polkadot/extension-dapp": "0.41.1",
+    "@polkadot/keyring": "^7.8.2",
+    "@polkadot/networks": "^7.8.2",
+    "@polkadot/types": "^6.8.1",
+    "@polkadot/types-known": "^6.8.1",
+    "@polkadot/types-support": "^6.8.1",
+    "@polkadot/ui-keyring": "^0.86.5",
+    "@polkadot/util": "^7.8.2",
+    "@polkadot/util-crypto": "^7.8.2",
+    "@polkadot/wasm-crypto": "^4.2.1",
     "core-js": "^3.6.5",
     "vue": "^3.0.0",
     "vue-class-component": "^8.0.0-0",
