@@ -1,40 +1,34 @@
-import { Store, createStore, useStore as vuexUseStore } from 'vuex';
+import { store } from 'quasar/wrappers';
 import { InjectionKey } from 'vue';
-import { Contract } from 'web3-eth-contract';
-import mutations from './mutations';
-import getters from './getters';
-import actions from './actions';
+import general, { GeneralStateInterface } from './general';
+import {
+  createStore,
+  Store as VuexStore,
+  useStore as vuexUseStore,
+} from 'vuex';
 
-// declare store state
 export interface StateInterface {
-  errorMessage: string,
-  isLoading: boolean,
-  account: string,
-  mintContract: Contract | undefined,
-  mintContractAddress: string
+  general: GeneralStateInterface;
 }
 
-// provide typings for `this.$store`
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {
-    $store: Store<StateInterface>;
+    $store: VuexStore<StateInterface>;
   }
 }
 
 // provide typings for `useStore` helper
-export const storeKey: InjectionKey<Store<StateInterface>> = Symbol();
+export const storeKey: InjectionKey<VuexStore<StateInterface>> =
+  Symbol('vuex-key');
 
-export const store = createStore<StateInterface>({
-  state: {
-    errorMessage: '',
-    isLoading: false,
-    account: '',
-    mintContract: undefined,
-    mintContractAddress: '',
-  },
-  mutations,
-  getters,
-  actions
+export default store(function (/* { ssrContext } */) {
+  const Store = createStore<StateInterface>({
+    modules: {
+      general,
+    },
+  });
+
+  return Store;
 });
 
 export function useStore() {
