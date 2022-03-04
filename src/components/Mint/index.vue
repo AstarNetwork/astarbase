@@ -1,9 +1,13 @@
 <template>
   <div>
-    <button v-if="!isConnected" @click="connect()">Connect</button>
-    <button v-if="isConnected" @click="disconnect()">Disconnect</button>
-    <button v-if="isConnected" @click="mint()">Mint</button>
-    <div>{{ errorMessage }}</div>
+    <div class="tw-mb-2">Ethereum Wallet</div>
+    <div v-if="isConnected">Address: {{ account }}</div>
+    <div>
+      <button v-if="!isConnected" @click="connect()">Connect</button>
+      <button v-if="isConnected" @click="disconnect()">Disconnect</button>
+      <button v-if="isConnected" @click="mint()">Mint</button>
+      <div>{{ errorMessage }}</div>
+    </div>
   </div>
 </template>
 
@@ -56,7 +60,8 @@ export default defineComponent({
       isConnected,
       connect,
       disconnect,
-      mint
+      mint,
+      account
     };
   }
 });
