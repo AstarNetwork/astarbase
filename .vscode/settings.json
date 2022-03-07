@@ -10,5 +10,11 @@
     "**/.git": true,
     "**/.quasar": true,
     "**/node_modules": true
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "[vue]": {
+    "editor.defaultFormatter": "SimonSiefke.prettier-vscode"
   }
 }

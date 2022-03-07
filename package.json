@@ -12,7 +12,7 @@
     "build:spa": "quasar build -m spa",
     "format": "prettier --write **/*.{ts,vue}",
     "check-format": "prettier --check **/*.{ts,vue}",
-    "lint": "yarn format && yarn check-format && eslint --fix --ext .ts,.vue ./",
+    "lint": "yarn format && yarn check-format && prettier --write '**/*.{ts,vue,css,json,md,mdx,html}'",
     "lint:check": "yarn check-format && eslint --ext .ts,.vue ./"
   },
   "dependencies": {
@@ -80,8 +80,11 @@
     "last 5 Opera versions"
   ],
   "engines": {
-    "node": ">= 12.22.1",
-    "npm": ">= 6.13.4",
-    "yarn": ">= 1.21.1"
+    "node": "16.x",
+    "yarn": ">=1.22.0"
+  },
+  "browser": {
+    "crypto": false,
+    "stream": false
   }
 }

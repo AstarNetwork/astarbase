@@ -52,9 +52,7 @@ const loadAccounts = async (api: ApiPromise) => {
     ),
   ]);
 
-  const isDevelopment = isTestChain(
-    systemChain ? systemChain.toString() : '<unknown>'
-  );
+  const isDevelopment = isTestChain(systemChain ? systemChain.toString() : '<unknown>');
 
   keyring.loadAll(
     {
@@ -66,11 +64,7 @@ const loadAccounts = async (api: ApiPromise) => {
   );
 };
 
-export async function connectApi(
-  endpoint: string,
-  networkIdx: number,
-  store: any
-) {
+export async function connectApi(endpoint: string, networkIdx: number, store: any) {
   const provider = new WsProvider(endpoint);
   const api = new ApiPromise(options({ provider }));
   console.log('networkIdx', networkIdx);

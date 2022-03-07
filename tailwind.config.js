@@ -3,7 +3,7 @@ const colors = require('tailwindcss/colors');
 module.exports = {
   prefix: 'tw-',
   purge: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
-  darkMode: 'media', // or false or 'class' or 'media'
+  darkMode: false, // or false or 'class' or 'media'
   theme: {
     colors: {
       transparent: 'transparent',
@@ -106,7 +106,7 @@ module.exports = {
   plugins: [
     themeVariants({
       themes: {
-        'dark': {
+        dark: {
           selector: '.dark',
         },
       },

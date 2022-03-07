@@ -14,7 +14,13 @@
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-  name: 'MainLayout'
+  name: 'MainLayout',
+  setup() {
+    // const isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    // isDark
+    //   ? document.documentElement.classList.add('dark')
+    //   : document.documentElement.classList.remove('dark');
+  },
 });
 </script>
 

@@ -1,10 +1,5 @@
 import { providerEndpoints, endpointKey } from 'src/config/chainEndpoints';
-export {
-  getChainData,
-  setupNetwork,
-  getChainId,
-  createWeb3Instance,
-} from './utils';
+export { getChainData, setupNetwork, getChainId, createWeb3Instance } from './utils';
 
 interface RequestArguments {
   method: string;
@@ -17,10 +12,7 @@ export interface EthereumProvider {
   request: (args: RequestArguments) => Promise<unknown>;
 }
 
-export type TNetworkId =
-  | endpointKey.SHIDEN
-  | endpointKey.SHIBUYA
-  | endpointKey.ASTAR;
+export type TNetworkId = endpointKey.SHIDEN | endpointKey.SHIBUYA | endpointKey.ASTAR;
 
 const chain = {
   shiden: providerEndpoints.find((it) => it.key === endpointKey.SHIDEN),

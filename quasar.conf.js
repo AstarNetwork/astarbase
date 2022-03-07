@@ -33,8 +33,7 @@ module.exports = configure(function (ctx) {
     boot: ['i18n', 'api'],
 
     // https://v2.quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
-    // css: ['app.scss'],
-    css: ['app.scss','base.scss'],
+    css: ['app.scss', 'base.scss'],
 
     // https://github.com/quasarframework/quasar/tree/dev/extras
     extras: [
@@ -76,9 +75,7 @@ module.exports = configure(function (ctx) {
         const nodePolyfillWebpackPlugin = require('node-polyfill-webpack-plugin');
         chain.plugin('node-polyfill').use(nodePolyfillWebpackPlugin);
         // Ref: https://quasar.dev/quasar-cli/linter
-        chain
-          .plugin('eslint-webpack-plugin')
-          .use(ESLintPlugin, [{ extensions: ['js', 'vue'] }]);
+        chain.plugin('eslint-webpack-plugin').use(ESLintPlugin, [{ extensions: ['js', 'vue'] }]);
       },
       extendWebpack(cfg) {
         cfg.plugins.push(new NodePolyfillPlugin({}));
@@ -108,7 +105,7 @@ module.exports = configure(function (ctx) {
       // directives: [],
 
       config: {
-        dark: 'auto',
+        dark: 'false',
       },
 
       // Quasar plugins

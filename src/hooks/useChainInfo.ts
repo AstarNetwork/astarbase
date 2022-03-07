@@ -27,18 +27,11 @@ function createInfo(
     color: '#2096F3',
     genesisHash: api.genesisHash.toHex(),
     icon: 'polkadot',
-    metaCalls: Buffer.from(api.runtimeMetadata.asCallsOnly.toU8a()).toString(
-      'base64'
-    ),
+    metaCalls: Buffer.from(api.runtimeMetadata.asCallsOnly.toU8a()).toString('base64'),
     specVersion: api.runtimeVersion.specVersion.toNumber(),
-    ss58Format: isNumber(api.registry.chainSS58)
-      ? api.registry.chainSS58
-      : DEFAULT_SS58.toNumber(),
-    tokenDecimals: (api.registry.chainDecimals || [
-      DEFAULT_DECIMALS.toNumber(),
-    ])[0],
-    tokenSymbol: (api.registry.chainTokens ||
-      formatBalance.getDefaults().unit)[0],
+    ss58Format: isNumber(api.registry.chainSS58) ? api.registry.chainSS58 : DEFAULT_SS58.toNumber(),
+    tokenDecimals: (api.registry.chainDecimals || [DEFAULT_DECIMALS.toNumber()])[0],
+    tokenSymbol: (api.registry.chainTokens || formatBalance.getDefaults().unit)[0],
     types: getSpecTypes(
       api.registry,
       systemChain,
@@ -52,9 +45,7 @@ export function useChainInfo(api: ApiPromise) {
   const chainInfo = ref<ChainInfo>();
   api.isReady.then(async () => {
     const specName: string = api.runtimeVersion.specName.toString();
-    const systemChain: string = (
-      (await api.rpc.system.chain()) || '<unknown>'
-    ).toString();
+    const systemChain: string = ((await api.rpc.system.chain()) || '<unknown>').toString();
     const systemName: string = (await api.rpc.system.name()).toString();
     chainInfo.value = createInfo(api, systemChain, systemName, specName);
   });

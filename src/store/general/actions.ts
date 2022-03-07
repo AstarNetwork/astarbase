@@ -7,6 +7,7 @@ import { ConnectPayload } from './mutations';
 import { GeneralStateInterface as State } from './index';
 
 const UNRECOGNIZED_CHAIN_ID_ERROR_CODE = 4902;
+const toastTimeout = 5000;
 
 /**
  * Switches to network given by chainConfig or creates a new network configuration if needed.
@@ -86,10 +87,7 @@ const actions: ActionTree<State, StateInterface> = {
         });
         const abi = await abiResponse.json();
 
-        const mintContract = new web3.eth.Contract(
-          abi,
-          config.mintContractAddress
-        );
+        const mintContract = new web3.eth.Contract(abi, config.mintContractAddress);
 
         // TODO create Astar base contract here and put it to vuex
 
@@ -127,6 +125,14 @@ const actions: ActionTree<State, StateInterface> = {
   },
   async disconnect({ commit }) {
     commit('changeAccount', '');
+  },
+  showAlertMsg({ commit }, { msg, alertType }) {
+    commit('setShowAlertMsg', true);
+    commit('setAlertMsg', msg);
+    commit('setAlertType', alertType);
+    setTimeout(() => {
+      commit('setShowAlertMsg', false);
+    }, toastTimeout);
   },
 };
 

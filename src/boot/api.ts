@@ -2,11 +2,7 @@ import { ApiPromise } from '@polkadot/api';
 import { useMeta } from 'quasar';
 import { boot } from 'quasar/wrappers';
 import { connectApi } from 'src/config/api/polkadot/connectApi';
-import {
-  ASTAR_CHAIN,
-  getProviderIndex,
-  providerEndpoints,
-} from 'src/config/chainEndpoints';
+import { ASTAR_CHAIN, getProviderIndex, providerEndpoints } from 'src/config/chainEndpoints';
 import { LOCAL_STORAGE } from 'src/config/localStorage';
 import { opengraphMeta } from 'src/config/opengraph';
 import { createWeb3Instance, TNetworkId } from 'src/config/web3';
@@ -42,18 +38,11 @@ export default boot(async ({ store }) => {
     meta: opengraphMeta,
   });
 
-  const { api, extensions } = await connectApi(
-    endpoint,
-    networkIdx.value,
-    store
-  );
+  const { api, extensions } = await connectApi(endpoint, networkIdx.value, store);
   $api.value = api;
 
   const { chainInfo } = useChainInfo(api);
-  const { metaExtensions, extensionCount } = useMetaExtensions(
-    api,
-    extensions
-  )!;
+  const { metaExtensions, extensionCount } = useMetaExtensions(api, extensions)!;
   watchPostEffect(async () => {
     store.commit('general/setChainInfo', chainInfo.value);
     store.commit('general/setMetaExtensions', metaExtensions.value);
@@ -64,9 +53,7 @@ export default boot(async ({ store }) => {
       const currentNetworkIdx = getProviderIndex(currentChain);
       const web3 = await createWeb3Instance(currentNetworkIdx as TNetworkId);
       if (!web3) {
-        console.error(
-          `cannot create the web3 instance with network id ${currentNetworkIdx}`
-        );
+        console.error(`cannot create the web3 instance with network id ${currentNetworkIdx}`);
       }
       $web3.value = web3;
     }

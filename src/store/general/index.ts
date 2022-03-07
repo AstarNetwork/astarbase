@@ -12,11 +12,18 @@ export type SubstrateAccount = {
   source: string;
 };
 
-export type ConnectionType = 'connected' | 'connecting' | 'offline';
+export type AlertBox = {
+  showAlertMsg: boolean;
+  alertMsg: string;
+  alertType: string;
+};
 
-// // declare store state
+export type ConnectionType = 'connected' | 'connecting' | 'offline';
+export type Theme = 'LIGHT' | 'DARK';
+
 export interface GeneralStateInterface {
   errorMessage: string;
+  alertBox: AlertBox;
   isLoading: boolean;
   account: string;
   mintContract: Contract | undefined;
@@ -24,6 +31,8 @@ export interface GeneralStateInterface {
   currentNetworkStatus: ConnectionType;
   substrateAccounts: SubstrateAccount[];
   currentNetworkIdx: number;
+  currentAddress: string;
+  currentTheme: Theme;
 }
 
 const generalModule: Module<GeneralStateInterface, StateInterface> = {
@@ -34,12 +43,22 @@ const generalModule: Module<GeneralStateInterface, StateInterface> = {
   state: {
     errorMessage: '',
     isLoading: false,
+    alertBox: {
+      showAlertMsg: false,
+      alertMsg: '',
+      alertType: 'success',
+    },
     account: '',
     mintContract: undefined,
     mintContractAddress: '',
     currentNetworkStatus: 'connecting',
     substrateAccounts: [],
     currentNetworkIdx: endpointKey.SHIDEN,
+    currentAddress: '',
+    currentTheme:
+      window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        ? 'DARK'
+        : 'LIGHT',
   },
 };
 

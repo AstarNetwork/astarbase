@@ -20,13 +20,9 @@ export default defineComponent({
   setup() {
     const store = useStore();
     const errorMessage = computed(() => store.getters['general/errorMessage']);
-    const isConnected = computed(
-      () => store.getters['general/isMetamaskConnected']
-    );
+    const isConnected = computed(() => store.getters['general/isMetamaskConnected']);
     const mintContract = computed(() => store.getters['general/mintContract']);
-    const mintContractAddress = computed(
-      () => store.getters['general/mintContractAddress']
-    );
+    const mintContractAddress = computed(() => store.getters['general/mintContractAddress']);
     const account = computed(() => store.getters['general/account']);
 
     const connect = () => {
@@ -43,7 +39,7 @@ export default defineComponent({
         .mint('1')
         .send({
           to: mintContractAddress.value,
-          from: account.value
+          from: account.value,
         })
         .once('error', (err: Error) => {
           console.log(err);
@@ -61,9 +57,9 @@ export default defineComponent({
       connect,
       disconnect,
       mint,
-      account
+      account,
     };
-  }
+  },
 });
 </script>
 

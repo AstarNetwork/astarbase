@@ -25,11 +25,7 @@ module.exports = {
   },
 
   // Ref: https://www.npmjs.com/package/eslint-plugin-prettier-vue
-  extends: [
-    'plugin:vue/recommended',
-    'plugin:prettier-vue/recommended',
-    'prettier',
-  ],
+  extends: ['plugin:vue/recommended', 'plugin:prettier-vue/recommended', 'prettier'],
 
   plugins: [
     // required to apply rules which need type information
@@ -141,7 +137,7 @@ module.exports = {
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
 
     'prettier-vue/prettier': [
-      'off',
+      'error',
       {
         // Override all options of `prettier` here
         // @see https://prettier.io/docs/en/options.html

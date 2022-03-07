@@ -4,8 +4,7 @@ import { CHAIN_INFORMATION } from '..';
 import { endpointKey } from 'src/config/chainEndpoints';
 
 export const getChainData = (chainId: number) => {
-  const { chainName, nativeCurrency, rpcUrls, blockExplorerUrls } =
-    CHAIN_INFORMATION;
+  const { chainName, nativeCurrency, rpcUrls, blockExplorerUrls } = CHAIN_INFORMATION;
 
   return {
     chainName: chainName[chainId],
@@ -19,8 +18,7 @@ export const setupNetwork = async (network: number): Promise<boolean> => {
   const provider = typeof window !== 'undefined' && window.ethereum;
   if (provider) {
     const chainId = `0x${network.toString(16)}`;
-    const { chainName, nativeCurrency, rpcUrls, blockExplorerUrls } =
-      getChainData(network);
+    const { chainName, nativeCurrency, rpcUrls, blockExplorerUrls } = getChainData(network);
     try {
       await provider.request({
         method: 'wallet_addEthereumChain',

@@ -1,6 +1,6 @@
 import { RouteRecordRaw } from 'vue-router';
 import Index from 'pages/Index.vue';
-import Home from 'src/components/Home.vue';
+import Mint from 'src/components/Mint/Mint.vue';
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
@@ -8,12 +8,12 @@ const routes: RouteRecordRaw[] = [
   },
   {
     path: '/',
-    name: 'Home',
+    name: 'Mint',
     component: Index,
     children: [
       {
         path: 'mint',
-        component: Home,
+        component: Mint,
       },
     ],
   },
