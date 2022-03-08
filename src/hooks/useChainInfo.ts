@@ -21,7 +21,6 @@ function createInfo(
   systemName: string,
   specName: string
 ): ChainInfo {
-  // console.log('chainInfo', `${systemChain} | ${systemName} | ${specName}`);
   return {
     chain: systemChain,
     color: '#2096F3',

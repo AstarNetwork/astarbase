@@ -49,7 +49,7 @@ export default defineComponent({
           from: account.value,
         })
         .once('error', (err: Error) => {
-          console.log(err);
+          console.error(err.message);
           store.dispatch('general/setError', err.message);
         })
         .then((receipt: any) => {

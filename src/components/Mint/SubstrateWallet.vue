@@ -3,7 +3,7 @@
     <div class="container-substrate-wallet">
       <div>
         <div v-if="!substrateAddress">
-          <button class="btn" @click="openSelectModal">
+          <button :disabled="!isConnectedNetwork" class="btn" @click="openSelectModal">
             {{ $t('mint.connectWallet') }}
           </button>
         </div>
