@@ -40,10 +40,6 @@ export default boot(async ({ store }) => {
   const { api, extensions } = await connectApi(endpoint, store);
   $api.value = api;
 
-  const result = await api.query.dappsStaking.registeredDapps({
-    Evm: '0x4633c1f0f633cc42fd0ba394762283606c88ae52',
-  });
-
   const { chainInfo } = useChainInfo(api);
   const { metaExtensions, extensionCount } = useMetaExtensions(api, extensions)!;
   watchPostEffect(async () => {
