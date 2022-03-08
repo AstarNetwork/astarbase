@@ -16,7 +16,6 @@
     "lint:check": "yarn check-format && eslint --ext .ts,.vue ./"
   },
   "dependencies": {
-    "@astar-network/astar-api": "^0.1.5-3",
     "@polkadot/api": "^7.11.1",
     "@polkadot/api-contract": "^7.11.1",
     "@polkadot/extension-dapp": "^0.42.7",
