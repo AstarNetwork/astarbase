@@ -1,13 +1,15 @@
 <template>
-  <div>
-    <div class="tw-mb-2">Ethereum Wallet</div>
-    <div v-if="isConnected">Address: {{ account }}</div>
+  <div class="container-ethereum-wallet">
     <div>
-      <button v-if="!isConnected" @click="connect()">Connect</button>
-      <button v-if="isConnected" @click="disconnect()">Disconnect</button>
-      <button v-if="isConnected" @click="mint()">Mint</button>
-      <div>{{ errorMessage }}</div>
+      <button v-if="!isConnected" class="btn" @click="connect()">Connect MetaMask</button>
+      <button v-else class="btn" @click="disconnect()">Connected MetaMask</button>
     </div>
+
+    <div v-if="isConnected">
+      <div class="tw-text-lg">Address: {{ getShortenAddress(account) }}</div>
+    </div>
+    <button :disabled="!isConnected" class="btn" @click="mint()">Mint</button>
+    <div>{{ errorMessage }}</div>
   </div>
 </template>
 
@@ -15,6 +17,7 @@
 import { useStore } from 'src/store';
 import { computed, defineComponent } from 'vue';
 import { Contract } from 'web3-eth-contract';
+import { getShortenAddress } from 'src/modules/address';
 
 export default defineComponent({
   setup() {
@@ -58,10 +61,12 @@ export default defineComponent({
       disconnect,
       mint,
       account,
+      getShortenAddress,
     };
   },
 });
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped></style>
+<style lang="scss" scoped>
+@import './styles/ethereum-wallet.scss';
+</style>

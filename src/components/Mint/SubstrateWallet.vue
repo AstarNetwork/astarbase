@@ -1,33 +1,37 @@
 <template>
   <div>
-    <div class="tw-font-xl">Substrate Wallet</div>
-    <div v-if="isConnectedNetwork">
-      <div v-if="!currentAccount" class="container">
-        <div class="connect-wallet" @click="openSelectModal">{{ $t('wallet.connectWallet') }}</div>
+    <div class="container-substrate-wallet">
+      <div>
+        <div v-if="!currentAccount">
+          <button class="btn" @click="openSelectModal">Connect Wallet</button>
+        </div>
+        <div v-else>
+          <button class="btn" @click="disconnectAccount">Connected Wallet</button>
+        </div>
       </div>
-      <div v-else>
-        <!-- <BalancePlasm /> -->
-        <div>connected wallet</div>
+
+      <div v-if="currentAccount">
+        <div class="tw-text-lg">Address: {{ getShortenAddress(currentAccount) }}</div>
       </div>
-
-      <modal-connect-wallet
-        v-if="modalName === WalletModalOption.SelectWallet"
-        :set-wallet-modal="setWalletModal"
-        :set-close-modal="setCloseModal"
-      />
-
-      <ModalAccount
-        v-if="modalAccountSelect"
-        v-model:isOpen="modalAccountSelect"
-        :selected-wallet="selectedWallet"
-      />
-
-      <ModalInstallWallet
-        v-if="modalName === WalletModalOption.NoExtension"
-        :set-close-modal="setCloseModal"
-        :selected-wallet="selectedWallet"
-      />
     </div>
+
+    <modal-connect-wallet
+      v-if="modalName === WalletModalOption.SelectWallet"
+      :set-wallet-modal="setWalletModal"
+      :set-close-modal="setCloseModal"
+    />
+
+    <ModalAccount
+      v-if="modalAccountSelect"
+      v-model:isOpen="modalAccountSelect"
+      :selected-wallet="selectedWallet"
+    />
+
+    <ModalInstallWallet
+      v-if="modalName === WalletModalOption.NoExtension"
+      :set-close-modal="setCloseModal"
+      :selected-wallet="selectedWallet"
+    />
   </div>
 </template>
 
@@ -37,6 +41,7 @@ import { defineComponent, watch } from 'vue';
 import ModalConnectWallet from './modals/ModalConnectWallet.vue';
 import ModalInstallWallet from './modals/ModalInstallWallet.vue';
 import ModalAccount from './modals/ModalAccount.vue';
+import { getShortenAddress } from 'src/modules/address';
 
 export default defineComponent({
   components: {
@@ -56,6 +61,7 @@ export default defineComponent({
       setCloseModal,
       setWalletModal,
       openSelectModal,
+      disconnectAccount,
     } = useConnectWallet();
 
     watch(
@@ -81,11 +87,13 @@ export default defineComponent({
       setCloseModal,
       setWalletModal,
       openSelectModal,
+      disconnectAccount,
+      getShortenAddress,
     };
   },
 });
 </script>
 
 <style lang="scss" scoped>
-@import './styles/connect-wallet.scss';
+@import './styles/substrate-wallet.scss';
 </style>

@@ -1,4 +1,4 @@
-// @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap');
 
 @import 'tailwindcss/base';
 
@@ -6,10 +6,3 @@
 
 @import 'tailwindcss/utilities';
 
-.tw-tooltip:hover span {
-  @apply tw-block;
-}
-
-.checkbox:checked + span {
-  @apply tw-block;
-}

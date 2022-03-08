@@ -1,1 +1,23 @@
 // app global css in SCSS form
+
+.tw-tooltip:hover span {
+  @apply tw-block;
+}
+
+.checkbox:checked + span {
+  @apply tw-block;
+}
+
+.btn {
+  width: 280px;
+  @apply tw-shadow tw-rounded-lg
+  dark:tw-bg-darkGray-800 tw-cursor-pointer tw-text-blue-900 dark:tw-text-darkGray-100 tw-font-bold tw-py-4 tw-text-lg;
+}
+
+.btn:hover {
+  @apply tw-bg-gray-100 dark:tw-bg-darkGray-600;
+}
+
+body {
+  @apply tw-bg-gray-50 dark:tw-bg-black;
+}

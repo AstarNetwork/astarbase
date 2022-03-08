@@ -5,6 +5,7 @@ import { StateInterface } from '../index';
 import actions from './actions';
 import getters from './getters';
 import mutations from './mutations';
+import type { Extensions } from 'src/hooks/useMetaExtensions';
 
 export type SubstrateAccount = {
   address: string;
@@ -33,6 +34,9 @@ export interface GeneralStateInterface {
   currentNetworkIdx: number;
   currentAddress: string;
   currentTheme: Theme;
+  chainInfo: any;
+  metaExtensions: Extensions;
+  extensionCount: number;
 }
 
 const generalModule: Module<GeneralStateInterface, StateInterface> = {
@@ -53,6 +57,12 @@ const generalModule: Module<GeneralStateInterface, StateInterface> = {
     mintContractAddress: '',
     currentNetworkStatus: 'connecting',
     substrateAccounts: [],
+    chainInfo: undefined,
+    metaExtensions: {
+      count: 0,
+      extensions: [],
+    },
+    extensionCount: 0,
     currentNetworkIdx: endpointKey.SHIDEN,
     currentAddress: '',
     currentTheme:

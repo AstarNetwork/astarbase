@@ -51,11 +51,6 @@ export const useConnectWallet = () => {
     }
   });
 
-  watchEffect(() => {
-    const address = localStorage.getItem(SELECTED_ADDRESS);
-    // address && store.commit('general/setCurrentAddress', address);
-  });
-
   return {
     WalletModalOption,
     modalConnectWallet,

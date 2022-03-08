@@ -2,6 +2,8 @@ import { MutationTree } from 'vuex';
 import { Contract } from 'web3-eth-contract';
 import { ConnectionType, GeneralStateInterface as State, SubstrateAccount } from './index';
 import { Dark } from 'quasar';
+import type { Extensions } from 'src/hooks/useMetaExtensions';
+import type { ChainInfo } from 'src/hooks/useChainInfo';
 
 export type ConnectPayload = {
   account: string;
@@ -23,6 +25,9 @@ export interface GeneralMutations<S = State> {
   setShowAlertMsg(state: S, showAlert: boolean): void;
   setAlertMsg(state: S, msg: string): void;
   setAlertType(state: S, type: string): void;
+  setChainInfo(state: S, type: ChainInfo): void;
+  setMetaExtensions(state: S, type: Extensions): void;
+  setExtensionCount(state: S, type: number): void;
 }
 
 const mutation: MutationTree<State> & GeneralMutations = {
@@ -42,6 +47,15 @@ const mutation: MutationTree<State> & GeneralMutations = {
   },
   setLoading(state, isLoading) {
     state.isLoading = isLoading;
+  },
+  setChainInfo(state, chainInfo) {
+    state.chainInfo = chainInfo;
+  },
+  setMetaExtensions(state, extensions) {
+    state.metaExtensions = extensions;
+  },
+  setExtensionCount(state, count) {
+    state.extensionCount = count;
   },
   setShowAlertMsg(state, msg) {
     state.alertBox.showAlertMsg = msg;

@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <EthereumWallet />
+  <div class="container">
     <SubstrateWallet />
+    <EthereumWallet />
   </div>
 </template>
 
@@ -26,3 +26,7 @@ export default defineComponent({
   },
 });
 </script>
+
+<style lang="scss" scoped>
+@import './styles/mint.scss';
+</style>

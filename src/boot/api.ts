@@ -3,7 +3,6 @@ import { useMeta } from 'quasar';
 import { boot } from 'quasar/wrappers';
 import { connectApi } from 'src/config/api/polkadot/connectApi';
 import { ASTAR_CHAIN, getProviderIndex, providerEndpoints } from 'src/config/chainEndpoints';
-import { LOCAL_STORAGE } from 'src/config/localStorage';
 import { opengraphMeta } from 'src/config/opengraph';
 import { createWeb3Instance, TNetworkId } from 'src/config/web3';
 import { useChainInfo, useMetaExtensions } from 'src/hooks';
@@ -15,18 +14,18 @@ const $web3 = ref<Web3>();
 
 export default boot(async ({ store }) => {
   // Todo: Add the network select component on UI
-  const { NETWORK_IDX } = LOCAL_STORAGE;
-  const networkIdxStore = localStorage.getItem(NETWORK_IDX);
-  if (networkIdxStore) {
-    store.commit('general/setCurrentNetworkIdx', parseInt(networkIdxStore));
-  }
+  // const { NETWORK_IDX } = LOCAL_STORAGE;
+  // const networkIdxStore = localStorage.getItem(NETWORK_IDX);
+  // if (networkIdxStore) {
+  //   store.commit('general/setCurrentNetworkIdx', parseInt(networkIdxStore));
+  // }
 
   const networkIdx = computed(() => store.getters['general/networkIdx']);
   const endpoint = providerEndpoints[networkIdx.value].endpoint;
 
   const favicon = providerEndpoints[parseInt(networkIdx.value)].favicon;
   useMeta({
-    title: '',
+    title: 'Astar Base',
     titleTemplate: (title) => `${title} | Astar Base`,
     htmlAttr: { lang: 'en' },
     link: {
