@@ -1,4 +1,3 @@
-import { LOCAL_STORAGE } from './localStorage';
 import { RegistryTypes } from '@polkadot/types/types';
 import * as typeDefs from 'src/config/api/polkadot/registry-types';
 

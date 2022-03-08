@@ -1,3 +1,4 @@
+import { LOCAL_STORAGE } from 'src/config/localStorage';
 import { useStore } from 'src/store';
 import { SubstrateAccount } from 'src/store/general';
 import { computed, ref, watch } from 'vue';
@@ -9,11 +10,13 @@ export const useAccount = () => {
   const store = useStore();
   const substrateAccounts = computed(() => store.getters['general/substrateAccounts']);
   const substrateAccount = computed(() => store.getters['general/substrateAccount']);
+  const { SELECTED_ADDRESS } = LOCAL_STORAGE;
 
   const disconnectAccount = () => {
     store.commit('general/setCurrentAddress', null);
     substrateAddress.value = '';
     substrateAccountName.value = '';
+    localStorage.removeItem(SELECTED_ADDRESS);
   };
 
   watch(
@@ -26,6 +29,7 @@ export const useAccount = () => {
       if (account) {
         substrateAddress.value = account.address;
         substrateAccountName.value = account.name;
+        localStorage.setItem(SELECTED_ADDRESS, String(substrateAddress.value));
       }
     },
     { immediate: true }
