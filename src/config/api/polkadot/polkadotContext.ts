@@ -13,7 +13,7 @@ import BN from 'bn.js';
 interface ProviderState {
   api?: ApiPromise;
   extensions?: InjectedExtension[];
-  currentAccount?: KeyringPair;
+  substrateAccount?: KeyringPair;
   currentBalance?: BN;
   unsubscribeAccountInfo?: UnsubscribePromise;
 }
@@ -22,7 +22,7 @@ interface ProviderState {
 const state = reactive<ProviderState>({
   api: undefined,
   extensions: undefined,
-  currentAccount: undefined,
+  substrateAccount: undefined,
   currentBalance: undefined,
   unsubscribeAccountInfo: undefined,
 });
@@ -35,7 +35,7 @@ const mutations = {
   setExtensions: (extensions: InjectedExtension[]) => {
     state.extensions = extensions;
   },
-  setCurrentAccount: (accountIndex: number) => {
+  setSubstrateAccount: (accountIndex: number) => {
     const api = state.api;
     if (!api) {
       return;
@@ -54,12 +54,12 @@ const mutations = {
       })();
     }
 
-    const currentAccount = accounts[accountIndex];
-    state.currentAccount = currentAccount;
+    const substrateAccount = accounts[accountIndex];
+    state.substrateAccount = substrateAccount;
 
     // Memo: comment out for avoiding error
     // subscribe current AccountInfo
-    // state.unsubscribeAccountInfo = api.query.system.account(currentAccount.address, (result) => {
+    // state.unsubscribeAccountInfo = api.query.system.account(substrateAccount.address, (result) => {
     //   state.currentBalance = result.data.free.toBn();
     // });
   },

@@ -16,7 +16,7 @@ export const useConnectWallet = () => {
 
   const store = useStore();
   const isConnectedNetwork = computed(() => store.getters['general/networkStatus'] === 'connected');
-  const { currentAccount, currentAccountName, disconnectAccount } = useAccount();
+  const { substrateAddress, substrateAccountName, disconnectAccount } = useAccount();
 
   const setCloseModal = () => {
     modalName.value = '';
@@ -51,8 +51,8 @@ export const useConnectWallet = () => {
   return {
     WalletModalOption,
     modalConnectWallet,
-    currentAccount,
-    currentAccountName,
+    substrateAddress,
+    substrateAccountName,
     modalName,
     selectedWallet,
     modalAccountSelect,

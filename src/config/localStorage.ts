@@ -1,4 +1,4 @@
 export enum LOCAL_STORAGE {
   NETWORK_IDX = 'networkIdx',
-  SELECTED_ADDRESS = 'selectedAddress',
+  SELECTED_ADDRESS = 'substrateAccount',
 }

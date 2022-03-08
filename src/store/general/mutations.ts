@@ -6,7 +6,7 @@ import type { Extensions } from 'src/hooks/useMetaExtensions';
 import type { ChainInfo } from 'src/hooks/useChainInfo';
 
 export type ConnectPayload = {
-  account: string;
+  ethereumAccount: string;
   mintContract: Contract;
   mintContractAddress: string;
 };
@@ -15,7 +15,7 @@ export interface GeneralMutations<S = State> {
   connectRequest(state: S): void;
   connectFailed(state: S, errorMessage: string): void;
   connectSuccess(state: S, payload: ConnectPayload): void;
-  changeAccount(state: S, account: string): void;
+  changeEthereumAccount(state: S, account: string): void;
   setError(state: S, errorMessage: string): void;
   setCurrentNetworkStatus(state: S, networkStatus: ConnectionType): void;
   setSubstrateAccounts(state: S, type: SubstrateAccount[]): void;
@@ -40,7 +40,7 @@ const mutation: MutationTree<State> & GeneralMutations = {
     state.errorMessage = errorMessage;
   },
   connectSuccess(state, payload) {
-    state.account = payload.account;
+    state.ethereumAccount = payload.ethereumAccount;
     state.mintContract = payload.mintContract;
     (state.mintContractAddress = payload.mintContractAddress), (state.isLoading = false);
     state.errorMessage = '';
@@ -66,8 +66,8 @@ const mutation: MutationTree<State> & GeneralMutations = {
   setAlertType(state, type) {
     state.alertBox.alertType = type;
   },
-  changeAccount(state, account) {
-    state.account = account;
+  changeEthereumAccount(state, account) {
+    state.ethereumAccount = account;
   },
   setError(state, errorMessage) {
     state.errorMessage = errorMessage;
@@ -82,7 +82,7 @@ const mutation: MutationTree<State> & GeneralMutations = {
     state.currentNetworkIdx = networkIdx;
   },
   setCurrentAddress(state, address) {
-    state.currentAddress = address;
+    state.substrateAccount = address;
   },
   setTheme(state, theme) {
     if (theme == 'DARK') {

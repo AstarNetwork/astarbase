@@ -12,11 +12,11 @@ export interface GeneralGetters {
   errorMessage(state: State): string;
   mintContract(state: State): Contract | undefined;
   mintContractAddress(state: State): string;
-  account(state: State): string;
+  ethereumAccount(state: State): string;
+  substrateAccount(state: State): string;
   substrateAccounts(state: State): SubstrateAccount[];
   networkStatus(state: State): string;
   networkIdx(state: State): number;
-  selectedAddress(state: State): string;
   theme(state: State): Theme;
   chainInfo(state: State): ChainInfo;
   metaExtensions(state: State): Extensions;
@@ -29,15 +29,15 @@ const getters: GetterTree<State, StateInterface> & GeneralGetters = {
   chainInfo: (state) => state.chainInfo,
   metaExtensions: (state) => state.metaExtensions,
   extensionCount: (state) => state.extensionCount,
-  isMetamaskConnected: (state) => !!state.account,
+  isMetamaskConnected: (state) => !!state.ethereumAccount,
   errorMessage: (state) => state.errorMessage,
   mintContract: (state) => state.mintContract,
   mintContractAddress: (state) => state.mintContractAddress,
-  account: (state) => state.account,
+  ethereumAccount: (state) => state.ethereumAccount,
+  substrateAccount: (state) => state.substrateAccount,
   substrateAccounts: (state) => state.substrateAccounts,
   networkStatus: (state) => state.currentNetworkStatus,
   networkIdx: (state) => state.currentNetworkIdx,
-  selectedAddress: (state) => state.currentAddress,
   theme: (state) => state.currentTheme,
 };
 

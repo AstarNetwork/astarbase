@@ -2,7 +2,7 @@
   <div>
     <div class="container-substrate-wallet">
       <div>
-        <div v-if="!currentAccount">
+        <div v-if="!substrateAddress">
           <button class="btn" @click="openSelectModal">
             {{ $t('mint.connectWallet') }}
           </button>
@@ -12,12 +12,14 @@
         </div>
       </div>
 
-      <div v-if="currentAccount">
-        <div class="tw-text-lg">
-          {{ $t('common.address', { value: getShortenAddress(currentAccount) }) }}
+      <div v-if="substrateAddress">
+        <div class="tw-text-lg tw-mb-1">
+          {{ $t('common.address', { value: getShortenAddress(substrateAddress) }) }}
         </div>
         <div v-if="stakedDapps.length > 0">
-          {{ $t('mint.stakedDapp') }}
+          <span class="tw-text-lg">
+            {{ $t('mint.stakedDapp') }}
+          </span>
         </div>
         <li v-for="dapp in stakedDapps" :key="dapp">
           {{ dapp }}
@@ -64,7 +66,7 @@ export default defineComponent({
     const {
       WalletModalOption,
       modalConnectWallet,
-      currentAccount,
+      substrateAddress,
       modalName,
       selectedWallet,
       modalAccountSelect,
@@ -76,9 +78,9 @@ export default defineComponent({
     } = useConnectWallet();
 
     watch(
-      [currentAccount],
+      [substrateAddress],
       () => {
-        if (currentAccount.value === '') {
+        if (substrateAddress.value === '') {
           setTimeout(() => {
             openSelectModal();
           }, 200);
@@ -91,7 +93,7 @@ export default defineComponent({
       WalletModalOption,
       isConnectedNetwork,
       modalConnectWallet,
-      currentAccount,
+      substrateAddress,
       modalName,
       selectedWallet,
       modalAccountSelect,

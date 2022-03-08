@@ -9,7 +9,7 @@
   "files.exclude": {
     "**/.git": true,
     "**/.quasar": true,
-    "**/node_modules": false
+    "**/node_modules": true
   },
   "[typescript]": {
     "editor.defaultFormatter": "vscode.typescript-language-features"

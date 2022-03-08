@@ -3,29 +3,29 @@ import { SubstrateAccount } from 'src/store/general';
 import { computed, ref, watch } from 'vue';
 
 export const useAccount = () => {
-  const currentAccount = ref<string>('');
-  const currentAccountName = ref<string>('');
+  const substrateAddress = ref<string>('');
+  const substrateAccountName = ref<string>('');
 
   const store = useStore();
   const substrateAccounts = computed(() => store.getters['general/substrateAccounts']);
-  const currentAddress = computed(() => store.getters['general/selectedAddress']);
+  const substrateAccount = computed(() => store.getters['general/substrateAccount']);
 
   const disconnectAccount = () => {
     store.commit('general/setCurrentAddress', null);
-    currentAccount.value = '';
-    currentAccountName.value = '';
+    substrateAddress.value = '';
+    substrateAccountName.value = '';
   };
 
   watch(
-    [currentAddress],
+    [substrateAccount],
     () => {
       if (!substrateAccounts.value) return;
       const account = substrateAccounts.value.find(
-        (it: SubstrateAccount) => it.address === currentAddress.value
+        (it: SubstrateAccount) => it.address === substrateAccount.value
       );
       if (account) {
-        currentAccount.value = account.address;
-        currentAccountName.value = account.name;
+        substrateAddress.value = account.address;
+        substrateAccountName.value = account.name;
       }
     },
     { immediate: true }
@@ -33,8 +33,8 @@ export const useAccount = () => {
 
   return {
     substrateAccounts,
-    currentAccount,
-    currentAccountName,
+    substrateAddress,
+    substrateAccountName,
     disconnectAccount,
   };
 };

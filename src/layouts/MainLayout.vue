@@ -36,7 +36,9 @@ export default defineComponent({
 }
 
 .header {
-  padding-top: 56px;
-  text-align: center;
+  position: absolute;
+  top: 56px;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 </style>

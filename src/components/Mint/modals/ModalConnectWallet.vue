@@ -3,7 +3,7 @@
     <template #content>
       <div class="tw-max-w-md">
         <div class="tw-text-lg tw-text-center tw-text-blue-900 dark:tw-text-darkGray-100">
-          {{ $t('wallet.select') }}
+          {{ $t('mint.wallet.select') }}
         </div>
         <div
           class="tw-flex tw-flex-col sm:tw-flex-row sm:tw-flex-wrap tw-gap-x-2 tw-justify-center tw-items-center"

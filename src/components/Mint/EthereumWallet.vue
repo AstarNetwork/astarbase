@@ -30,7 +30,7 @@ export default defineComponent({
     const isConnected = computed(() => store.getters['general/isMetamaskConnected']);
     const mintContract = computed(() => store.getters['general/mintContract']);
     const mintContractAddress = computed(() => store.getters['general/mintContractAddress']);
-    const account = computed(() => store.getters['general/account']);
+    const account = computed(() => store.getters['general/ethereumAccount']);
 
     const connect = () => {
       store.dispatch('general/connect');

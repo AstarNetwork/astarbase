@@ -5,16 +5,16 @@ import { useAccount } from './useAccount';
 import { useStore } from 'src/store';
 
 export const useStakingDapps = () => {
-  const { currentAccount } = useAccount();
+  const { substrateAddress } = useAccount();
   const store = useStore();
   const stakedDapps = ref<string[]>([]);
 
   watchEffect(async () => {
     const api = $api.value;
-    if (!currentAccount.value || !api) return;
+    if (!substrateAddress.value || !api) return;
     try {
       store.commit('general/setLoading', true);
-      stakedDapps.value = await getStakingArray({ api, address: currentAccount.value });
+      stakedDapps.value = await getStakingArray({ api, address: substrateAddress.value });
     } catch (error: any) {
       console.error(error.messages);
     } finally {

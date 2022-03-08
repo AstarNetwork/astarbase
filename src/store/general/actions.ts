@@ -63,9 +63,7 @@ const actions: ActionTree<State, StateInterface> = {
     });
     const config: Config = await configResponse.json();
 
-    console.log('config', config);
     if (isMetamaskInstalled) {
-      console.log('metamask is installed');
       (Web3EthContract as any).setProvider(ethereum);
       const web3 = new Web3(ethereum);
 
@@ -92,14 +90,14 @@ const actions: ActionTree<State, StateInterface> = {
         // TODO create Astar base contract here and put it to vuex
 
         commit('connectSuccess', {
-          account: accounts[0],
+          ethereumAccount: accounts[0],
           mintContract,
           mintContractAddress: config.mintContractAddress,
         } as ConnectPayload);
 
         // Register listeners
         ethereum.on('accountsChanged', (accounts: string[]) => {
-          commit('changeAccount', accounts[0]);
+          commit('changeEthereumAccount', accounts[0]);
         });
 
         ethereum.on('chainChanged', async () => {
@@ -124,7 +122,7 @@ const actions: ActionTree<State, StateInterface> = {
     commit('setError', errorMessage);
   },
   async disconnect({ commit }) {
-    commit('changeAccount', '');
+    commit('changeEthereumAccount', '');
   },
   showAlertMsg({ commit }, { msg, alertType }) {
     commit('setShowAlertMsg', true);

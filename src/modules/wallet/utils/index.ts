@@ -9,12 +9,12 @@ export const getInjectedExtensions = async (): Promise<any[]> => {
 
 export const getSelectedAccount = (accounts: SubstrateAccount[]) => {
   try {
-    const selectedAddress = localStorage.getItem(LOCAL_STORAGE.SELECTED_ADDRESS);
-    if (selectedAddress === 'Ethereum Extension') {
+    const substrateAccount = localStorage.getItem(LOCAL_STORAGE.SELECTED_ADDRESS);
+    if (substrateAccount === 'Ethereum Extension') {
       return undefined;
     }
 
-    const account = accounts.find((it) => it.address === selectedAddress);
+    const account = accounts.find((it) => it.address === substrateAccount);
     return account;
   } catch (error: any) {
     console.error(error.message);
