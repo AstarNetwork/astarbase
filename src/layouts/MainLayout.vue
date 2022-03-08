@@ -1,5 +1,10 @@
 <template>
   <div>
+    <div class="header">
+      <span class="tw-text-3xl tw-font-bold">
+        {{ $t('common.astarBase') }}
+      </span>
+    </div>
     <div class="main-wrapper">
       <main>
         <slot />
@@ -24,9 +29,14 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .main-wrapper {
-  padding: 0px 4px;
+  padding: 0px 24px;
   @media (min-width: 756px) {
     padding: 0px 100px;
   }
+}
+
+.header {
+  padding-top: 56px;
+  text-align: center;
 }
 </style>

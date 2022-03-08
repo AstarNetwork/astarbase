@@ -3,16 +3,22 @@
     <div class="container-substrate-wallet">
       <div>
         <div v-if="!currentAccount">
-          <button class="btn" @click="openSelectModal">Connect Wallet</button>
+          <button class="btn" @click="openSelectModal">
+            {{ $t('mint.connectWallet') }}
+          </button>
         </div>
         <div v-else>
-          <button class="btn" @click="disconnectAccount">Connected Wallet</button>
+          <button class="btn" @click="disconnectAccount">{{ $t('mint.connectedWallet') }}</button>
         </div>
       </div>
 
       <div v-if="currentAccount">
-        <div class="tw-text-lg">Address: {{ getShortenAddress(currentAccount) }}</div>
-        <div v-if="stakedDapps">Staked dApp</div>
+        <div class="tw-text-lg">
+          {{ $t('common.address', { value: getShortenAddress(currentAccount) }) }}
+        </div>
+        <div v-if="stakedDapps.length > 0">
+          {{ $t('mint.stakedDapp') }}
+        </div>
         <li v-for="dapp in stakedDapps" :key="dapp">
           {{ dapp }}
         </li>

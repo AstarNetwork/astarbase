@@ -1,14 +1,18 @@
 <template>
   <div class="container-ethereum-wallet">
     <div>
-      <button v-if="!isConnected" class="btn" @click="connect()">Connect MetaMask</button>
-      <button v-else class="btn" @click="disconnect()">Connected MetaMask</button>
+      <button v-if="!isConnected" class="btn" @click="connect()">
+        {{ $t('mint.connectMetaMask') }}
+      </button>
+      <button v-else class="btn" @click="disconnect()">{{ $t('mint.connectedMetaMask') }}</button>
     </div>
 
     <div v-if="isConnected">
-      <div class="tw-text-lg">Address: {{ getShortenAddress(account) }}</div>
+      <div class="tw-text-lg">
+        {{ $t('common.address', { value: getShortenAddress(account) }) }}
+      </div>
     </div>
-    <button :disabled="!isConnected" class="btn" @click="mint()">Mint</button>
+    <button :disabled="!isConnected" class="btn" @click="mint()">{{ $t('mint.mint') }}</button>
     <div>{{ errorMessage }}</div>
   </div>
 </template>
