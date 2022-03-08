@@ -12,6 +12,10 @@
 
       <div v-if="currentAccount">
         <div class="tw-text-lg">Address: {{ getShortenAddress(currentAccount) }}</div>
+        <div v-if="stakedDapps">Staked dApp</div>
+        <li v-for="dapp in stakedDapps" :key="dapp">
+          {{ dapp }}
+        </li>
       </div>
     </div>
 
@@ -36,7 +40,7 @@
 </template>
 
 <script lang="ts">
-import { useConnectWallet } from 'src/hooks';
+import { useConnectWallet, useStakingDapps } from 'src/hooks';
 import { defineComponent, watch } from 'vue';
 import ModalConnectWallet from './modals/ModalConnectWallet.vue';
 import ModalInstallWallet from './modals/ModalInstallWallet.vue';
@@ -50,6 +54,7 @@ export default defineComponent({
     ModalAccount,
   },
   setup() {
+    const { stakedDapps } = useStakingDapps();
     const {
       WalletModalOption,
       modalConnectWallet,
@@ -84,6 +89,7 @@ export default defineComponent({
       modalName,
       selectedWallet,
       modalAccountSelect,
+      stakedDapps,
       setCloseModal,
       setWalletModal,
       openSelectModal,

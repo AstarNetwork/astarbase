@@ -1,12 +1,11 @@
-import { LOCAL_STORAGE } from 'src/config/localStorage';
-import { useStore } from 'src/store';
 import {
   getInjectedExtensions,
   SubstrateWallets,
   SupportWallet,
   WalletModalOption,
 } from 'src/modules/wallet';
-import { ref, watchEffect, computed } from 'vue';
+import { useStore } from 'src/store';
+import { computed, ref, watchEffect } from 'vue';
 import { useAccount } from './useAccount';
 
 export const useConnectWallet = () => {
@@ -18,8 +17,6 @@ export const useConnectWallet = () => {
   const store = useStore();
   const isConnectedNetwork = computed(() => store.getters['general/networkStatus'] === 'connected');
   const { currentAccount, currentAccountName, disconnectAccount } = useAccount();
-
-  const { SELECTED_ADDRESS } = LOCAL_STORAGE;
 
   const setCloseModal = () => {
     modalName.value = '';

@@ -57,10 +57,11 @@ const mutations = {
     const currentAccount = accounts[accountIndex];
     state.currentAccount = currentAccount;
 
+    // Memo: comment out for avoiding error
     // subscribe current AccountInfo
-    state.unsubscribeAccountInfo = api.query.system.account(currentAccount.address, (result) => {
-      state.currentBalance = result.data.free.toBn();
-    });
+    // state.unsubscribeAccountInfo = api.query.system.account(currentAccount.address, (result) => {
+    //   state.currentBalance = result.data.free.toBn();
+    // });
   },
 };
 
