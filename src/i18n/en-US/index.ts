@@ -6,7 +6,7 @@ export default {
   mint: {
     connectWallet: 'Connect Wallet',
     connectedWallet: 'Connected Wallet',
-    stakedDapp: 'Staked dApp',
+    stakedDapps: 'Staked dApps',
     connectMetaMask: 'Connect MetaMask',
     connectedMetaMask: 'Connected MetaMask',
     mint: 'Mint',

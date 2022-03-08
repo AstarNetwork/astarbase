@@ -18,7 +18,7 @@
         </div>
         <div v-if="stakedDapps.length > 0">
           <span class="tw-text-lg">
-            {{ $t('mint.stakedDapp') }}
+            {{ $t('mint.stakedDapps') }}
           </span>
         </div>
         <li v-for="dapp in stakedDapps" :key="dapp">
