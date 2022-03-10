@@ -1,12 +1,12 @@
 export type Config = {
-  mintContractAddress: string,
-  astarBaseContractAddress: string,
+  mintContractAddress: string;
+  astarBaseContractAddress: string;
   network: {
-    name: string,
-    symbol: string,
-    id: number,
-    decimals: number,
-    rpcUrl: string,
-    blockExplorerUrl: string
-  }
-}
+    name: string;
+    symbol: string;
+    id: number;
+    decimals: number;
+    rpcUrl: string;
+    blockExplorerUrl: string;
+  };
+};
