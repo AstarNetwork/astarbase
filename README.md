@@ -39,6 +39,9 @@ After EVM smart contract (AstarBase) is filled with user's addresses, the dApps 
 
 One of the biggest challenges for new projects is to attract users. The AstarBase is a tool that enables dApps to provide benefit to our already established community.
 
+## Example Use Case
+<img width="632" alt="Screenshot 2022-03-16 at 14 32 41" src="https://user-images.githubusercontent.com/34627453/158603228-976d0559-42e3-4949-862d-4379b95a6c06.png">
+
 ## How to motivate users to register in AstarBase?
 
 - Create articles and AMA sessions explaining benefits for users.
