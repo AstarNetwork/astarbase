@@ -24,15 +24,13 @@ contract AstarBase is Ownable {
     }
 
     /// @notice Register senders' address with corresponding SS58 address and store to mapping
-    /// @param ss58PublicKey, SS58 address used for staking
-    /// @param signedMsg, signed message
+    /// @param ss58PublicKey, SS58 address used for signing
+    /// @param signedMsg, The message that was signed should be constructed as:
+    ///                   MSG_PREFIX + ss58PublicKey + msg.sender
     function register(bytes32 ss58PublicKey, bytes calldata signedMsg) external {
         require(!paused, "The contract is paused");
         require(ss58PublicKey != 0, "Can't register ss58PublicKey with 0");
 
-        // if message="AstarBaseAccepted", hexMsg is = 4173746172426173654163636570746564
-        // fullMessage is prefix + hexMsg + postfix
-        //      = 0x3c42797465733e41737461724261736541636365707465643c2f42797465733e
         bytes memory messageBytes = bytes(MSG_PREFIX);
         bytes memory addressInBytes = abi.encodePacked(msg.sender);
         bytes memory fullMessage = bytes.concat(PREFIX, messageBytes, ss58PublicKey, addressInBytes, POSTFIX);
