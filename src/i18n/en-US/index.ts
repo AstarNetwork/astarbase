@@ -9,7 +9,7 @@ export default {
     stakedDapps: 'Staked dApps',
     connectMetaMask: 'Connect MetaMask',
     connectedMetaMask: 'Connected MetaMask',
-    mint: 'Mint',
+    mint: 'Register',
     wallet: {
       select: 'Please select a wallet to connect to this app',
       chooseAccount: 'Choose Account',

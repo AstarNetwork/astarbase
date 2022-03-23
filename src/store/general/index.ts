@@ -64,7 +64,7 @@ const generalModule: Module<GeneralStateInterface, StateInterface> = {
       extensions: [],
     },
     extensionCount: 0,
-    currentNetworkIdx: endpointKey.SHIDEN,
+    currentNetworkIdx: endpointKey.SHIBUYA,
     currentTheme:
       window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
         ? 'DARK'
