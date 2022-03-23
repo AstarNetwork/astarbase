@@ -17,28 +17,29 @@ contract AstarBase is Ownable {
     mapping(address => bytes32) public addressMap;
     DappsStaking public constant DAPPS_STAKING = DappsStaking(0x0000000000000000000000000000000000005001);
     SR25519 public constant SR25519Contract = SR25519(0x0000000000000000000000000000000000005002);
+    string MSG_PREFIX = "Sign this to register to AstarBase for:";
 
     constructor() {
         paused = false;
     }
 
     /// @notice Register senders' address with corresponding SS58 address and store to mapping
-    /// @param polkadotPublicKey, SS58 address used for staking
+    /// @param ss58PublicKey, SS58 address used for staking
     /// @param signedMsg, signed message
-    /// @param message, message string that was signed
-    function register(bytes32 polkadotPublicKey, bytes calldata signedMsg, string calldata message) external {
+    function register(bytes32 ss58PublicKey, bytes calldata signedMsg) external {
         require(!paused, "The contract is paused");
-        require(polkadotPublicKey != 0, "Can't register polkadotPublicKey with 0");
+        require(ss58PublicKey != 0, "Can't register ss58PublicKey with 0");
 
         // if message="AstarBaseAccepted", hexMsg is = 4173746172426173654163636570746564
         // fullMessage is prefix + hexMsg + postfix
         //      = 0x3c42797465733e41737461724261736541636365707465643c2f42797465733e
-        bytes memory messageBytes = bytes(message);
-        bytes memory fullMessage = bytes.concat(PREFIX, messageBytes, POSTFIX);
-        bool address_verified = SR25519Contract.verify(polkadotPublicKey, signedMsg, fullMessage);
+        bytes memory messageBytes = bytes(MSG_PREFIX);
+        bytes memory addressInBytes = abi.encodePacked(msg.sender);
+        bytes memory fullMessage = bytes.concat(PREFIX, messageBytes, ss58PublicKey, addressInBytes, POSTFIX);
+        bool address_verified = SR25519Contract.verify(ss58PublicKey, signedMsg, fullMessage);
         require(address_verified, "Signed message not confirmed");
 
-        addressMap[msg.sender] = polkadotPublicKey;
+        addressMap[msg.sender] = ss58PublicKey;
 
         registeredCnt.increment();
     }
@@ -64,17 +65,17 @@ contract AstarBase is Ownable {
     /// @notice Check if given address was registered
     /// @param evmAddress, EVM address used for registration
     function isRegistered(address evmAddress) public view returns (bool) {
-        bytes32 polkadotPublicKey = addressMap[evmAddress];
+        bytes32 ss58PublicKey = addressMap[evmAddress];
 
-        return polkadotPublicKey != 0;
+        return ss58PublicKey != 0;
     }
 
     /// @notice Check if given address was registered and return staked amount
     /// @param evmAddress, EVM address used for registration
     /// @return staked amount on the SS58 address
     function checkStakerStatus(address evmAddress) public view returns (uint128) {
-        bytes32 polkadotPublicKey = addressMap[evmAddress];
-        bytes memory pubKeyBytes = bytes(abi.encodePacked(polkadotPublicKey));
+        bytes32 ss58PublicKey = addressMap[evmAddress];
+        bytes memory pubKeyBytes = bytes(abi.encodePacked(ss58PublicKey));
         uint128 stakedAmount = DAPPS_STAKING.read_staked_amount(pubKeyBytes);
 
         return stakedAmount;
