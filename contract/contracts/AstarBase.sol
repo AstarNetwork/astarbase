@@ -15,6 +15,7 @@ contract AstarBase is Ownable {
     bytes POSTFIX= hex"3c2f42797465733e";
     bool public paused;
     mapping(address => bytes32) public addressMap;
+    mapping(bytes32 => address) public ss58Map;
     DappsStaking public constant DAPPS_STAKING = DappsStaking(0x0000000000000000000000000000000000005001);
     SR25519 public constant SR25519Contract = SR25519(0x0000000000000000000000000000000000005002);
     string MSG_PREFIX = "Sign this to register to AstarBase for:";
@@ -38,25 +39,31 @@ contract AstarBase is Ownable {
         require(address_verified, "Signed message not confirmed");
 
         addressMap[msg.sender] = ss58PublicKey;
-
+        ss58Map[ss58PublicKey] = msg.sender;
         registeredCnt.increment();
     }
 
     /// @notice unRegister senders' address
     function unRegister() public {
         require(!paused, "The contract is paused");
-        require(addressMap[msg.sender] != 0, "Unregistring unknown entry");
 
-        addressMap[msg.sender] = 0;
-        registeredCnt.decrement();
+        unRegisterExecute(msg.sender);
     }
 
     /// @notice unRegister any address by contract owner
     /// @param evmAddress, EVM address used for registration
     function sudoUnRegister(address evmAddress) public onlyOwner {
+        unRegisterExecute(evmAddress);
+    }
+
+    /// @notice execute unRegister function
+    /// @param evmAddress, EVM address used for registration
+    function unRegisterExecute(address evmAddress) private {
         require(addressMap[evmAddress] != 0, "Unregistring unknown entry");
 
-        addressMap[evmAddress] = 0;
+        bytes32 ss58PublicKey = bytes32(addressMap[evmAddress]);
+        addressMap[evmAddress] = address(0);
+        ss58Map[ss58PublicKey] = address(0);
         registeredCnt.decrement();
     }
 
