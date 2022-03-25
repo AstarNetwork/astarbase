@@ -10,8 +10,9 @@ export interface GeneralGetters {
   showAlert(state: State): AlertBox;
   isMetamaskConnected(state: State): boolean;
   errorMessage(state: State): string;
-  mintContract(state: State): Contract | undefined;
-  mintContractAddress(state: State): string;
+  registered(state: State): boolean;
+  registerContract(state: State): Contract | undefined;
+  astarBaseContractAddress(state: State): string;
   ethereumAccount(state: State): string;
   substrateAccount(state: State): string;
   substrateAccounts(state: State): SubstrateAccount[];
@@ -31,8 +32,9 @@ const getters: GetterTree<State, StateInterface> & GeneralGetters = {
   extensionCount: (state) => state.extensionCount,
   isMetamaskConnected: (state) => !!state.ethereumAccount,
   errorMessage: (state) => state.errorMessage,
-  mintContract: (state) => state.mintContract,
-  mintContractAddress: (state) => state.mintContractAddress,
+  registered: (state) => state.registered,
+  registerContract: (state) => state.registerContract,
+  astarBaseContractAddress: (state) => state.astarBaseContractAddress,
   ethereumAccount: (state) => state.ethereumAccount,
   substrateAccount: (state) => state.substrateAccount,
   substrateAccounts: (state) => state.substrateAccounts,

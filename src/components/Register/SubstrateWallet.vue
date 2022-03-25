@@ -4,11 +4,13 @@
       <div>
         <div v-if="!substrateAddress">
           <button :disabled="!isConnectedNetwork" class="btn" @click="openSelectModal">
-            {{ $t('mint.connectWallet') }}
+            {{ $t('register.connectWallet') }}
           </button>
         </div>
         <div v-else>
-          <button class="btn" @click="disconnectAccount">{{ $t('mint.connectedWallet') }}</button>
+          <button class="btn" @click="disconnectAccount">
+            {{ $t('register.connectedWallet') }}
+          </button>
         </div>
       </div>
 
@@ -18,7 +20,7 @@
         </div>
         <div v-if="stakedDapps.length > 0">
           <span class="tw-text-lg">
-            {{ $t('mint.stakedDapps') }}
+            {{ $t('register.stakedDapps') }}
           </span>
         </div>
         <li v-for="dapp in stakedDapps" :key="dapp">

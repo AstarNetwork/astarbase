@@ -3,13 +3,16 @@ export default {
     astarBase: 'Astar Base',
     address: 'Address: {value}',
   },
-  mint: {
-    connectWallet: 'Connect Wallet',
-    connectedWallet: 'Connected Wallet',
+  register: {
+    connectWallet: 'Connect to Native Wallet',
+    connectedWallet: 'Connected to Native Wallet',
     stakedDapps: 'Staked dApps',
     connectMetaMask: 'Connect MetaMask',
     connectedMetaMask: 'Connected MetaMask',
-    mint: 'Register',
+    register: 'Register to ShidenPass',
+    registered:
+      'Congratulations! You now hold ShidenPass. Use it in the Shiden ecosystem to claim rewards. Note, ShidenPass is valid as long as you are active staker in dApps-Staking',
+    mintNft: 'Mint your Free NFT',
     wallet: {
       select: 'Please select a wallet to connect to this app',
       chooseAccount: 'Choose Account',

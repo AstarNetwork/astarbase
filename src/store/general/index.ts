@@ -27,8 +27,8 @@ export interface GeneralStateInterface {
   alertBox: AlertBox;
   isLoading: boolean;
   ethereumAccount: string;
-  mintContract: Contract | undefined;
-  mintContractAddress: string;
+  registerContract: Contract | undefined;
+  astarBaseContractAddress: string;
   currentNetworkStatus: ConnectionType;
   substrateAccounts: SubstrateAccount[];
   currentNetworkIdx: number;
@@ -37,6 +37,7 @@ export interface GeneralStateInterface {
   chainInfo: any;
   metaExtensions: Extensions;
   extensionCount: number;
+  registered: boolean;
 }
 
 const generalModule: Module<GeneralStateInterface, StateInterface> = {
@@ -53,8 +54,8 @@ const generalModule: Module<GeneralStateInterface, StateInterface> = {
       alertType: 'success',
     },
     ethereumAccount: '',
-    mintContract: undefined,
-    mintContractAddress: '',
+    registerContract: undefined,
+    astarBaseContractAddress: '',
     currentNetworkStatus: 'connecting',
     substrateAccount: '',
     substrateAccounts: [],
@@ -65,6 +66,7 @@ const generalModule: Module<GeneralStateInterface, StateInterface> = {
     },
     extensionCount: 0,
     currentNetworkIdx: endpointKey.SHIBUYA,
+    registered: false,
     currentTheme:
       window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
         ? 'DARK'

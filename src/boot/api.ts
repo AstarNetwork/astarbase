@@ -25,7 +25,7 @@ export default boot(async ({ store }) => {
 
   const favicon = providerEndpoints[parseInt(networkIdx.value)].favicon;
   useMeta({
-    title: 'Mint',
+    title: 'Register',
     titleTemplate: (title) => `${title} | Astar Base`,
     htmlAttr: { lang: 'en' },
     link: {

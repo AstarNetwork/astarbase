@@ -10,17 +10,19 @@ const signMessage = stringToHex('Sign this to register to AstarBase for:');
 const PREFIX = '3c42797465733e';
 const POSTFIX = '3c2f42797465733e';
 
-export const useMint = () => {
+export const useRegister = () => {
   const store = useStore();
-  const mintContract = computed(() => store.getters['general/mintContract']);
-  const mintContractAddress = computed(() => store.getters['general/mintContractAddress']);
+  const registerContract = computed(() => store.getters['general/registerContract']);
+  const astarBaseContractAddress = computed(
+    () => store.getters['general/astarBaseContractAddress']
+  );
   const account = computed(() => store.getters['general/ethereumAccount']);
   const substrateAccounts = computed(() => store.getters['general/substrateAccounts']);
   const substrateAccount = computed(() => store.getters['general/substrateAccount']);
 
   // Todo: Modify the logic once contract has been finalized
-  const mint = async () => {
-    const contract = mintContract.value as Contract;
+  const register = async () => {
+    const contract = registerContract.value as Contract;
     const injector = await getInjector(substrateAccounts.value);
     const address = substrateAccount.value;
 
@@ -39,7 +41,7 @@ export const useMint = () => {
     contract.methods
       .register(hexPublicKey, result.signature)
       .send({
-        to: mintContractAddress.value,
+        to: astarBaseContractAddress.value,
         from: account.value,
       })
       .once('error', (err: Error) => {
@@ -48,11 +50,11 @@ export const useMint = () => {
       })
       .then((receipt: any) => {
         console.log(receipt);
-        //TODO check if data reload is required
+        store.dispatch('general/setRegistered', true);
       });
   };
 
   return {
-    mint,
+    register,
   };
 };
