@@ -2,7 +2,20 @@
   height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: flex-start;
   row-gap: 24px;
+}
+
+.columns {
+  display: flex;
+  flex-direction: row;
+}
+
+.info {
+  margin-left: 100px;
+  max-width: 400px;
+  padding: 10px;
+  background-color: purple;
+  color: white;
+  height: 100%;
 }

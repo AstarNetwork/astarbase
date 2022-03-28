@@ -1,10 +1,15 @@
 <template>
   <div class="container-ethereum-wallet">
     <div>
-      <button v-if="!isConnected" class="btn" @click="connect">
-        {{ $t('register.connectMetaMask') }}
-      </button>
-      <button v-else class="btn" @click="disconnect">{{ $t('register.connectedMetaMask') }}</button>
+      <label>{{ $t('register.evmConnectLabel') }}</label>
+      <div>
+        <button v-if="!isConnected" class="btn" @click="connect">
+          {{ $t('register.connectMetaMask') }}
+        </button>
+        <button v-else class="btn" @click="disconnect">
+          {{ $t('register.connectedMetaMask') }}
+        </button>
+      </div>
     </div>
 
     <div v-if="isConnected">
@@ -13,16 +18,24 @@
       </div>
     </div>
     <!-- Todo: fix `:disabled` -->
-    <button :disabled="!isConnected" class="btn" @click="register">
-      {{ $t('register.register') }}
-    </button>
-    <div>{{ errorMessage }}</div>
-    <div v-if="registered">{{ $t('register.registered') }}</div>
-    <div>
-      <button v-if="registered" class="btn" @click="mintNft">
-        {{ $t('register.mintNft') }}
-      </button>
+    <div v-if="!registered">
+      <label>{{ $t('register.registerLabel') }}</label>
+      <div>
+        <button :disabled="!isConnected" class="btn" @click="register">
+          {{ $t('register.register') }}
+        </button>
+      </div>
     </div>
+    <div>{{ errorMessage }}</div>
+    <div v-if="registered">
+      <label>{{ $t('register.registerLabel') }}</label>
+      <div>
+        <button class="btn" @click="mintNft">
+          {{ $t('register.mintNft') }}
+        </button>
+      </div>
+    </div>
+    <div v-if="registered">{{ $t('register.registered') }}</div>
   </div>
 </template>
 

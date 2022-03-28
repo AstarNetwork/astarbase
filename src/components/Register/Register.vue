@@ -1,7 +1,17 @@
 <template>
-  <div class="container">
-    <SubstrateWallet />
-    <EthereumWallet />
+  <div class="columns">
+    <div class="container">
+      <SubstrateWallet />
+      <EthereumWallet />
+    </div>
+    <div class="info">
+      <div>
+        {{ $t('register.info') }} <br /><br />
+        {{ $t('register.info2') }} <br /><br />
+        {{ $t('register.info3') }} <br />
+        {{ $t('register.info4') }}
+      </div>
+    </div>
   </div>
 </template>
 

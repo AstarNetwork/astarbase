@@ -1,9 +1,9 @@
 <template>
   <div>
     <div class="header">
-      <span class="tw-text-3xl tw-font-bold">
-        {{ $t('common.astarBase') }}
-      </span>
+      <h1 class="tw-text-6xl">
+        {{ $t('common.shidenPass') }}
+      </h1>
     </div>
     <div class="main-wrapper">
       <main>
@@ -36,9 +36,6 @@ export default defineComponent({
 }
 
 .header {
-  position: absolute;
-  top: 56px;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  padding: 50px 100px;
 }
 </style>

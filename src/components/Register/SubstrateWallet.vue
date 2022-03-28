@@ -2,6 +2,7 @@
   <div>
     <div class="container-substrate-wallet">
       <div>
+        <label>{{ $t('register.polkadotConnectLabel') }}</label>
         <div v-if="!substrateAddress">
           <button :disabled="!isConnectedNetwork" class="btn" @click="openSelectModal">
             {{ $t('register.connectWallet') }}
