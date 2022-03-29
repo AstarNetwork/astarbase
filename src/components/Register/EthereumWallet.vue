@@ -13,7 +13,7 @@
     </div>
 
     <div v-if="isConnected">
-      <div class="tw-text-lg">
+      <div class="tw-text-lg info-green">
         {{ $t('common.address', { value: getShortenAddress(account) }) }}
       </div>
     </div>
@@ -35,7 +35,7 @@
         </button>
       </div>
     </div>
-    <div v-if="registered">{{ $t('register.registered') }}</div>
+    <div v-if="registered" class="info-green">{{ $t('register.registered') }}</div>
   </div>
 </template>
 
@@ -64,6 +64,7 @@ export default defineComponent({
 
     const mintNft = () => {
       console.log('go to mint site');
+      window.open('https://astarmint-28bcc.web.app/');
     };
 
     return {

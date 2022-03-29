@@ -21,7 +21,7 @@ export default {
       'The Shiden Pass registration is for free (small gas fee cost). You will need to connect with 2 wallets, for example with Polkadot.js wallet and with Metamask. And then you will need to sign and register. Overall 4 wallet interactions is all it takes.',
     info3: '*Astar Native address is sometimes referred as Polkadot address.',
     info4: '**Astar EVM address is also known as MetaMask Address.',
-    mintNft: 'Claim your Free ShidenPass NFT',
+    mintNft: 'Claim a Free ShidenPass NFT',
     wallet: {
       select: 'Please select a wallet to connect to this app',
       chooseAccount: 'Choose Account',

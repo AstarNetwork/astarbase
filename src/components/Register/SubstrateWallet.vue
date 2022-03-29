@@ -16,7 +16,7 @@
       </div>
 
       <div v-if="substrateAddress">
-        <div class="tw-text-lg tw-mb-1">
+        <div class="tw-text-lg tw-mb-1 info-green">
           {{ $t('common.address', { value: getShortenAddress(substrateAddress) }) }}
         </div>
         <div v-if="stakedDapps.length > 0">

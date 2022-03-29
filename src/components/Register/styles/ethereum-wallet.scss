@@ -3,3 +3,12 @@
     flex-direction: column;
     row-gap: 24px;
 }
+
+.info-green {
+    max-width: 300px;
+    color: white;
+    background: linear-gradient(83.83deg, #694ea4 0%, #1b6dc1 37.5%, #1b6dc1 65.1%, #2ea0c4 100%);
+    padding: 5px;
+    border-radius: 5px;
+    text-align: center;
+}
