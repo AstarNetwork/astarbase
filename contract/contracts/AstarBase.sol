@@ -19,6 +19,7 @@ contract AstarBase is Ownable {
     DappsStaking public constant DAPPS_STAKING = DappsStaking(0x0000000000000000000000000000000000005001);
     SR25519 public constant SR25519Contract = SR25519(0x0000000000000000000000000000000000005002);
     string MSG_PREFIX = "Sign this to register to AstarBase for:";
+    uint256 public unregisterFee = 1 ether;
 
     constructor() {
         paused = false;
@@ -43,6 +44,14 @@ contract AstarBase is Ownable {
         addressMap[msg.sender] = ss58PublicKey;
         ss58Map[ss58PublicKey] = msg.sender;
         registeredCnt.increment();
+    }
+
+    /// @notice unRegister senders' address
+    function unRegister() public payable {
+        require(!paused, "The contract is paused");
+        require(msg.value == unregisterFee, "Not enough funds to unregister");
+
+        unRegisterExecute(msg.sender);
     }
 
     /// @notice unRegister any address by contract owner
@@ -85,5 +94,17 @@ contract AstarBase is Ownable {
     /// @param _state, true or false
     function pause(bool _state) public onlyOwner {
         paused = _state;
+    }
+
+    /// @notice set new value for the unregisterFee
+    /// @param _newCost new fee cost
+    function setUnregisterFee(uint256 _newCost) public onlyOwner {
+        unregisterFee = _newCost;
+    }
+
+    /// @notice withdraw contract's funds
+    function withdraw() public payable {
+        (bool dev, ) = payable(owner()).call{value: address(this).balance}("");
+        require(dev);
     }
 }
