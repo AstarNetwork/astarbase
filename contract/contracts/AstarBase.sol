@@ -31,7 +31,8 @@ contract AstarBase is Ownable {
     function register(bytes32 ss58PublicKey, bytes calldata signedMsg) external {
         require(!paused, "The contract is paused");
         require(ss58PublicKey != 0, "Can't register ss58PublicKey with 0");
-        require(ss58Map[ss58PublicKey] == address(0), "already used ss58 Public Key");
+        require(ss58Map[ss58PublicKey] == address(0), "Already used ss58 Public Key");
+        require(addressMap[msg.sender] == 0, "Already registered evm address");
 
         bytes memory messageBytes = bytes(MSG_PREFIX);
         bytes memory addressInBytes = abi.encodePacked(msg.sender);
