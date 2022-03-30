@@ -20,6 +20,7 @@ contract AstarBase is Ownable {
     SR25519 public constant SR25519Contract = SR25519(0x0000000000000000000000000000000000005002);
     string MSG_PREFIX = "Sign this to register to AstarBase for:";
     uint256 public unregisterFee = 1 ether;
+    address public beneficiary = 0x91986602d9c0d8A4f5BFB5F39a7Aa2cD73Db73B7; // Faucet on all Astar networks
 
     constructor() {
         paused = false;
@@ -102,9 +103,15 @@ contract AstarBase is Ownable {
         unregisterFee = _newCost;
     }
 
+    /// @notice set new beneficiary
+    /// @param _newBeneficiary new beneficiary address
+    function setBeneficiary(address _newBeneficiary) public onlyOwner {
+        beneficiary = _newBeneficiary;
+    }
+
     /// @notice withdraw contract's funds
     function withdraw() public payable {
-        (bool dev, ) = payable(owner()).call{value: address(this).balance}("");
-        require(dev);
+        (bool success, ) = payable(beneficiary).call{value: address(this).balance}("");
+        require(success);
     }
 }
