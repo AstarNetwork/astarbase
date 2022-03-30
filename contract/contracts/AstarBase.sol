@@ -31,6 +31,7 @@ contract AstarBase is Ownable {
     function register(bytes32 ss58PublicKey, bytes calldata signedMsg) external {
         require(!paused, "The contract is paused");
         require(ss58PublicKey != 0, "Can't register ss58PublicKey with 0");
+        require(ss58Map[ss58PublicKey] == address(0), "already used ss58 Public Key");
 
         bytes memory messageBytes = bytes(MSG_PREFIX);
         bytes memory addressInBytes = abi.encodePacked(msg.sender);
@@ -41,13 +42,6 @@ contract AstarBase is Ownable {
         addressMap[msg.sender] = ss58PublicKey;
         ss58Map[ss58PublicKey] = msg.sender;
         registeredCnt.increment();
-    }
-
-    /// @notice unRegister senders' address
-    function unRegister() public {
-        require(!paused, "The contract is paused");
-
-        unRegisterExecute(msg.sender);
     }
 
     /// @notice unRegister any address by contract owner
@@ -62,7 +56,7 @@ contract AstarBase is Ownable {
         require(addressMap[evmAddress] != 0, "Unregistring unknown entry");
 
         bytes32 ss58PublicKey = bytes32(addressMap[evmAddress]);
-        addressMap[evmAddress] = address(0);
+        addressMap[evmAddress] = 0;
         ss58Map[ss58PublicKey] = address(0);
         registeredCnt.decrement();
     }
