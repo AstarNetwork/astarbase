@@ -16,7 +16,7 @@ export default {
     register: 'Register to ShidenPass',
     registered:
       'Congratulations! You now hold the ShidenPass. Use it in the Shiden ecosystem to claim rewards. Note, ShidenPass is valid as long as you are an active staker in dApps staking.',
-    info: "ShidenPass is the mapping between your Shiden Native Address(*) and your Shiden EVM address(**). Holding the ShidenPass will allow different projects in the Shiden Network to offer something extra for you. To showcase the usage you will be able to claim a free ShidenPass NFT if you are an active staker on Shiden dApp staking.",
+    info: 'ShidenPass is the mapping between your Shiden Native Address(*) and your Shiden EVM address(**). Holding the ShidenPass will allow different projects in the Shiden Network to offer something extra for you. To showcase the usage you will be able to claim a free ShidenPass NFT if you are an active staker on Shiden dApp staking.',
     info2:
       'The ShidenPass registration is completely free (excluding a small gas fee). The first step you need to connect with your two wallets, the native and EVM wallet. For example your Polkadot.js wallet and Metamask. The second step is to sign and register.',
     info3: '(*) Astar Native address is sometimes referred as Polkadot address.',

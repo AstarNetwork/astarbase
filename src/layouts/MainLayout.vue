@@ -2,7 +2,9 @@
   <div>
     <div class="header">
       <h1 class="tw-text-6xl">
-        {{ $t('common.shidenPass') }}
+        <img class="logo-head" width="50" src="/icons/shiden-pass.png" />{{
+          $t('common.shidenPass')
+        }}
       </h1>
     </div>
     <div class="main-wrapper">
@@ -37,5 +39,10 @@ export default defineComponent({
 
 .header {
   padding: 50px 100px;
+}
+
+.logo-head {
+  display: inline;
+  vertical-align: baseline;
 }
 </style>
