@@ -92,6 +92,9 @@ export default defineComponent({
 
 body {
   background-image: url(/icons/bg.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
   color: white;
 }
 </style>
