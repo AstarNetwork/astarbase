@@ -76,8 +76,8 @@ const actions: ActionTree<State, StateInterface> = {
         // Switch network or create a new configuration if needed.
         await switchNetwork(ethereum, config);
 
-        // Create a minting contract instance
-        const abiResponse = await fetch('/config/mint_abi.json', {
+        // Create a registerContract contract instance
+        const abiResponse = await fetch('/config/register_abi.json', {
           headers: {
             'Content-Type': 'application/json',
             Accept: 'application/json',
@@ -85,14 +85,14 @@ const actions: ActionTree<State, StateInterface> = {
         });
         const abi = await abiResponse.json();
 
-        const mintContract = new web3.eth.Contract(abi, config.mintContractAddress);
+        const registerContract = new web3.eth.Contract(abi, config.astarBaseContractAddress);
 
         // TODO create Astar base contract here and put it to vuex
 
         commit('connectSuccess', {
           ethereumAccount: accounts[0],
-          mintContract,
-          mintContractAddress: config.mintContractAddress,
+          registerContract,
+          astarBaseContractAddress: config.astarBaseContractAddress,
         } as ConnectPayload);
 
         // Register listeners
@@ -120,6 +120,9 @@ const actions: ActionTree<State, StateInterface> = {
   },
   setError({ commit }, errorMessage: string) {
     commit('setError', errorMessage);
+  },
+  setRegistered({ commit }, registered: boolean) {
+    commit('setRegistered', registered);
   },
   async disconnect({ commit }) {
     commit('changeEthereumAccount', '');

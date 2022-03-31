@@ -19,23 +19,23 @@
               <div
                 class="tw-text-lg tw-font-extrabold tw-text-blue-900 dark:tw-text-white tw-text-center tw-mb-2"
               >
-                {{ $t('mint.installWallet.getWallet', { value: $t(name) }) }}
+                {{ $t('register.installWallet.getWallet', { value: $t(name) }) }}
               </div>
             </div>
             <div class="tw-text-md tw-text-blue-900 dark:tw-text-white tw-text-center">
-              {{ $t('mint.installWallet.installWallet', { value: $t(name) }) }}
+              {{ $t('register.installWallet.installWallet', { value: $t(name) }) }}
             </div>
           </div>
         </div>
         <div class="tw-mt-6 tw-flex tw-justify-center">
           <a :href="guideUrl" target="_blank" rel="noopener noreferrer">
             <button type="button" class="learnButton">
-              {{ $t('mint.installWallet.howToConnect') }}
+              {{ $t('register.installWallet.howToConnect') }}
             </button>
           </a>
           <a :href="walletUrl" target="_blank" rel="noopener noreferrer">
             <button type="button" class="installButton">
-              {{ $t('mint.installWallet.installExtension', { value: $t(name) }) }}
+              {{ $t('register.installWallet.installExtension', { value: $t(name) }) }}
             </button>
           </a>
         </div>

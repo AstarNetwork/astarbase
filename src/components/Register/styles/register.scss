@@ -1,0 +1,22 @@
+.container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  row-gap: 24px;
+}
+
+.columns {
+  display: flex;
+  flex-direction: row;
+}
+
+.info {
+  margin-left: 100px;
+  max-width: 400px;
+  padding: 10px;
+  background: linear-gradient(83.83deg, #694ea4 0%, #1b6dc1 37.5%, #1b6dc1 65.1%, #2ea0c4 100%);
+  color: white;
+  height: 100%;
+  border-radius: 5px;
+}

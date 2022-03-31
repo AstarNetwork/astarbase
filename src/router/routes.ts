@@ -1,19 +1,19 @@
 import { RouteRecordRaw } from 'vue-router';
 import Index from 'pages/Index.vue';
-import Mint from 'src/components/Mint/Mint.vue';
+import Register from 'src/components/Register/Register.vue';
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
-    redirect: '/mint',
+    redirect: '/register',
   },
   {
     path: '/',
-    name: 'Mint',
+    name: 'Register',
     component: Index,
     children: [
       {
-        path: 'mint',
-        component: Mint,
+        path: 'register',
+        component: Register,
       },
     ],
   },

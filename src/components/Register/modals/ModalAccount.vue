@@ -15,14 +15,14 @@
               <h3
                 class="tw-text-lg tw-font-extrabold tw-text-blue-900 dark:tw-text-white tw-mb-6 tw-text-center"
               >
-                {{ $t('mint.wallet.chooseAccount') }}
+                {{ $t('register.wallet.chooseAccount') }}
               </h3>
               <div v-if="!substrateAccounts.length && selectedWallet === SupportWallet.Math">
                 <li v-if="currentNetworkIdx !== 1">
-                  {{ $t('mint.wallet.math.supportsNetwork') }}
+                  {{ $t('register.wallet.math.supportsNetwork') }}
                 </li>
                 <li v-if="!substrateAccounts.length">
-                  {{ $t('mint.wallet.math.switchNetwork') }}
+                  {{ $t('register.wallet.math.switchNetwork') }}
                 </li>
               </div>
               <div

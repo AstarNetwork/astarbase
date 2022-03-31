@@ -2,23 +2,26 @@
   <div>
     <div class="container-substrate-wallet">
       <div>
+        <label>{{ $t('register.polkadotConnectLabel') }}</label>
         <div v-if="!substrateAddress">
           <button :disabled="!isConnectedNetwork" class="btn" @click="openSelectModal">
-            {{ $t('mint.connectWallet') }}
+            {{ $t('register.connectWallet') }}
           </button>
         </div>
         <div v-else>
-          <button class="btn" @click="disconnectAccount">{{ $t('mint.connectedWallet') }}</button>
+          <button class="btn" @click="disconnectAccount">
+            {{ $t('register.connectedWallet') }}
+          </button>
         </div>
       </div>
 
       <div v-if="substrateAddress">
-        <div class="tw-text-lg tw-mb-1">
+        <div class="tw-text-lg tw-mb-1 info-green">
           {{ $t('common.address', { value: getShortenAddress(substrateAddress) }) }}
         </div>
         <div v-if="stakedDapps.length > 0">
           <span class="tw-text-lg">
-            {{ $t('mint.stakedDapps') }}
+            {{ $t('register.stakedDapps') }}
           </span>
         </div>
         <li v-for="dapp in stakedDapps" :key="dapp">

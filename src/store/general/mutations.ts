@@ -7,8 +7,8 @@ import type { ChainInfo } from 'src/hooks/useChainInfo';
 
 export type ConnectPayload = {
   ethereumAccount: string;
-  mintContract: Contract;
-  mintContractAddress: string;
+  registerContract: Contract;
+  astarBaseContractAddress: string;
 };
 
 export interface GeneralMutations<S = State> {
@@ -17,6 +17,7 @@ export interface GeneralMutations<S = State> {
   connectSuccess(state: S, payload: ConnectPayload): void;
   changeEthereumAccount(state: S, account: string): void;
   setError(state: S, errorMessage: string): void;
+  setRegistered(state: S, registered: boolean): void;
   setCurrentNetworkStatus(state: S, networkStatus: ConnectionType): void;
   setSubstrateAccounts(state: S, type: SubstrateAccount[]): void;
   setCurrentNetworkIdx(state: S, networkIdx: number): void;
@@ -41,8 +42,8 @@ const mutation: MutationTree<State> & GeneralMutations = {
   },
   connectSuccess(state, payload) {
     state.ethereumAccount = payload.ethereumAccount;
-    state.mintContract = payload.mintContract;
-    (state.mintContractAddress = payload.mintContractAddress), (state.isLoading = false);
+    state.registerContract = payload.registerContract;
+    (state.astarBaseContractAddress = payload.astarBaseContractAddress), (state.isLoading = false);
     state.errorMessage = '';
   },
   setLoading(state, isLoading) {
@@ -71,6 +72,9 @@ const mutation: MutationTree<State> & GeneralMutations = {
   },
   setError(state, errorMessage) {
     state.errorMessage = errorMessage;
+  },
+  setRegistered(state, registered) {
+    state.registered = registered;
   },
   setCurrentNetworkStatus(state, networkStatus) {
     state.currentNetworkStatus = networkStatus;
