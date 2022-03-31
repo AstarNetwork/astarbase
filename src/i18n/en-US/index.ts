@@ -15,12 +15,12 @@ export default {
     connectedMetaMask: 'Connected MetaMask',
     register: 'Register to ShidenPass',
     registered:
-      'Congratulations! You now hold ShidenPass. Use it in the Shiden ecosystem to claim rewards. Note, ShidenPass is valid as long as you are active staker in dApps-Staking',
-    info: "Shidenpass is mapping between your Astar Native Address* and your Astar EVM address** Holding Shiden Pass will allow different projects in Astar eco system to offer perks for you. To showcase the usage you will be able to claim free Shiden Pass NFT if you are active staker in Shiden's",
+      'Congratulations! You now hold the ShidenPass. Use it in the Shiden ecosystem to claim rewards. Note, ShidenPass is valid as long as you are an active staker in dApps staking.',
+    info: "ShidenPass is the mapping between your Shiden Native Address(*) and your Shiden EVM address(**). Holding the ShidenPass will allow different projects in the Shiden Network to offer something extra for you. To showcase the usage you will be able to claim a free ShidenPass NFT if you are an active staker on Shiden dApp staking.",
     info2:
-      'The Shiden Pass registration is for free (small gas fee cost). You will need to connect with 2 wallets, for example with Polkadot.js wallet and with Metamask. And then you will need to sign and register. Overall 4 wallet interactions is all it takes.',
-    info3: '*Astar Native address is sometimes referred as Polkadot address.',
-    info4: '**Astar EVM address is also known as MetaMask Address.',
+      'The ShidenPass registration is completely free (excluding a small gas fee). The first step you need to connect with your two wallets, the native and EVM wallet. For example your Polkadot.js wallet and Metamask. The second step is to sign and register.',
+    info3: '(*) Astar Native address is sometimes referred as Polkadot address.',
+    info4: '(**) Astar EVM address is also known as MetaMask Address.',
     mintNft: 'Claim a Free ShidenPass NFT',
     wallet: {
       select: 'Please select a wallet to connect to this app',
