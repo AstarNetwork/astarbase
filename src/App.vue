@@ -91,6 +91,7 @@ export default defineComponent({
 }
 
 body {
-  background-image: url(/icons/hero-image.jpg);
+  background-image: url(/icons/bg.png);
+  color: white;
 }
 </style>
