@@ -19,6 +19,8 @@ contract AstarBase is Ownable {
     DappsStaking public constant DAPPS_STAKING = DappsStaking(0x0000000000000000000000000000000000005001);
     SR25519 public constant SR25519Contract = SR25519(0x0000000000000000000000000000000000005002);
     string MSG_PREFIX = "Sign this to register to AstarBase for:";
+    uint256 public unregisterFee = 1 ether;
+    address public beneficiary = 0x91986602d9c0d8A4f5BFB5F39a7Aa2cD73Db73B7; // Faucet on all Astar networks
 
     constructor() {
         paused = false;
@@ -31,6 +33,8 @@ contract AstarBase is Ownable {
     function register(bytes32 ss58PublicKey, bytes calldata signedMsg) external {
         require(!paused, "The contract is paused");
         require(ss58PublicKey != 0, "Can't register ss58PublicKey with 0");
+        require(ss58Map[ss58PublicKey] == address(0), "Already used ss58 Public Key");
+        require(addressMap[msg.sender] == 0, "Already registered evm address");
 
         bytes memory messageBytes = bytes(MSG_PREFIX);
         bytes memory addressInBytes = abi.encodePacked(msg.sender);
@@ -44,8 +48,9 @@ contract AstarBase is Ownable {
     }
 
     /// @notice unRegister senders' address
-    function unRegister() public {
+    function unRegister() public payable {
         require(!paused, "The contract is paused");
+        require(msg.value == unregisterFee, "Not enough funds to unregister");
 
         unRegisterExecute(msg.sender);
     }
@@ -62,7 +67,7 @@ contract AstarBase is Ownable {
         require(addressMap[evmAddress] != 0, "Unregistring unknown entry");
 
         bytes32 ss58PublicKey = bytes32(addressMap[evmAddress]);
-        addressMap[evmAddress] = address(0);
+        addressMap[evmAddress] = 0;
         ss58Map[ss58PublicKey] = address(0);
         registeredCnt.decrement();
     }
@@ -90,5 +95,23 @@ contract AstarBase is Ownable {
     /// @param _state, true or false
     function pause(bool _state) public onlyOwner {
         paused = _state;
+    }
+
+    /// @notice set new value for the unregisterFee
+    /// @param _newCost new fee cost
+    function setUnregisterFee(uint256 _newCost) public onlyOwner {
+        unregisterFee = _newCost;
+    }
+
+    /// @notice set new beneficiary
+    /// @param _newBeneficiary new beneficiary address
+    function setBeneficiary(address _newBeneficiary) public onlyOwner {
+        beneficiary = _newBeneficiary;
+    }
+
+    /// @notice withdraw contract's funds
+    function withdraw() public payable {
+        (bool success, ) = payable(beneficiary).call{value: address(this).balance}("");
+        require(success);
     }
 }
