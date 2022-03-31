@@ -35,7 +35,10 @@
         </button>
       </div>
     </div>
-    <div v-if="registered" class="info-green">{{ $t('register.registered') }}</div>
+    <div v-if="registered" class="info-green">
+      {{ $t('register.registered') }}
+      <a class="link" href="https://portal.astar.network/#/dapp-staking/discover">dapps-staking</a>
+    </div>
   </div>
 </template>
 
