@@ -3,8 +3,8 @@ pragma solidity ^0.8.7;
 
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "./DappsStaking.sol";
-import "./SR25519.sol";
+import "./DappsStakingDummy.sol";
+import "./SR25519Dummy.sol";
 
 /// @author The Astar Network Team
 /// @title Astarbase. Mapping of Stakers ss58 <> H160
