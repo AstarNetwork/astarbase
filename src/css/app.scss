@@ -23,6 +23,7 @@
 }
 
 .btn:hover {
+  filter: brightness(1.2);
   @apply tw-bg-gray-100 dark:tw-bg-darkGray-600;
 }
 
