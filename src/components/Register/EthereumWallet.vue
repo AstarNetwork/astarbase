@@ -26,7 +26,7 @@
         </button>
       </div>
     </div>
-    <div>{{ errorMessage }}</div>
+    <div class="error">{{ errorMessage }}</div>
     <div v-if="registered">
       <label>{{ $t('register.registerLabel') }}</label>
       <div>
