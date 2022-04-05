@@ -9,6 +9,8 @@ import { u8aToHex } from '@polkadot/util';
 const signMessage = stringToHex('Sign this to register to AstarBase for:');
 const PREFIX = '3c42797465733e';
 const POSTFIX = '3c2f42797465733e';
+const GAS_PRICE = '10000000000';
+const GAS_LIMIT = '300000';
 
 export const useRegister = () => {
   const store = useStore();
@@ -43,6 +45,8 @@ export const useRegister = () => {
       .send({
         to: astarBaseContractAddress.value,
         from: account.value,
+        gasPrice: GAS_PRICE,
+        gasLimit: GAS_LIMIT,
       })
       .once('error', (err: Error) => {
         console.error(err.message);
