@@ -30,7 +30,7 @@
     <div v-if="registered">
       <label>{{ $t('register.registerLabel') }}</label>
       <div>
-        <button class="btn" @click="mintNft">
+        <button class="btn green" @click="mintNft">
           {{ $t('register.mintNft') }}
         </button>
       </div>
