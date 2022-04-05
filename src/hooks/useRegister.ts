@@ -40,6 +40,7 @@ export const useRegister = () => {
       type: 'bytes',
     });
 
+    store.commit('general/setLoading', true);
     contract.methods
       .register(hexPublicKey, result.signature)
       .send({
@@ -49,10 +50,12 @@ export const useRegister = () => {
       .once('error', (err: Error) => {
         console.error(err.message);
         store.dispatch('general/setError', err.message);
+        store.commit('general/setLoading', false);
       })
       .then((receipt: any) => {
         console.log(receipt);
         store.dispatch('general/setRegistered', true);
+        store.commit('general/setLoading', false);
       });
   };
 
