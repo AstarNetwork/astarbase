@@ -46,6 +46,8 @@ export const useRegister = () => {
       .send({
         to: astarBaseContractAddress.value,
         from: account.value,
+        gasLimit: GAS_LIMIT,
+        gasPrice: GAS_PRICE,
       })
       .once('error', (err: Error) => {
         console.error(err.message);
