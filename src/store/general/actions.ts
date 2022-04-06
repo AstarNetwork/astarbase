@@ -85,6 +85,8 @@ const actions: ActionTree<State, StateInterface> = {
         });
         const abi = await abiResponse.json();
 
+        web3.eth.handleRevert = true;
+
         const registerContract = new web3.eth.Contract(abi, config.astarBaseContractAddress);
 
         // TODO create Astar base contract here and put it to vuex

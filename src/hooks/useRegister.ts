@@ -49,9 +49,10 @@ export const useRegister = () => {
         gasLimit: GAS_LIMIT,
         gasPrice: GAS_PRICE,
       })
-      .once('error', (err: Error) => {
-        console.error(err.message);
-        store.dispatch('general/setError', err.message);
+      .once('error', (err: any) => {
+        console.error(err);
+        const message = err.reason || err.message;
+        store.dispatch('general/setError', message);
         store.commit('general/setLoading', false);
       })
       .then((receipt: any) => {
