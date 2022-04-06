@@ -34,6 +34,10 @@ export const useRegister = () => {
     const signData =
       PREFIX + signMessage.slice(2) + hexPublicKey.slice(2) + account.value.slice(2) + POSTFIX;
 
+    console.log(`Native account: ${substrateAccount.value}`);
+    console.log(`H160 address: ${account.value}`);
+    console.log(`signData: 0x${signData}`);
+
     const result = await injector.signer.signRaw({
       address,
       data: `0x${signData}`,
