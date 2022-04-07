@@ -14,6 +14,8 @@ export interface GeneralGetters {
   registerContract(state: State): Contract | undefined;
   astarBaseContractAddress(state: State): string;
   ethereumAccount(state: State): string;
+  stakerStatus(state: State): number;
+  isRegistered(state: State): boolean;
   substrateAccount(state: State): string;
   substrateAccounts(state: State): SubstrateAccount[];
   networkStatus(state: State): string;
@@ -36,6 +38,8 @@ const getters: GetterTree<State, StateInterface> & GeneralGetters = {
   registerContract: (state) => state.registerContract,
   astarBaseContractAddress: (state) => state.astarBaseContractAddress,
   ethereumAccount: (state) => state.ethereumAccount,
+  stakerStatus: (state) => state.stakerStatus,
+  isRegistered: (state) => state.isRegistered,
   substrateAccount: (state) => state.substrateAccount,
   substrateAccounts: (state) => state.substrateAccounts,
   networkStatus: (state) => state.currentNetworkStatus,
