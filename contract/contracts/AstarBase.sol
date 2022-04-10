@@ -26,6 +26,30 @@ contract AstarBase is Ownable {
         paused = false;
     }
 
+    // Signature methods
+    function splitSignature(bytes sig)
+        internal
+        pure
+        returns (uint8, bytes32, bytes32)
+    {
+        require(sig.length == 65);
+
+        bytes32 r;
+        bytes32 s;
+        uint8 v;
+
+        assembly {
+            // first 32 bytes, after the length prefix
+            r := mload(add(sig, 32))
+            // second 32 bytes
+            s := mload(add(sig, 64))
+            // final byte (first byte of the next 32 bytes)
+            v := byte(0, mload(add(sig, 96)))
+        }
+
+        return (v, r, s);
+    }
+
     /// @notice Register senders' address with corresponding SS58 address and store to mapping
     /// @param ss58PublicKey, SS58 address used for signing
     /// @param signedMsg, The message that was signed should be constructed as:
@@ -40,6 +64,23 @@ contract AstarBase is Ownable {
         bytes memory addressInBytes = abi.encodePacked(msg.sender);
         bytes memory fullMessage = bytes.concat(PREFIX, messageBytes, ss58PublicKey, addressInBytes, POSTFIX);
         bool address_verified = SR25519Contract.verify(ss58PublicKey, signedMsg, fullMessage);
+
+        // ECDSA verify
+        if (!address_verified) {
+            bytes hashedMessage = keccak256(fullMessage);
+            bytes memory prefix = "\x19Ethereum Signed Message:\n32";
+            bytes32 prefixedHashMessage = keccak256(abi.encodePacked(prefix, hashedMessage));
+            
+            uint8 v;
+            bytes32 r;
+            bytes32 s;
+
+            (v, r, s) = splitSignature(signedMsg);
+
+            signer = ecrecover(prefixedHashMessage, v, r, s);
+            address_verified = address(keccak256(ss58PublicKey)) == signer;
+        }
+
         require(address_verified, "Signed message not confirmed");
 
         addressMap[msg.sender] = ss58PublicKey;
