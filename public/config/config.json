@@ -2,11 +2,11 @@
   "mintContractAddress": "",
   "astarBaseContractAddress": "0x20044438CfaF684e251d1FfC70f999291D49e9a7",
   "network": {
-    "name": "Shiden",
-    "symbol": "SDN",
-    "id": 336,
+    "name": "Astar",
+    "symbol": "ASTR",
+    "id": 592,
     "decimals": 18,
-    "rpcUrl": "https://evm.shiden.astar.network",
-    "blockExplorerUrl": "https://blockscout.com/shiden/address/0x20044438CfaF684e251d1FfC70f999291D49e9a7/transactions"
+    "rpcUrl": "https://rpc.astar.network",
+    "blockExplorerUrl": "https://blockscout.com/astar/address/0x20044438CfaF684e251d1FfC70f999291D49e9a7/transactions"
   }
 }

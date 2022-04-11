@@ -45,7 +45,7 @@ export const providerEndpoints: ChainProvider[] = [
     subscan: 'https://astar.subscan.io',
     blockscout: 'https://blockscout.com/astar',
     evmChainId: '592',
-    evmRpc: 'https://rpc.astar.network:8545',
+    evmRpc: 'https://rpc.astar.network',
     faucetEndpoint: 'https://astar-discord-faucet.herokuapp.com/astar',
   },
   {
