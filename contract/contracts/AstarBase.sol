@@ -5,6 +5,7 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "./DappsStakingDummy.sol";
 import "./SR25519Dummy.sol";
+import "./ECDSADummy.sol";
 
 /// @author The Astar Network Team
 /// @title Astarbase. Mapping of Stakers ss58 <> H160
@@ -18,36 +19,13 @@ contract AstarBase is Ownable {
     mapping(bytes32 => address) public ss58Map;
     DappsStaking public constant DAPPS_STAKING = DappsStaking(0x0000000000000000000000000000000000005001);
     SR25519 public constant SR25519Contract = SR25519(0x0000000000000000000000000000000000005002);
+    ECDSA public constant ECDSAContract = ECDSA(0x0000000000000000000000000000000000005003);
     string MSG_PREFIX = "Sign this to register to AstarBase for:";
     uint256 public unregisterFee = 1 ether;
     address public beneficiary = 0x91986602d9c0d8A4f5BFB5F39a7Aa2cD73Db73B7; // Faucet on all Astar networks
 
     constructor() {
         paused = false;
-    }
-
-    // Signature methods
-    function splitSignature(bytes sig)
-        internal
-        pure
-        returns (uint8, bytes32, bytes32)
-    {
-        require(sig.length == 65);
-
-        bytes32 r;
-        bytes32 s;
-        uint8 v;
-
-        assembly {
-            // first 32 bytes, after the length prefix
-            r := mload(add(sig, 32))
-            // second 32 bytes
-            s := mload(add(sig, 64))
-            // final byte (first byte of the next 32 bytes)
-            v := byte(0, mload(add(sig, 96)))
-        }
-
-        return (v, r, s);
     }
 
     /// @notice Register senders' address with corresponding SS58 address and store to mapping
@@ -67,18 +45,7 @@ contract AstarBase is Ownable {
 
         // ECDSA verify
         if (!address_verified) {
-            bytes hashedMessage = keccak256(fullMessage);
-            bytes memory prefix = "\x19Ethereum Signed Message:\n32";
-            bytes32 prefixedHashMessage = keccak256(abi.encodePacked(prefix, hashedMessage));
-            
-            uint8 v;
-            bytes32 r;
-            bytes32 s;
-
-            (v, r, s) = splitSignature(signedMsg);
-
-            signer = ecrecover(prefixedHashMessage, v, r, s);
-            address_verified = address(keccak256(ss58PublicKey)) == signer;
+            address_verified = ECDSAContract.verify(abi.encodePacked(ss58PublicKey), signedMsg, fullMessage);
         }
 
         require(address_verified, "Signed message not confirmed");
