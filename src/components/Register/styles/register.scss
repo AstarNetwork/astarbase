@@ -13,9 +13,9 @@
     height: 100%;
     row-gap: 24px;
     margin-left: 0px;
-    margin-top: 40px;
+    margin-top: 100px;
     background: white;
-    align-items: flex-start;
+    align-items: center;
     justify-content: flex-start;
     padding: 5px;
   }
@@ -35,7 +35,7 @@
   justify-content: center;
 
   @media (max-width: 756px) {
-    flex-direction: column;
+    flex-direction: column-reverse;
   }
 }
 
@@ -44,7 +44,7 @@
   font-weight: 500;
 
   @media (max-width: 756px) {
-    margin-top: 100px;
+    margin-top: 20px;
   }
 }
 
