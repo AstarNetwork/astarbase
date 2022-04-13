@@ -1,6 +1,5 @@
 async function main() {
     const AstarBase = await ethers.getContractFactory("AstarBase");
-    console.log(AstarBase.functions)
     console.log("Deploying AstarBase...");
     const proxy = await upgrades.deployProxy(AstarBase);
     console.log("AstarBase proxy deployed to:", proxy.address);

@@ -1,0 +1,25 @@
+// test/AstarBase.js
+// Load dependencies
+const { expect } = require('chai');
+
+let AstarBase;
+let astarBase;
+
+// Start test block
+describe('AstarBase', function () {
+  beforeEach(async function () {
+    AstarBase = await ethers.getContractFactory("AstarBase");
+    astarBase = await AstarBase.deploy();
+    await astarBase.deployed();
+  });
+
+  // Test case
+  it('retrieve returns a value previously stored', async function () {
+    // Store a value
+    await astarBase.setVersion();
+
+    // Test if the returned value is the same one
+    // Note that we need to use strings to compare the 256 bit integers
+    expect((await astarBase.getVersion()).toString()).to.equal('1');
+  });
+});

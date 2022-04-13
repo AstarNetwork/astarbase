@@ -8,7 +8,7 @@ import "./SR25519Dummy.sol";
 
 /// @author The Astar Network Team
 /// @title Astarbase. Mapping of Stakers ss58 <> H160
-contract AstarBase is Initializable, OwnableUpgradeable {
+contract AstarBaseV2 is Initializable, OwnableUpgradeable {
     uint256 public registeredCnt;
     uint256 public version;
     bytes PREFIX;
@@ -25,7 +25,7 @@ contract AstarBase is Initializable, OwnableUpgradeable {
     function initialize() public initializer {
         __Ownable_init_unchained();
         registeredCnt = 0;
-        version = 1;
+        version = 0;
         PREFIX= hex"3c42797465733e";
         POSTFIX= hex"3c2f42797465733e";
         paused = false;
@@ -126,11 +126,11 @@ contract AstarBase is Initializable, OwnableUpgradeable {
     }
 
     /// @notice Check upgradable contract version. For new version increase the increment from 2 to 3
-    function setVersion() public {
-        version += 1;
+    function setVersion() public onlyOwner {
+        version +=2;
     }
 
-        /// @notice Check upgradable contract version. For new version increase the increment from 2 to 3
+    /// @notice Check upgradable contract version. For new version increase the increment from 2 to 3
     function getVersion() public view returns (uint256){
         return version;
     }
