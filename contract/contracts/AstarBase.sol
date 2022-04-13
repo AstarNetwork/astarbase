@@ -1,29 +1,36 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.7;
+pragma solidity 0.8.7;
 
-import "@openzeppelin/contracts/utils/Counters.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import "./DappsStakingDummy.sol";
 import "./SR25519Dummy.sol";
 
 /// @author The Astar Network Team
 /// @title Astarbase. Mapping of Stakers ss58 <> H160
-contract AstarBase is Ownable {
-    using Counters for Counters.Counter;
-    Counters.Counter public registeredCnt;
-    bytes PREFIX= hex"3c42797465733e";
-    bytes POSTFIX= hex"3c2f42797465733e";
+contract AstarBase is Initializable, OwnableUpgradeable {
+    uint256 registeredCnt;
+    bytes PREFIX;
+    bytes POSTFIX;
+    string MSG_PREFIX;
+    address public beneficiary;
+    uint256 public unregisterFee;
     bool public paused;
     mapping(address => bytes32) public addressMap;
     mapping(bytes32 => address) public ss58Map;
-    DappsStaking public constant DAPPS_STAKING = DappsStaking(0x0000000000000000000000000000000000005001);
-    SR25519 public constant SR25519Contract = SR25519(0x0000000000000000000000000000000000005002);
-    string MSG_PREFIX = "Sign this to register to AstarBase for:";
-    uint256 public unregisterFee = 1 ether;
-    address public beneficiary = 0x91986602d9c0d8A4f5BFB5F39a7Aa2cD73Db73B7; // Faucet on all Astar networks
+    DappsStaking public DAPPS_STAKING;
+    SR25519 public SR25519Contract;
 
-    constructor() {
+    function initialize() public initializer {
+        __Ownable_init_unchained();
+        PREFIX= hex"3c42797465733e";
+        POSTFIX= hex"3c2f42797465733e";
         paused = false;
+        MSG_PREFIX = "Sign this to register to AstarBase for:";
+        unregisterFee = 1 ether;
+        beneficiary = 0x91986602d9c0d8A4f5BFB5F39a7Aa2cD73Db73B7; // Faucet on all Astar networks
+        DAPPS_STAKING = DappsStaking(0x0000000000000000000000000000000000005001);
+        SR25519Contract = SR25519(0x0000000000000000000000000000000000005002);
     }
 
     /// @notice Register senders' address with corresponding SS58 address and store to mapping
@@ -38,13 +45,13 @@ contract AstarBase is Ownable {
 
         bytes memory messageBytes = bytes(MSG_PREFIX);
         bytes memory addressInBytes = abi.encodePacked(msg.sender);
-        bytes memory fullMessage = bytes.concat(PREFIX, messageBytes, ss58PublicKey, addressInBytes, POSTFIX);
+        bytes memory fullMessage = bytes(abi.encodePacked(PREFIX, messageBytes, ss58PublicKey, addressInBytes, POSTFIX));
         bool address_verified = SR25519Contract.verify(ss58PublicKey, signedMsg, fullMessage);
         require(address_verified, "Signed message not confirmed");
 
         addressMap[msg.sender] = ss58PublicKey;
         ss58Map[ss58PublicKey] = msg.sender;
-        registeredCnt.increment();
+        registeredCnt += 1;
     }
 
     /// @notice unRegister senders' address
@@ -69,7 +76,7 @@ contract AstarBase is Ownable {
         bytes32 ss58PublicKey = bytes32(addressMap[evmAddress]);
         addressMap[evmAddress] = 0;
         ss58Map[ss58PublicKey] = address(0);
-        registeredCnt.decrement();
+        registeredCnt -= 1;
     }
 
     /// @notice Check if given address was registered
