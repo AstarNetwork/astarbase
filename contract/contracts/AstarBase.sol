@@ -45,7 +45,7 @@ contract AstarBase is Initializable, OwnableUpgradeable {
 
         bytes memory messageBytes = bytes(MSG_PREFIX);
         bytes memory addressInBytes = abi.encodePacked(msg.sender);
-        bytes memory fullMessage = bytes(abi.encodePacked(PREFIX, messageBytes, ss58PublicKey, addressInBytes, POSTFIX));
+        bytes memory fullMessage = bytes.concat(PREFIX, messageBytes, ss58PublicKey, addressInBytes, POSTFIX);
         bool address_verified = SR25519Contract.verify(ss58PublicKey, signedMsg, fullMessage);
         require(address_verified, "Signed message not confirmed");
 
