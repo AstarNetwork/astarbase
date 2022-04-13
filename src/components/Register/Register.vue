@@ -27,19 +27,23 @@
       <SubstrateWallet />
       <EthereumWallet />
     </div>
+    <ModalMintNft v-if="modalName === WalletModalOption.MintNFT" :set-close-modal="setCloseModal" />
   </div>
 </template>
 
 <script lang="ts">
 import { useStore } from 'src/store';
+import { useConnectWallet } from 'src/hooks';
 import { computed, defineComponent } from 'vue';
 import EthereumWallet from './EthereumWallet.vue';
 import SubstrateWallet from './SubstrateWallet.vue';
+import ModalMintNft from './modals/ModalMintNft.vue';
 
 export default defineComponent({
   components: {
     EthereumWallet,
     SubstrateWallet,
+    ModalMintNft,
   },
   setup() {
     const store = useStore();
@@ -47,7 +51,15 @@ export default defineComponent({
     const stakerStatus = computed(() => store.getters['general/stakerStatus']);
     const isRegistered = computed(() => store.getters['general/isRegistered']);
 
+    const { modalName, selectedWallet, WalletModalOption, setCloseModal, openMintNFT } =
+      useConnectWallet();
+
     return {
+      WalletModalOption,
+      modalName,
+      selectedWallet,
+      setCloseModal,
+      openMintNFT,
       ethereumAccount,
       stakerStatus,
       isRegistered,
