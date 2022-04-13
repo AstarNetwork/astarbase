@@ -6,7 +6,7 @@
     "symbol": "ASTR",
     "id": 592,
     "decimals": 18,
-    "rpcUrl": "https://rpc.astar.network",
+    "rpcUrl": "https://rpc.astar.network:8545",
     "blockExplorerUrl": "https://blockscout.com/astar/address/0x20044438CfaF684e251d1FfC70f999291D49e9a7/transactions"
   }
 }
