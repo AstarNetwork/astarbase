@@ -1,7 +1,9 @@
 <template>
   <div class="container-ethereum-wallet">
     <div>
-      <label>{{ $t('register.evmConnectLabel') }}</label>
+      <div class="tw-mb-6">
+        <label>{{ $t('register.evmConnectLabel') }}</label>
+      </div>
       <div>
         <button v-if="!isConnected" class="btn" @click="connect">
           {{ $t('register.connectMetaMask') }}
@@ -19,7 +21,9 @@
     </div>
     <!-- Todo: fix `:disabled` -->
     <div v-if="!registered">
-      <label>{{ $t('register.registerLabel') }}</label>
+      <div class="tw-mb-6">
+        <label>{{ $t('register.registerLabel') }}</label>
+      </div>
       <div>
         <button :disabled="!isConnected" class="btn" @click="register">
           {{ $t('register.register') }}
@@ -28,7 +32,9 @@
     </div>
     <div class="error">{{ errorMessage }}</div>
     <div v-if="registered">
-      <label>{{ $t('register.registerLabel') }}</label>
+      <div class="tw-mb-6">
+        <label>{{ $t('register.registerLabel') }}</label>
+      </div>
       <div>
         <button class="btn green" @click="mintNft">
           {{ $t('register.mintNft') }}
