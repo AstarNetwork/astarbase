@@ -45,7 +45,7 @@ contract AstarBase is Ownable {
         require(!paused, "The contract is paused");
         require(ss58PublicKey[0] != 0, "Can't register ss58PublicKey with 0");
         require(ss58Map[ss58PublicKey] == address(0), "Already used ss58 Public Key");
-        require(addressMap[msg.sender][0] == 0, "Already registered evm address");
+        require(addressMap[msg.sender].length == 0, "Already registered evm address");
 
         bytes memory messageBytes = bytes(MSG_PREFIX);
         bytes memory addressInBytes = abi.encodePacked(msg.sender);
@@ -82,7 +82,7 @@ contract AstarBase is Ownable {
     /// @notice execute unRegister function
     /// @param evmAddress, EVM address used for registration
     function unRegisterExecute(address evmAddress) private {
-        require(addressMap[evmAddress][0] != 0, "Unregistring unknown entry");
+        require(addressMap[evmAddress].length != 0, "Unregistring unknown entry");
 
         bytes memory ss58PublicKey = bytes(addressMap[evmAddress]);
         addressMap[evmAddress] = new bytes(0);
@@ -95,7 +95,7 @@ contract AstarBase is Ownable {
     function isRegistered(address evmAddress) public view returns (bool) {
         bytes memory ss58PublicKey = addressMap[evmAddress];
 
-        return ss58PublicKey[0] != 0;
+        return ss58PublicKey.length != 0;
     }
 
     /// @notice Check if given address was registered and return staked amount
