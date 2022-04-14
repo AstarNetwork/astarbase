@@ -1,13 +1,9 @@
 npx hardhat run --network shibuya scripts/upgrade.js
 npx hardhat console --network shibuya
-> const AstarBaseV2 = await ethers.getContractFactory("AstarBaseV2")
+> const newAstarBase = await ethers.getContractFactory("AstarBase_example_upgrade")
 undefined
-> const astarBaseV2 = await AstarBaseV2.attach("0x64741276eDDF1fb1aD1fbd1ABD7ef5E8d1890E9b")
+> const astarbase = await Astarbase.attach("0xA046f9Dd588521601923B0e9bAbb650F8117C04C")
 undefined
-> (await astarBaseV2.getVersion()).toString()
-'2'
-> await astarBaseV2.setVersion()
-{ hash:
-...
-> (await astarBaseV2.getVersion()).toString()
-'7'
+> const tx = await astarbase.getVersion()
+> receipt = await tx.wait()
+> receipt.events[0].data

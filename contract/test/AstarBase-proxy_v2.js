@@ -11,7 +11,7 @@ let astarBaseV2;
 describe('AstarBaseV2 (proxy)', function () {
   beforeEach(async function () {
     AstarBase = await ethers.getContractFactory("AstarBase");
-    NewAstarBase = await ethers.getContractFactory("AstarBaseV2");
+    NewAstarBase = await ethers.getContractFactory("AstarBase_example_upgrade");
 
     astarBase = await upgrades.deployProxy(AstarBase);
     newAstarBase = await upgrades.upgradeProxy(astarBase.address, NewAstarBase);

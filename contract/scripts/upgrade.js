@@ -1,7 +1,7 @@
 async function main() {
-    const AstarBaseV2 = await ethers.getContractFactory("AstarBaseV2")
-    let proxy = await upgrades.upgradeProxy("0x6D46BD2d301B46686717531A2F603191A536238D", AstarBaseV2)
-    console.log("Your upgraded proxy is done!", proxy.address)
+    const newAstarBase = await ethers.getContractFactory("AstarBase_example_upgrade")
+    let proxy = await upgrades.upgradeProxy("0xA046f9Dd588521601923B0e9bAbb650F8117C04C", newAstarBase)
+    console.log("Your contract is upgraded! Proxy remains at:", proxy.address)
 }
 
 main()
