@@ -22,19 +22,19 @@ contract AstarBaseV2 is Initializable, OwnableUpgradeable {
     DappsStaking public DAPPS_STAKING;
     SR25519 public SR25519Contract;
 
-    function initialize() public initializer {
-        __Ownable_init_unchained();
-        registeredCnt = 0;
-        version = 0;
-        PREFIX= hex"3c42797465733e";
-        POSTFIX= hex"3c2f42797465733e";
-        paused = false;
-        MSG_PREFIX = "Sign this to register to AstarBase for:";
-        unregisterFee = 1 ether;
-        beneficiary = 0x91986602d9c0d8A4f5BFB5F39a7Aa2cD73Db73B7; // Faucet on all Astar networks
-        DAPPS_STAKING = DappsStaking(0x0000000000000000000000000000000000005001);
-        SR25519Contract = SR25519(0x0000000000000000000000000000000000005002);
-    }
+    // function initialize() public initializer {
+    //     __Ownable_init_unchained();
+    //     registeredCnt = 0;
+    //     version = 1;
+    //     PREFIX= hex"3c42797465733e";
+    //     POSTFIX= hex"3c2f42797465733e";
+    //     paused = false;
+    //     MSG_PREFIX = "Sign this to register to AstarBase for:";
+    //     unregisterFee = 1 ether;
+    //     beneficiary = 0x91986602d9c0d8A4f5BFB5F39a7Aa2cD73Db73B7; // Faucet on all Astar networks
+    //     DAPPS_STAKING = DappsStaking(0x0000000000000000000000000000000000005001);
+    //     SR25519Contract = SR25519(0x0000000000000000000000000000000000005002);
+    // }
 
     /// @notice Register senders' address with corresponding SS58 address and store to mapping
     /// @param ss58PublicKey, SS58 address used for signing
@@ -127,7 +127,7 @@ contract AstarBaseV2 is Initializable, OwnableUpgradeable {
 
     /// @notice Check upgradable contract version. For new version increase the increment from 2 to 3
     function setVersion() public onlyOwner {
-        version +=2;
+        version += 5;
     }
 
     /// @notice Check upgradable contract version. For new version increase the increment from 2 to 3

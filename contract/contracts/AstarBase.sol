@@ -5,6 +5,7 @@ import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import "./DappsStakingDummy.sol";
 import "./SR25519Dummy.sol";
+import "hardhat/console.sol";
 
 /// @author The Astar Network Team
 /// @title Astarbase. Mapping of Stakers ss58 <> H160
