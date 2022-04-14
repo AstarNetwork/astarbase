@@ -2,6 +2,7 @@
 pragma solidity 0.8.7;
 
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+import "@openzeppelin/contracts-upgradeable/utils/CountersUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import "./DappsStakingDummy.sol";
 import "./SR25519Dummy.sol";
@@ -10,7 +11,8 @@ import "hardhat/console.sol";
 /// @author The Astar Network Team
 /// @title Astarbase. Mapping of Stakers ss58 <> H160
 contract AstarBase is Initializable, OwnableUpgradeable {
-    uint256 public registeredCnt;
+    using CountersUpgradeable for CountersUpgradeable.Counter;
+    CountersUpgradeable.Counter public registeredCnt;
     uint256 public version;
     bytes PREFIX;
     bytes POSTFIX;
@@ -25,7 +27,7 @@ contract AstarBase is Initializable, OwnableUpgradeable {
 
     function initialize() public initializer {
         __Ownable_init_unchained();
-        registeredCnt = 0;
+        registeredCnt.reset();
         version = 1;
         PREFIX= hex"3c42797465733e";
         POSTFIX= hex"3c2f42797465733e";
@@ -55,7 +57,7 @@ contract AstarBase is Initializable, OwnableUpgradeable {
 
         addressMap[msg.sender] = ss58PublicKey;
         ss58Map[ss58PublicKey] = msg.sender;
-        registeredCnt += 1;
+        registeredCnt.increment();
     }
 
     /// @notice unRegister senders' address
@@ -80,7 +82,7 @@ contract AstarBase is Initializable, OwnableUpgradeable {
         bytes32 ss58PublicKey = bytes32(addressMap[evmAddress]);
         addressMap[evmAddress] = 0;
         ss58Map[ss58PublicKey] = address(0);
-        registeredCnt -= 1;
+        registeredCnt.decrement();
     }
 
     /// @notice Check if given address was registered
@@ -126,13 +128,9 @@ contract AstarBase is Initializable, OwnableUpgradeable {
         require(success);
     }
 
-    /// @notice Check upgradable contract version. For new version increase the increment from 2 to 3
-    function setVersion() public {
-        version += 1;
-    }
-
-        /// @notice Check upgradable contract version. For new version increase the increment from 2 to 3
+    /// @notice Check upgradable contract version.
     function getVersion() public view returns (uint256){
+        uint256 version = 1;
         return version;
     }
 

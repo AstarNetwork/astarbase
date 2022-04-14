@@ -2,14 +2,17 @@
 pragma solidity 0.8.7;
 
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+import "@openzeppelin/contracts-upgradeable/utils/CountersUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import "./DappsStakingDummy.sol";
 import "./SR25519Dummy.sol";
+import "hardhat/console.sol";
 
 /// @author The Astar Network Team
 /// @title Astarbase. Mapping of Stakers ss58 <> H160
 contract AstarBaseV2 is Initializable, OwnableUpgradeable {
-    uint256 public registeredCnt;
+    using CountersUpgradeable for CountersUpgradeable.Counter;
+    CountersUpgradeable.Counter public registeredCnt;
     uint256 public version;
     bytes PREFIX;
     bytes POSTFIX;
@@ -21,20 +24,6 @@ contract AstarBaseV2 is Initializable, OwnableUpgradeable {
     mapping(bytes32 => address) public ss58Map;
     DappsStaking public DAPPS_STAKING;
     SR25519 public SR25519Contract;
-
-    // function initialize() public initializer {
-    //     __Ownable_init_unchained();
-    //     registeredCnt = 0;
-    //     version = 1;
-    //     PREFIX= hex"3c42797465733e";
-    //     POSTFIX= hex"3c2f42797465733e";
-    //     paused = false;
-    //     MSG_PREFIX = "Sign this to register to AstarBase for:";
-    //     unregisterFee = 1 ether;
-    //     beneficiary = 0x91986602d9c0d8A4f5BFB5F39a7Aa2cD73Db73B7; // Faucet on all Astar networks
-    //     DAPPS_STAKING = DappsStaking(0x0000000000000000000000000000000000005001);
-    //     SR25519Contract = SR25519(0x0000000000000000000000000000000000005002);
-    // }
 
     /// @notice Register senders' address with corresponding SS58 address and store to mapping
     /// @param ss58PublicKey, SS58 address used for signing
@@ -54,7 +43,7 @@ contract AstarBaseV2 is Initializable, OwnableUpgradeable {
 
         addressMap[msg.sender] = ss58PublicKey;
         ss58Map[ss58PublicKey] = msg.sender;
-        registeredCnt += 1;
+        registeredCnt.increment();
     }
 
     /// @notice unRegister senders' address
@@ -79,7 +68,7 @@ contract AstarBaseV2 is Initializable, OwnableUpgradeable {
         bytes32 ss58PublicKey = bytes32(addressMap[evmAddress]);
         addressMap[evmAddress] = 0;
         ss58Map[ss58PublicKey] = address(0);
-        registeredCnt -= 1;
+        registeredCnt.decrement();
     }
 
     /// @notice Check if given address was registered
@@ -125,13 +114,9 @@ contract AstarBaseV2 is Initializable, OwnableUpgradeable {
         require(success);
     }
 
-    /// @notice Check upgradable contract version. For new version increase the increment from 2 to 3
-    function setVersion() public onlyOwner {
-        version += 5;
-    }
-
-    /// @notice Check upgradable contract version. For new version increase the increment from 2 to 3
+    /// @notice Check upgradable contract version.
     function getVersion() public view returns (uint256){
+        uint256 version = 2;
         return version;
     }
 

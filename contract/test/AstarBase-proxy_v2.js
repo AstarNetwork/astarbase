@@ -19,11 +19,6 @@ describe('AstarBaseV2 (proxy)', function () {
 
   // Test case
   it('retrieve returns a value previously incremented', async function () {
-    // Increment
-    await astarBaseV2.setVersion();
-
-    // Test if the returned value is the same one
-    // Note that we need to use strings to compare the 256 bit integers
-    expect((await astarBaseV2.getVersion()).toString()).to.equal('6');
+    expect((await astarBaseV2.getVersion()).toString()).to.equal('2');
   });
 });
