@@ -22,8 +22,7 @@
 }
 
 .header {
-  position: absolute;
-  top: 110px;
+  margin-bottom: 40px;
   @media (max-width: 756px) {
     top: 10px;
   }
@@ -55,9 +54,23 @@
 
 .first {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .blue {
   color: #0084ff;
+}
+
+.stakerStatus {
+  padding: 30px;
+  text-align: center;
+  width: 300px;
+  height: 150px;
+  background-color: white;
+  border-radius: 20px;
+
+  img {
+    margin-top: 24px;
+  }
 }

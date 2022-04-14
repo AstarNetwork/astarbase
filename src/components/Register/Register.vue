@@ -24,6 +24,12 @@
       </div>
     </div>
     <div class="container">
+      <div class="stakerStatus">
+        <div>Your status: {{ statusText }}</div>
+        <div>
+          <img :src="statusImage" />
+        </div>
+      </div>
       <SubstrateWallet />
       <EthereumWallet />
     </div>
@@ -54,6 +60,11 @@ export default defineComponent({
     const { modalName, selectedWallet, WalletModalOption, setCloseModal, openMintNFT } =
       useConnectWallet();
 
+    const statusText = 'staker';
+    const statusImage = '/icons/AstarPass-logo-staker.png';
+
+    //AstarPass-logo-gray.png
+
     return {
       WalletModalOption,
       modalName,
@@ -63,6 +74,8 @@ export default defineComponent({
       ethereumAccount,
       stakerStatus,
       isRegistered,
+      statusText,
+      statusImage,
     };
   },
 });
