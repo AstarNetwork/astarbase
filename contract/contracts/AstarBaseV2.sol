@@ -22,6 +22,9 @@ contract AstarBaseV2 is Initializable, OwnableUpgradeable {
     DappsStaking public DAPPS_STAKING;
     SR25519 public SR25519Contract;
 
+    event ContractVersion(uint256 newValue);
+    event AstarBaseRegistered(address newEntry);
+
     // function initialize() public initializer {
     //     __Ownable_init_unchained();
     //     registeredCnt = 0;
@@ -35,6 +38,13 @@ contract AstarBaseV2 is Initializable, OwnableUpgradeable {
     //     DAPPS_STAKING = DappsStaking(0x0000000000000000000000000000000000005001);
     //     SR25519Contract = SR25519(0x0000000000000000000000000000000000005002);
     // }
+
+    /// @notice Check upgradable contract version.
+    /// @notice Change this version value for each new contract upgrade
+    function getVersion() public {
+
+        emit ContractVersion(42);
+    }
 
     /// @notice Register senders' address with corresponding SS58 address and store to mapping
     /// @param ss58PublicKey, SS58 address used for signing
@@ -123,16 +133,6 @@ contract AstarBaseV2 is Initializable, OwnableUpgradeable {
     function withdraw() public payable {
         (bool success, ) = payable(beneficiary).call{value: address(this).balance}("");
         require(success);
-    }
-
-    /// @notice Check upgradable contract version. For new version increase the increment from 2 to 3
-    function setVersion() public onlyOwner {
-        version += 5;
-    }
-
-    /// @notice Check upgradable contract version. For new version increase the increment from 2 to 3
-    function getVersion() public view returns (uint256){
-        return version;
     }
 
     /// @notice setting precompile addresses for unit test purposes

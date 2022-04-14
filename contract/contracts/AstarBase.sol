@@ -23,8 +23,11 @@ contract AstarBase is Initializable, OwnableUpgradeable {
     DappsStaking public DAPPS_STAKING;
     SR25519 public SR25519Contract;
 
+    event ContractVersion(uint256 newValue);
+    event AstarBaseRegistered(address newEntry);
+
     function initialize() public initializer {
-        __Ownable_init_unchained();
+        __Ownable_init();
         registeredCnt = 0;
         version = 1;
         PREFIX= hex"3c42797465733e";
@@ -35,6 +38,13 @@ contract AstarBase is Initializable, OwnableUpgradeable {
         beneficiary = 0x91986602d9c0d8A4f5BFB5F39a7Aa2cD73Db73B7; // Faucet on all Astar networks
         DAPPS_STAKING = DappsStaking(0x0000000000000000000000000000000000005001);
         SR25519Contract = SR25519(0x0000000000000000000000000000000000005002);
+    }
+
+    /// @notice Check upgradable contract version.
+    /// @notice Change this version value for each new contract upgrade
+    function getVersion() public {
+
+        emit ContractVersion(1);
     }
 
     /// @notice Register senders' address with corresponding SS58 address and store to mapping
@@ -56,6 +66,7 @@ contract AstarBase is Initializable, OwnableUpgradeable {
         addressMap[msg.sender] = ss58PublicKey;
         ss58Map[ss58PublicKey] = msg.sender;
         registeredCnt += 1;
+        emit AstarBaseRegistered(msg.sender);
     }
 
     /// @notice unRegister senders' address
@@ -124,16 +135,6 @@ contract AstarBase is Initializable, OwnableUpgradeable {
     function withdraw() public payable {
         (bool success, ) = payable(beneficiary).call{value: address(this).balance}("");
         require(success);
-    }
-
-    /// @notice Check upgradable contract version. For new version increase the increment from 2 to 3
-    function setVersion() public {
-        version += 1;
-    }
-
-        /// @notice Check upgradable contract version. For new version increase the increment from 2 to 3
-    function getVersion() public view returns (uint256){
-        return version;
     }
 
     /// @notice setting precompile addresses for unit test purposes

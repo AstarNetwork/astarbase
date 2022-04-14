@@ -13,8 +13,9 @@ describe('AstarBase (proxy)', function () {
 
   // Test case
   it('retrieve returns a value previously initialized', async function () {
-    // Test if the returned value is the same one
-    // Note that we need to use strings to compare the 256 bit integers
-    expect((await astarBase.getVersion()).toString()).to.equal('1');
+    let tx = await astarBase.getVersion();
+
+    let receipt = await tx.wait();
+    expect(receipt.events[0].data).to.equal('0x0000000000000000000000000000000000000000000000000000000000000001');
   });
 });

@@ -2,7 +2,7 @@ npx hardhat run --network shibuya scripts/deploy.js
 npx hardhat console --network shibuya
 > const Astarbase = await ethers.getContractFactory("AstarBase")
 undefined
-> const astarbase = await Astarbase.attach("0x23721848D8D6D6691B7AD2bbE34D73F81dA4270c")
+> const astarbase = await Astarbase.attach("0x64741276eDDF1fb1aD1fbd1ABD7ef5E8d1890E9b")
 undefined
 > (await astarbase.getVersion()).toString()
 > await astarbase.setVersion()

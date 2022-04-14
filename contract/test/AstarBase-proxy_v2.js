@@ -11,19 +11,17 @@ let astarBaseV2;
 describe('AstarBaseV2 (proxy)', function () {
   beforeEach(async function () {
     AstarBase = await ethers.getContractFactory("AstarBase");
-    AstarBaseV2 = await ethers.getContractFactory("AstarBaseV2");
+    NewAstarBase = await ethers.getContractFactory("AstarBaseV2");
 
     astarBase = await upgrades.deployProxy(AstarBase);
-    astarBaseV2 = await upgrades.upgradeProxy(astarBase.address, AstarBaseV2);
+    newAstarBase = await upgrades.upgradeProxy(astarBase.address, NewAstarBase);
   });
 
   // Test case
   it('retrieve returns a value previously incremented', async function () {
-    // Increment
-    await astarBaseV2.setVersion();
+    let tx = await newAstarBase.getVersion();
 
-    // Test if the returned value is the same one
-    // Note that we need to use strings to compare the 256 bit integers
-    expect((await astarBaseV2.getVersion()).toString()).to.equal('6');
+    let receipt = await tx.wait();
+    expect(receipt.events[0].data).to.equal('0x000000000000000000000000000000000000000000000000000000000000002a');
   });
 });
