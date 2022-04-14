@@ -2,7 +2,7 @@
   "manifestVersion": "3.2",
   "admin": {
     "address": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
-    "txHash": "0xf3982ee69cc0e45b64e6c7a51f7cf12f4bb8e325e74353e8cd42f048b5d8b373"
+    "txHash": "0x91a548fc8410108203c265b7a9ef31c548434aeccdfb5e913b4e4008a9a84487"
   },
   "proxies": [
     {
@@ -17,19 +17,19 @@
     },
     {
       "address": "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
-      "txHash": "0xecbbe2f26ce6dd3ef596ae5d89a928122f3b3b4aac24f069636509b05b4ee626",
+      "txHash": "0xad25f8e80df6af4e594f81a249464a831617e245e5a228a1c0a841f0f80c2b7a",
       "kind": "transparent"
     },
     {
       "address": "0x0165878A594ca255338adfa4d48449f69242Eb8F",
-      "txHash": "0xdcce91af42cd7e09e83764343a23f327aa1c50e81ee57e9caf2204fcd1c63a1c",
+      "txHash": "0xfe8596a95466ba50a13453bac989f006bef02362d241e46013535d0a9e1f38e1",
       "kind": "transparent"
     }
   ],
   "impls": {
-    "dfb336a155a82d00d454709f48601e3f1c5f615637726f8bf92ecd8e904787eb": {
+    "9c1b3f68c6ba60a63fa8b70736d2d1eed6374b410807fe0b71c4ccf42cf1f4bf": {
       "address": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
-      "txHash": "0xb19b2a562da8754d9aeebf1b26c0fe4e3ef1d8874d364d46be175a87e6167bff",
+      "txHash": "0x509070e90070fe463a22ab81327d479bea582ca292d459217421ee36ae7cb901",
       "layout": {
         "storage": [
           {
@@ -233,9 +233,9 @@
         }
       }
     },
-    "f8b4a7290b57067e320a9e2063dde65eebd74921df10276f3532c5662617a089": {
+    "fb4a7abcbd4c62e9f6f3cec3f18ab3d1f0b4611604cf3a7e7350066dad33ec51": {
       "address": "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9",
-      "txHash": "0x1f1d13cf1e552eeefa38f62ce89baa7d5964d503b6996846c6b4003b57422874",
+      "txHash": "0xa5c1fa3143dc5a96782cba1edb3e5ae78f6cc646c016619a6a8c2f9ec8e9eb6a",
       "layout": {
         "storage": [
           {
@@ -284,7 +284,7 @@
             "slot": "101",
             "type": "t_struct(Counter)488_storage",
             "contract": "AstarBase_example_upgrade",
-            "src": "contracts/AstarBaseV2.sol:14"
+            "src": "contracts/AstarBase_example_upgrade.sol:14"
           },
           {
             "label": "version",
@@ -292,7 +292,7 @@
             "slot": "102",
             "type": "t_uint256",
             "contract": "AstarBase_example_upgrade",
-            "src": "contracts/AstarBaseV2.sol:15"
+            "src": "contracts/AstarBase_example_upgrade.sol:15"
           },
           {
             "label": "PREFIX",
@@ -300,7 +300,7 @@
             "slot": "103",
             "type": "t_bytes_storage",
             "contract": "AstarBase_example_upgrade",
-            "src": "contracts/AstarBaseV2.sol:16"
+            "src": "contracts/AstarBase_example_upgrade.sol:16"
           },
           {
             "label": "POSTFIX",
@@ -308,7 +308,7 @@
             "slot": "104",
             "type": "t_bytes_storage",
             "contract": "AstarBase_example_upgrade",
-            "src": "contracts/AstarBaseV2.sol:17"
+            "src": "contracts/AstarBase_example_upgrade.sol:17"
           },
           {
             "label": "MSG_PREFIX",
@@ -316,7 +316,7 @@
             "slot": "105",
             "type": "t_string_storage",
             "contract": "AstarBase_example_upgrade",
-            "src": "contracts/AstarBaseV2.sol:18"
+            "src": "contracts/AstarBase_example_upgrade.sol:18"
           },
           {
             "label": "beneficiary",
@@ -324,7 +324,7 @@
             "slot": "106",
             "type": "t_address",
             "contract": "AstarBase_example_upgrade",
-            "src": "contracts/AstarBaseV2.sol:19"
+            "src": "contracts/AstarBase_example_upgrade.sol:19"
           },
           {
             "label": "unregisterFee",
@@ -332,7 +332,7 @@
             "slot": "107",
             "type": "t_uint256",
             "contract": "AstarBase_example_upgrade",
-            "src": "contracts/AstarBaseV2.sol:20"
+            "src": "contracts/AstarBase_example_upgrade.sol:20"
           },
           {
             "label": "paused",
@@ -340,7 +340,7 @@
             "slot": "108",
             "type": "t_bool",
             "contract": "AstarBase_example_upgrade",
-            "src": "contracts/AstarBaseV2.sol:21"
+            "src": "contracts/AstarBase_example_upgrade.sol:21"
           },
           {
             "label": "addressMap",
@@ -348,7 +348,7 @@
             "slot": "109",
             "type": "t_mapping(t_address,t_bytes_storage)",
             "contract": "AstarBase_example_upgrade",
-            "src": "contracts/AstarBaseV2.sol:22"
+            "src": "contracts/AstarBase_example_upgrade.sol:22"
           },
           {
             "label": "ss58Map",
@@ -356,7 +356,7 @@
             "slot": "110",
             "type": "t_mapping(t_bytes_memory_ptr,t_address)",
             "contract": "AstarBase_example_upgrade",
-            "src": "contracts/AstarBaseV2.sol:23"
+            "src": "contracts/AstarBase_example_upgrade.sol:23"
           },
           {
             "label": "DAPPS_STAKING",
@@ -364,7 +364,7 @@
             "slot": "111",
             "type": "t_contract(DappsStaking)1715",
             "contract": "AstarBase_example_upgrade",
-            "src": "contracts/AstarBaseV2.sol:24"
+            "src": "contracts/AstarBase_example_upgrade.sol:24"
           },
           {
             "label": "SR25519Contract",
@@ -372,7 +372,7 @@
             "slot": "112",
             "type": "t_contract(SR25519)1752",
             "contract": "AstarBase_example_upgrade",
-            "src": "contracts/AstarBaseV2.sol:25"
+            "src": "contracts/AstarBase_example_upgrade.sol:25"
           }
         ],
         "types": {

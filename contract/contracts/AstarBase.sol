@@ -31,9 +31,9 @@ contract AstarBase is Initializable, OwnableUpgradeable {
     function initialize() public initializer {
         __Ownable_init();
         registeredCnt.reset();
-        version = 1;
-        PREFIX= hex"3c42797465733e";
-        POSTFIX= hex"3c2f42797465733e";
+        version = 0;
+        PREFIX = hex"3c42797465733e";
+        POSTFIX = hex"3c2f42797465733e";
         paused = false;
         MSG_PREFIX = "Sign this to register to AstarBase for:";
         unregisterFee = 1 ether;
