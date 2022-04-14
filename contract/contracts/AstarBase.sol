@@ -24,6 +24,10 @@ contract AstarBase is Initializable, OwnableUpgradeable {
     DappsStaking public DAPPS_STAKING;
     SR25519 public SR25519Contract;
 
+    // Emitted when the getVersion() is called
+    event ContractVersion(uint256 newValue);
+    event AstarBaseRegistered(address newEntry);
+
     function initialize() public initializer {
         __Ownable_init_unchained();
         registeredCnt.reset();
@@ -37,13 +41,11 @@ contract AstarBase is Initializable, OwnableUpgradeable {
         DAPPS_STAKING = DappsStaking(0x0000000000000000000000000000000000005001);
         SR25519Contract = SR25519(0x0000000000000000000000000000000000005002);
     }
-
     /// @notice Check upgradable contract version.
-    /// @notice Change the version value for each new contract upgrade
-    function getVersion() public returns (uint256){
-        version = 1;
+    /// @notice Change this version value for each new contract upgrade
+    function getVersion() public {
 
-        return version;
+        emit ContractVersion(1);
     }
 
     /// @notice Register senders' address with corresponding SS58 address and store to mapping

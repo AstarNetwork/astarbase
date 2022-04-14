@@ -11,14 +11,17 @@ let astarBaseV2;
 describe('AstarBaseV2 (proxy)', function () {
   beforeEach(async function () {
     AstarBase = await ethers.getContractFactory("AstarBase");
-    AstarBaseV2 = await ethers.getContractFactory("AstarBaseV2");
+    NewAstarBase = await ethers.getContractFactory("AstarBaseV2");
 
     astarBase = await upgrades.deployProxy(AstarBase);
-    astarBaseV2 = await upgrades.upgradeProxy(astarBase.address, AstarBaseV2);
+    newAstarBase = await upgrades.upgradeProxy(astarBase.address, NewAstarBase);
   });
 
   // Test case
   it('retrieve returns a value previously incremented', async function () {
-    expect((await astarBaseV2.getVersion()).toString()).to.equal('2');
+    let tx = await newAstarBase.getVersion();
+
+    let receipt = await tx.wait();
+    expect(receipt.events[0].data).to.equal('0x000000000000000000000000000000000000000000000000000000000000002a');
   });
 });
