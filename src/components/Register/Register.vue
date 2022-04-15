@@ -25,22 +25,29 @@
     </div>
     <div class="container">
       <div class="stakerStatus">
-        <div>Your status: {{ statusText }}</div>
-        <div>
-          <img :src="statusImage" />
+        <div v-if="stakerStatus > 0">Your status: Staker</div>
+        <div v-else>
+          <div v-if="isRegistered">Your status: Pass Holder</div>
+          <div v-else>Your status: Not Registered</div>
+        </div>
+        <div v-if="stakerStatus > 0 || isRegistered">
+          <img src="/icons/AstarPass-logo.png" />
+        </div>
+        <div v-else>
+          <img src="/icons/AstarPass-logo-gray.png" />
         </div>
       </div>
       <SubstrateWallet />
       <EthereumWallet />
     </div>
-    <ModalMintNft v-if="isRegistered" :set-close-modal="setCloseModal" />
+    <ModalMintNft v-if="modalName === WalletModalOption.MintNFT" :set-close-modal="setCloseModal" />
   </div>
 </template>
 
 <script lang="ts">
 import { useStore } from 'src/store';
 import { useConnectWallet } from 'src/hooks';
-import { computed, defineComponent } from 'vue';
+import { computed, defineComponent, watch } from 'vue';
 import EthereumWallet from './EthereumWallet.vue';
 import SubstrateWallet from './SubstrateWallet.vue';
 import ModalMintNft from './modals/ModalMintNft.vue';
@@ -60,18 +67,17 @@ export default defineComponent({
     const { modalName, selectedWallet, WalletModalOption, setCloseModal, openMintNFT } =
       useConnectWallet();
 
-    let statusText = 'Not Registered';
-    let statusImage = '/icons/AstarPass-logo-gray.png';
-
-    if (isRegistered.value) {
-      statusText = 'Holder';
-      statusImage = '/icons/AstarPass-logo.png';
-    }
-
-    if (stakerStatus.value > 0) {
-      statusText = 'Staker';
-      statusImage = '/icons/AstarPass-logo.png';
-    }
+    watch(
+      [isRegistered],
+      () => {
+        if (isRegistered.value) {
+          setTimeout(() => {
+            openMintNFT();
+          }, 10);
+        }
+      },
+      { immediate: false }
+    );
 
     return {
       WalletModalOption,
@@ -82,8 +88,6 @@ export default defineComponent({
       ethereumAccount,
       stakerStatus,
       isRegistered,
-      statusText,
-      statusImage,
     };
   },
 });
