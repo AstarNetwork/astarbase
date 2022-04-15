@@ -68,8 +68,15 @@
   width: 300px;
   height: 150px;
   border-radius: 20px;
+  background: white;
 
   img {
     margin-top: 24px;
+  }
+}
+
+.body--dark {
+  .stakerStatus  {
+    background: linear-gradient(100.5deg, #E6007A -16.32%, #703AC2 11.72%, #0070EB 47.31%, #0297FB 70.42%, #0AE2FF 94%);
   }
 }
