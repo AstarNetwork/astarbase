@@ -24,7 +24,7 @@
       </div>
     </div>
     <div class="container">
-      <div class="stakerStatus tw-bg-white">
+      <div class="stakerStatus">
         <div v-if="stakerStatus > 0">Your status: Staker</div>
         <div v-else>
           <div v-if="isRegistered">Your status: Pass Holder</div>
