@@ -33,7 +33,7 @@
       <SubstrateWallet />
       <EthereumWallet />
     </div>
-    <ModalMintNft v-if="modalName === WalletModalOption.MintNFT" :set-close-modal="setCloseModal" />
+    <ModalMintNft v-if="isRegistered" :set-close-modal="setCloseModal" />
   </div>
 </template>
 
@@ -67,6 +67,8 @@ export default defineComponent({
       statusText = 'Holder';
       statusImage = '/icons/AstarPass-logo.png';
     }
+
+    console.log(isRegistered);
 
     if (stakerStatus.value > 0) {
       statusText = 'Staker';

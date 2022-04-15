@@ -5,7 +5,6 @@ import { stringToHex } from '@polkadot/util';
 import { getInjector } from 'src/modules/wallet/utils';
 import { decodeAddress } from '@polkadot/util-crypto';
 import { u8aToHex } from '@polkadot/util';
-import { useConnectWallet } from 'src/hooks';
 
 const signMessage = stringToHex('Sign this to register to AstarBase for:');
 const PREFIX = '3c42797465733e';
@@ -22,7 +21,6 @@ export const useRegister = () => {
   const account = computed(() => store.getters['general/ethereumAccount']);
   const substrateAccounts = computed(() => store.getters['general/substrateAccounts']);
   const substrateAccount = computed(() => store.getters['general/substrateAccount']);
-  const { openMintNFT } = useConnectWallet();
 
   // Todo: Modify the logic once contract has been finalized
   const register = async () => {
@@ -65,7 +63,6 @@ export const useRegister = () => {
         console.log(receipt);
         store.dispatch('general/setRegistered', true);
         store.commit('general/setLoading', false);
-        openMintNFT();
       });
   };
 
