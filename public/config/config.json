@@ -1,12 +1,12 @@
 {
   "mintContractAddress": "",
-  "astarBaseContractAddress": "0xF183f51D3E8dfb2513c15B046F848D4a68bd3F5D",
+  "astarBaseContractAddress": "0x25257be737210F72DA4F51aCB66903A7520e59d6",
   "network": {
     "name": "Astar",
     "symbol": "ASTR",
     "id": 592,
     "decimals": 18,
     "rpcUrl": "https://rpc.astar.network:8545",
-    "blockExplorerUrl": "https://blockscout.com/astar/address/0x20044438CfaF684e251d1FfC70f999291D49e9a7/transactions"
+    "blockExplorerUrl": "https://blockscout.com/astar/address/0x25257be737210F72DA4F51aCB66903A7520e59d6/transactions"
   }
 }
