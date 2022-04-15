@@ -14,7 +14,7 @@
           The AstarPass registration is completely free (excluding a small gas fee). The first step
           you need to connect with your two wallets, the native and EVM wallet. For example your
           Polkadot.js wallet and Metamask. The second step is to sign and register. Please check the
-          rpc endpoint for Astar is https://evm.astar.network in metamask. <br /><br /><br />
+          rpc endpoint for Astar is https://rpc.astar.network:8545 in metamask. <br /><br /><br />
           <span class="blue">
             (*) Astar Native address is sometimes referred as Polkadot address.
           </span>
@@ -24,7 +24,7 @@
       </div>
     </div>
     <div class="container">
-      <div class="stakerStatus">
+      <div class="stakerStatus tw-bg-white">
         <div v-if="stakerStatus > 0">Your status: Staker</div>
         <div v-else>
           <div v-if="isRegistered">Your status: Pass Holder</div>

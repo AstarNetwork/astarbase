@@ -11,14 +11,14 @@ export default {
     connectWallet: 'Connect to Native Wallet',
     connectedWallet: 'Connected to Native Wallet',
     goToMint: 'Go to Minting Site',
-    mintNftCTA: 'You can mint a NFT for free',
+    mintNftCTA: 'You can mint a NFT for free if you stake ASTR with your native account',
     successfullyRegistered: 'Successfully Registered for',
     stakedDapps: 'Staked dApps',
     connectMetaMask: 'Connect MetaMask',
     connectedMetaMask: 'Connected MetaMask',
     register: 'Register to AstarPass',
     registered:
-      'Congratulations! You now hold the AstarPass. Use it in the Astar ecosystem to claim rewards. Note, AstarPass is valid as long as you are an active staker in dApps staking.',
+      'Congratulations! You now hold the AstarPass. Use it in the Astar ecosystem to claim rewards. Note, AstarPass is valid as long as you are an active staker in',
     mintNft: 'Claim a Free AstarPass NFT',
     wallet: {
       select: 'Please select a wallet to connect to this app',
