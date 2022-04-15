@@ -1,12 +1,15 @@
 async function main() {
-    const newAstarBase = await ethers.getContractFactory("AstarBase_example_upgrade")
-    let proxy = await upgrades.upgradeProxy("0xA046f9Dd588521601923B0e9bAbb650F8117C04C", newAstarBase)
-    console.log("Your contract is upgraded! Proxy remains at:", proxy.address)
+  const newAstarBase = await ethers.getContractFactory('AstarBaseV2');
+  let proxy = await upgrades.upgradeProxy(
+    '0xF183f51D3E8dfb2513c15B046F848D4a68bd3F5D',
+    newAstarBase
+  );
+  console.log('Your contract is upgraded! Proxy remains at:', proxy.address);
 }
 
 main()
-    .then(() => process.exit(0))
-    .catch(error => {
-        console.error(error)
-        process.exit(1)
-    })
+  .then(() => process.exit(0))
+  .catch((error) => {
+    console.error(error);
+    process.exit(1);
+  });
