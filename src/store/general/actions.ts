@@ -75,8 +75,12 @@ const actions: ActionTree<State, StateInterface> = {
 
         const account = accounts[0];
 
+        console.log(config);
+
         // Switch network or create a new configuration if needed.
         await switchNetwork(ethereum, config);
+
+        console.log('switched network');
 
         // Create a registerContract contract instance
         const abiResponse = await fetch('/config/register_abi.json', {
