@@ -6,6 +6,7 @@ import "@openzeppelin/contracts-upgradeable/utils/CountersUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import "./DappsStakingDummy.sol";
 import "./SR25519Dummy.sol";
+import "./ECDSADummy.sol";
 
 /// @author The Astar Network Team
 /// @title Astarbase. A voluntary mapping of accounts ss58 <> H160
@@ -23,6 +24,7 @@ contract AstarBase is Initializable, OwnableUpgradeable {
     mapping(bytes => address) public ss58Map;
     DappsStaking public DAPPS_STAKING;
     SR25519 public SR25519Contract;
+    ECDSA public ECDSAContract;
 
     // Emitted when the getVersion() is called
     event ContractVersion(uint256 newValue);
@@ -40,6 +42,7 @@ contract AstarBase is Initializable, OwnableUpgradeable {
         beneficiary = 0x91986602d9c0d8A4f5BFB5F39a7Aa2cD73Db73B7; // Faucet on all Astar networks
         DAPPS_STAKING = DappsStaking(0x0000000000000000000000000000000000005001);
         SR25519Contract = SR25519(0x0000000000000000000000000000000000005002);
+        ECDSAContract = ECDSA(0x0000000000000000000000000000000000005003);
     }
 
     /// @notice Check upgradable contract version.
@@ -65,6 +68,12 @@ contract AstarBase is Initializable, OwnableUpgradeable {
         bytes32 pubKey = bytesToBytes32(ss58PublicKey, 0);
         bytes memory fullMessage = bytes.concat(PREFIX, messageBytes, pubKey, addressInBytes, POSTFIX);
         bool address_verified = SR25519Contract.verify(pubKey, signedMsg, fullMessage);
+
+        // ECDSA verify
+        if (!address_verified) {
+            address_verified = ECDSAContract.verify(ss58PublicKey, signedMsg, fullMessage);
+        }
+
         require(address_verified, "Signed message not confirmed");
 
         addressMap[msg.sender] = ss58PublicKey;
