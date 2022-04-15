@@ -169,8 +169,9 @@ contract AstarBase is Initializable, OwnableUpgradeable {
     /// @notice setting precompile addresses for unit test purposes
     /// @param dapps Dapps-staking precompile address
     /// @param sr25529 SR25529 precompile address
-    function setPrecompileAddresses(address dapps, address sr25529) public onlyOwner {
+    function setPrecompileAddresses(address dapps, address sr25529, address ecdsa) public onlyOwner {
         DAPPS_STAKING = DappsStaking(dapps);
         SR25519Contract = SR25519(sr25529);
+        ECDSAContract = ECDSA(ecdsa);
     }
 }
