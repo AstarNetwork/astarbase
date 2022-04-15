@@ -63,14 +63,14 @@ export default defineComponent({
     let statusText = 'Not Registered';
     let statusImage = '/icons/AstarPass-logo-gray.png';
 
+    if (isRegistered.value) {
+      statusText = 'Holder';
+      statusImage = '/icons/AstarPass-logo.png';
+    }
+
     if (stakerStatus.value > 0) {
       statusText = 'Staker';
       statusImage = '/icons/AstarPass-logo.png';
-    } else {
-      if (isRegistered.value) {
-        statusText = 'Holder';
-        statusImage = '/icons/AstarPass-logo.png';
-      }
     }
 
     return {
