@@ -114,7 +114,7 @@ contract AstarBase is Initializable, OwnableUpgradeable {
         require(addressMap[evmAddress].length != 0, "Unregistring unknown entry");
 
         bytes memory ss58PublicKey = bytes(addressMap[evmAddress]);
-        addressMap[evmAddress] = new bytes(0);
+        addressMap[evmAddress] = "";
         ss58Map[ss58PublicKey] = address(0);
         registeredCnt.decrement();
     }
