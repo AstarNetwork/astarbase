@@ -9,7 +9,7 @@ import "./SR25519Dummy.sol";
 
 /// @author The Astar Network Team
 /// @title Astarbase. A voluntary mapping of accounts ss58 <> H160
-contract AstarBase is Initializable, OwnableUpgradeable {
+contract AstarBase_example_upgrade is Initializable, OwnableUpgradeable {
     using CountersUpgradeable for CountersUpgradeable.Counter;
     CountersUpgradeable.Counter public registeredCnt;
     uint256 public version;
@@ -46,7 +46,7 @@ contract AstarBase is Initializable, OwnableUpgradeable {
     /// @notice Change this version value for each new contract upgrade
     function getVersion() public {
 
-        emit ContractVersion(1);
+        emit ContractVersion(42);
     }
 
     /// @notice Register senders' address with corresponding SS58 address and store to mapping
