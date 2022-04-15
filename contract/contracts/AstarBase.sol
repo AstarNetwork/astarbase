@@ -132,12 +132,8 @@ contract AstarBase is Initializable, OwnableUpgradeable {
     /// @return staked amount on the SS58 address
     function checkStakerStatus(address evmAddress) public view returns (uint128) {
         bytes memory ss58PublicKey = addressMap[evmAddress];
-
-        if (ss58PublicKey.length == 0) {
-            return 0;
-        }
-
-        uint128 stakedAmount = DAPPS_STAKING.read_staked_amount(ss58PublicKey);
+        bytes memory pubKeyBytes = bytes(abi.encodePacked(ss58PublicKey));
+        uint128 stakedAmount = DAPPS_STAKING.read_staked_amount(pubKeyBytes);
 
         return stakedAmount;
     }
