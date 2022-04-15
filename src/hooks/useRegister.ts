@@ -56,12 +56,12 @@ export const useRegister = () => {
       .once('error', (err: any) => {
         console.error(err);
         const message = err.reason || err.message;
-        store.dispatch('general/setError', message);
+        store.commit('general/setError', message);
         store.commit('general/setLoading', false);
       })
       .then((receipt: any) => {
         console.log(receipt);
-        store.dispatch('general/setRegistered', true);
+        store.commit('general/changeIsRegistered', true);
         store.commit('general/setLoading', false);
       });
   };

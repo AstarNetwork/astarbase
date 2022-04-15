@@ -68,8 +68,6 @@ export default defineComponent({
       statusImage = '/icons/AstarPass-logo.png';
     }
 
-    console.log(isRegistered);
-
     if (stakerStatus.value > 0) {
       statusText = 'Staker';
       statusImage = '/icons/AstarPass-logo.png';

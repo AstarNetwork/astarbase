@@ -20,7 +20,7 @@
       </div>
     </div>
     <!-- Todo: fix `:disabled` -->
-    <div v-if="!registered">
+    <div v-if="!isRegistered">
       <div class="tw-mb-6">
         <label>{{ $t('register.registerLabel') }}</label>
       </div>
@@ -31,7 +31,7 @@
       </div>
     </div>
     <div class="error">{{ errorMessage }}</div>
-    <div v-if="registered">
+    <div v-if="isRegistered">
       <div class="tw-mb-6">
         <label>{{ $t('register.registerLabel') }}</label>
       </div>
@@ -41,7 +41,7 @@
         </button>
       </div>
     </div>
-    <div v-if="registered" class="info-green">
+    <div v-if="isRegistered" class="info-green">
       {{ $t('register.registered') }}
       <a class="link" href="https://portal.astar.network/#/dapp-staking/discover">dapps-staking</a>
     </div>
@@ -60,7 +60,7 @@ export default defineComponent({
     const errorMessage = computed(() => store.getters['general/errorMessage']);
     const isConnected = computed(() => store.getters['general/isMetamaskConnected']);
     const account = computed(() => store.getters['general/ethereumAccount']);
-    const registered = computed(() => store.getters['general/registered']);
+    const isRegistered = computed(() => store.getters['general/isRegistered']);
     const { register } = useRegister();
 
     const connect = () => {
@@ -77,7 +77,7 @@ export default defineComponent({
     };
 
     return {
-      registered,
+      isRegistered,
       errorMessage,
       isConnected,
       account,
