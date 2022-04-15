@@ -1,8 +1,29 @@
 [
   {
-    "inputs": [],
-    "stateMutability": "nonpayable",
-    "type": "constructor"
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "newEntry",
+        "type": "address"
+      }
+    ],
+    "name": "AstarBaseRegistered",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "newValue",
+        "type": "uint256"
+      }
+    ],
+    "name": "ContractVersion",
+    "type": "event"
   },
   {
     "anonymous": false,
@@ -60,9 +81,9 @@
     "name": "addressMap",
     "outputs": [
       {
-        "internalType": "bytes32",
+        "internalType": "bytes",
         "name": "",
-        "type": "bytes32"
+        "type": "bytes"
       }
     ],
     "stateMutability": "view",
@@ -98,6 +119,20 @@
       }
     ],
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getVersion",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "initialize",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -161,9 +196,9 @@
   {
     "inputs": [
       {
-        "internalType": "bytes32",
+        "internalType": "bytes",
         "name": "ss58PublicKey",
-        "type": "bytes32"
+        "type": "bytes"
       },
       {
         "internalType": "bytes",
@@ -212,6 +247,24 @@
   {
     "inputs": [
       {
+        "internalType": "address",
+        "name": "dapps",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "sr25529",
+        "type": "address"
+      }
+    ],
+    "name": "setPrecompileAddresses",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "uint256",
         "name": "_newCost",
         "type": "uint256"
@@ -225,9 +278,9 @@
   {
     "inputs": [
       {
-        "internalType": "bytes32",
+        "internalType": "bytes",
         "name": "",
-        "type": "bytes32"
+        "type": "bytes"
       }
     ],
     "name": "ss58Map",
@@ -277,6 +330,19 @@
   {
     "inputs": [],
     "name": "unregisterFee",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "version",
     "outputs": [
       {
         "internalType": "uint256",
