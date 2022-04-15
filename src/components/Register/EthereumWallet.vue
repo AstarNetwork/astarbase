@@ -73,7 +73,7 @@ export default defineComponent({
 
     const mintNft = () => {
       console.log('go to mint site');
-      window.open('https://shidennft.astar.network/');
+      window.open('https://astranaut.astar.network/');
     };
 
     return {
