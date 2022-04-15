@@ -1,5 +1,5 @@
 ### Shibuya
-* [0x105B46E8046d2ee2E4F3fe369F67CA19EC4e2d38](https://blockscout.com/shibuya/address/0x105B46E8046d2ee2E4F3fe369F67CA19EC4e2d38/read-contract)
+* 0xF183f51D3E8dfb2513c15B046F848D4a68bd3F5D
 
 ### Shiden
 * [0x20044438CfaF684e251d1FfC70f999291D49e9a7](https://blockscout.com/shiden/address/0x20044438CfaF684e251d1FfC70f999291D49e9a7/transactions)
