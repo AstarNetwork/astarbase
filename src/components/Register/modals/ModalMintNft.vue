@@ -20,18 +20,18 @@
                 <img src="/icons/AstarPass-logo.png" />
               </div>
             </div>
-            <div class="tw-text-md tw-text-black-800 tw-text-center">
+            <!-- <div class="tw-text-md tw-text-black-800 tw-text-center">
               {{ $t('register.mintNftCTA') }}
-            </div>
+            </div> -->
           </div>
         </div>
-        <div class="tw-mt-6 tw-flex tw-justify-center">
+        <!-- <div class="tw-mt-6 tw-flex tw-justify-center">
           <a href="https://astarnaut.astar.network" target="_blank" rel="noopener noreferrer">
             <button type="button" class="btn">
               {{ $t('register.goToMint') }}
             </button>
           </a>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>

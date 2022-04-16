@@ -19,7 +19,7 @@ export default {
     register: 'Register to AstarPass',
     registered:
       'Congratulations! You now hold the AstarPass. Use it in the Astar ecosystem to claim rewards. Note, AstarPass is valid as long as you are an active staker in',
-    mintNft: 'Claim a Free AstarPass NFT',
+    mintNft: 'Registered',
     wallet: {
       select: 'Please select a wallet to connect to this app',
       chooseAccount: 'Choose Account',

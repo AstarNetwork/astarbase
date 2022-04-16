@@ -36,7 +36,7 @@
         <label>{{ $t('register.registerLabel') }}</label>
       </div>
       <div>
-        <button class="btn green" @click="mintNft">
+        <button class="btn green">
           {{ $t('register.mintNft') }}
         </button>
       </div>

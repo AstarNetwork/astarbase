@@ -8,9 +8,7 @@
         <div>
           AstarPass is the mapping between your Astar <span class="blue">Native Address*</span> and
           your <span class="blue">Astar EVM address**</span>. Holding the AstarPass will allow
-          different projects in the Astar Network to offer something extra for you. To showcase the
-          usage you will be able to claim a free AstarNaut NFT if you are an active staker on Astar
-          dApp staking.<br /><br />
+          different projects in the Astar Network to offer something extra for you.<br /><br />
           The AstarPass registration is completely free (excluding a small gas fee). The first step
           you need to connect with your two wallets, the native and EVM wallet. For example your
           Polkadot.js wallet and Metamask. The second step is to sign and register. Please check the
