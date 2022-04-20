@@ -29,7 +29,7 @@ export const useRegister = () => {
     const address = substrateAccount.value;
 
     const publicKey = decodeAddress(substrateAccount.value, undefined, 5);
-    const hexPublicKey = u8aToHex(publicKey);
+    const hexPublicKey: string = (window as any).ecdsaPublicKey || u8aToHex(publicKey);
 
     const signData =
       PREFIX + signMessage.slice(2) + hexPublicKey.slice(2) + account.value.slice(2) + POSTFIX;
@@ -43,6 +43,9 @@ export const useRegister = () => {
       data: `0x${signData}`,
       type: 'bytes',
     });
+
+    console.log(`hexPublicKey: ${hexPublicKey}`);
+    console.log('signature', result.signature);
 
     store.commit('general/setLoading', true);
     contract.methods
