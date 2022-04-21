@@ -49,7 +49,7 @@ contract AstarBase is Initializable, OwnableUpgradeable {
     /// @notice Change this version value for each new contract upgrade
     function getVersion() public {
 
-        emit ContractVersion(1);
+        emit ContractVersion(3);
     }
 
     /// @notice Register senders' address with corresponding SS58 address and store to mapping
@@ -65,8 +65,8 @@ contract AstarBase is Initializable, OwnableUpgradeable {
 
         bytes memory messageBytes = bytes(MSG_PREFIX);
         bytes memory addressInBytes = abi.encodePacked(msg.sender);
+        bytes memory fullMessage = bytes.concat(PREFIX, messageBytes, ss58PublicKey, addressInBytes, POSTFIX);
         bytes32 pubKey = bytesToBytes32(ss58PublicKey, 0);
-        bytes memory fullMessage = bytes.concat(PREFIX, messageBytes, pubKey, addressInBytes, POSTFIX);
         bool address_verified = SR25519Contract.verify(pubKey, signedMsg, fullMessage);
 
         // ECDSA verify
