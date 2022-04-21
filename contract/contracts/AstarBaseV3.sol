@@ -10,7 +10,7 @@ import "./ECDSADummy.sol";
 
 /// @author The Astar Network Team
 /// @title Astarbase. A voluntary mapping of accounts ss58 <> H160
-contract AstarBase is Initializable, OwnableUpgradeable {
+contract AstarBaseV3 is Initializable, OwnableUpgradeable {
     using CountersUpgradeable for CountersUpgradeable.Counter;
     CountersUpgradeable.Counter public registeredCnt;
     uint256 public version;
