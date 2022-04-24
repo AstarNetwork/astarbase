@@ -65,6 +65,7 @@ import { computed, defineComponent, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import ModalAccountOption from './ModalAccountOption.vue';
 import { SubstrateAccount } from 'src/store/general';
+import { castMobileSource } from 'src/modules/wallet/utils';
 
 export default defineComponent({
   components: {
@@ -91,7 +92,8 @@ export default defineComponent({
     const substrateAccounts = computed(() => {
       const accounts = store.getters['general/substrateAccounts'];
       const filteredAccounts = accounts.filter((it: SubstrateAccount) => {
-        return it.source === props.selectedWallet;
+        const lookupWallet = castMobileSource(props.selectedWallet);
+        return it.source === lookupWallet;
       });
       return filteredAccounts;
     });
