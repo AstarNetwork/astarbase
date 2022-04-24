@@ -4,6 +4,7 @@ import {
   SupportWallet,
   WalletModalOption,
 } from 'src/modules/wallet';
+import { castMobileSource } from 'src/modules/wallet/utils';
 import { useStore } from 'src/store';
 import { computed, ref, watchEffect } from 'vue';
 import { useAccount } from './useAccount';
@@ -32,7 +33,7 @@ export const useConnectWallet = () => {
   };
 
   watchEffect(async () => {
-    const lookupWallet = modalName.value;
+    const lookupWallet = castMobileSource(modalName.value);
     if (SubstrateWallets.find((it) => it === lookupWallet)) {
       const injected = await getInjectedExtensions();
       const isInstalledExtension = injected.find((it) => lookupWallet === it.name);

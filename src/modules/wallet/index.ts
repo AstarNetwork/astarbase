@@ -83,7 +83,7 @@ export const supportWalletObj = {
     guideUrl: 'https://docs.subwallet.app/user-guide/how-to-install-subwallet',
   },
   [SupportWallet.NovaWallet]: {
-    img: require('/src/assets/img/logo-novawallet.svg'),
+    img: require('/src/assets/img/logo-novawallet.png'),
     name: 'Nova Wallet',
     source: SupportWallet.NovaWallet,
     walletUrl: 'https://novawallet.io/',
