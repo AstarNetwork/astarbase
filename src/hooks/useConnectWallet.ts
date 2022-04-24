@@ -34,13 +34,9 @@ export const useConnectWallet = () => {
 
   watchEffect(async () => {
     const lookupWallet = castMobileSource(modalName.value);
-    alert('lookupWallet');
-    alert(lookupWallet);
     if (SubstrateWallets.find((it) => it === lookupWallet)) {
       const injected = await getInjectedExtensions();
       const isInstalledExtension = injected.find((it) => lookupWallet === it.name);
-      alert('isInstalledExtension');
-      alert(isInstalledExtension);
 
       if (!isInstalledExtension) {
         modalName.value = WalletModalOption.NoExtension;
