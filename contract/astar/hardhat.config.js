@@ -40,6 +40,11 @@ module.exports = {
       url: 'https://rpc.shibuya.astar.network:8545',
       chainId: 81,
       accounts: [`0x${process.env.ACCOUNT_KEY}`]
+    },
+    astar: {
+      url: 'https://rpc.astar.network:8545',
+      chainId: 592,
+      accounts: [`0x${process.env.SUDO_KEY}`]
     }
   }
 };
