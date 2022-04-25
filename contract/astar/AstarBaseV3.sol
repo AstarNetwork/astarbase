@@ -48,7 +48,7 @@ contract AstarBaseV3 is Initializable, OwnableUpgradeable {
     /// @notice Check upgradable contract version.
     /// @notice Change this version value for each new contract upgrade
     function getVersion() public {
-
+        version = 3;
         emit ContractVersion(3);
     }
 
