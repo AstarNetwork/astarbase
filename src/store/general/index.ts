@@ -27,6 +27,8 @@ export interface GeneralStateInterface {
   alertBox: AlertBox;
   isLoading: boolean;
   ethereumAccount: string;
+  stakerStatus: number;
+  isRegistered: boolean;
   registerContract: Contract | undefined;
   astarBaseContractAddress: string;
   currentNetworkStatus: ConnectionType;
@@ -54,6 +56,8 @@ const generalModule: Module<GeneralStateInterface, StateInterface> = {
       alertType: 'success',
     },
     ethereumAccount: '',
+    stakerStatus: 0,
+    isRegistered: false,
     registerContract: undefined,
     astarBaseContractAddress: '',
     currentNetworkStatus: 'connecting',
@@ -65,7 +69,7 @@ const generalModule: Module<GeneralStateInterface, StateInterface> = {
       extensions: [],
     },
     extensionCount: 0,
-    currentNetworkIdx: endpointKey.SHIBUYA,
+    currentNetworkIdx: endpointKey.ASTAR,
     registered: false,
     currentTheme:
       window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches

@@ -73,6 +73,8 @@ const actions: ActionTree<State, StateInterface> = {
           method: 'eth_requestAccounts',
         });
 
+        const account = accounts[0];
+
         // Switch network or create a new configuration if needed.
         await switchNetwork(ethereum, config);
 
@@ -85,19 +87,34 @@ const actions: ActionTree<State, StateInterface> = {
         });
         const abi = await abiResponse.json();
 
+        web3.eth.handleRevert = true;
+
         const registerContract = new web3.eth.Contract(abi, config.astarBaseContractAddress);
 
         // TODO create Astar base contract here and put it to vuex
 
+        const stakerStatus = await registerContract.methods.checkStakerStatus(account).call();
+        const isRegistered = await registerContract.methods.isRegistered(account).call();
+
+        console.log('stakerStatus', stakerStatus);
+        console.log('isRegistered', isRegistered);
+
         commit('connectSuccess', {
-          ethereumAccount: accounts[0],
+          ethereumAccount: account,
           registerContract,
           astarBaseContractAddress: config.astarBaseContractAddress,
+          stakerStatus,
+          isRegistered,
         } as ConnectPayload);
 
         // Register listeners
-        ethereum.on('accountsChanged', (accounts: string[]) => {
+        ethereum.on('accountsChanged', async (accounts: string[]) => {
           commit('changeEthereumAccount', accounts[0]);
+          const stakerStatus = await registerContract.methods.checkStakerStatus(accounts[0]).call();
+          const isRegistered = await registerContract.methods.isRegistered(accounts[0]).call();
+
+          commit('changeStakerStatus', stakerStatus);
+          commit('changeIsRegistered', isRegistered);
         });
 
         ethereum.on('chainChanged', async () => {
@@ -126,6 +143,8 @@ const actions: ActionTree<State, StateInterface> = {
   },
   async disconnect({ commit }) {
     commit('changeEthereumAccount', '');
+    commit('changeStakerStatus', 0);
+    commit('changeIsRegistered', false);
   },
   showAlertMsg({ commit }, { msg, alertType }) {
     commit('setShowAlertMsg', true);

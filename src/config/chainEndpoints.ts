@@ -35,7 +35,7 @@ export const providerEndpoints: ChainProvider[] = [
     networkAlias: 'astar',
     displayName: 'Astar Network (Polkadot)',
     info: 'Smart contract platform for decentralized applications (dapps) on the Polkadot network',
-    endpoint: 'wss://astar.api.onfinality.io/public-ws',
+    endpoint: 'wss://rpc.astar.network',
     favicon: 'https://polkadot.js.org/apps/static/astar.b48435e0.png',
     isSupportContract: true,
     prefix: 0x250,
@@ -45,7 +45,7 @@ export const providerEndpoints: ChainProvider[] = [
     subscan: 'https://astar.subscan.io',
     blockscout: 'https://blockscout.com/astar',
     evmChainId: '592',
-    evmRpc: 'https://rpc.astar.network:8545',
+    evmRpc: 'https://evm.astar.network',
     faucetEndpoint: 'https://astar-discord-faucet.herokuapp.com/astar',
   },
   {
@@ -79,7 +79,7 @@ export const providerEndpoints: ChainProvider[] = [
     subscan: 'https://shibuya.subscan.io',
     blockscout: 'https://blockscout.com/shibuya',
     evmChainId: '81',
-    evmRpc: 'https://rpc.shibuya.astar.network:8545',
+    evmRpc: 'https://evm.shibuya.astar.network',
     faucetEndpoint: 'https://astar-discord-faucet.herokuapp.com/shibuya',
   },
   {

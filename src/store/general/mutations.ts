@@ -9,6 +9,8 @@ export type ConnectPayload = {
   ethereumAccount: string;
   registerContract: Contract;
   astarBaseContractAddress: string;
+  stakerStatus: number;
+  isRegistered: boolean;
 };
 
 export interface GeneralMutations<S = State> {
@@ -16,6 +18,8 @@ export interface GeneralMutations<S = State> {
   connectFailed(state: S, errorMessage: string): void;
   connectSuccess(state: S, payload: ConnectPayload): void;
   changeEthereumAccount(state: S, account: string): void;
+  changeStakerStatus(state: S, status: number): void;
+  changeIsRegistered(state: S, registered: boolean): void;
   setError(state: S, errorMessage: string): void;
   setRegistered(state: S, registered: boolean): void;
   setCurrentNetworkStatus(state: S, networkStatus: ConnectionType): void;
@@ -43,6 +47,8 @@ const mutation: MutationTree<State> & GeneralMutations = {
   connectSuccess(state, payload) {
     state.ethereumAccount = payload.ethereumAccount;
     state.registerContract = payload.registerContract;
+    state.stakerStatus = payload.stakerStatus;
+    state.isRegistered = payload.isRegistered;
     (state.astarBaseContractAddress = payload.astarBaseContractAddress), (state.isLoading = false);
     state.errorMessage = '';
   },
@@ -69,6 +75,12 @@ const mutation: MutationTree<State> & GeneralMutations = {
   },
   changeEthereumAccount(state, account) {
     state.ethereumAccount = account;
+  },
+  changeStakerStatus(state, status) {
+    state.stakerStatus = status;
+  },
+  changeIsRegistered(state, registered) {
+    state.isRegistered = registered;
   },
   setError(state, errorMessage) {
     state.errorMessage = errorMessage;

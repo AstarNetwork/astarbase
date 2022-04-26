@@ -1,7 +1,9 @@
 <template>
   <div class="container-ethereum-wallet">
     <div>
-      <label>{{ $t('register.evmConnectLabel') }}</label>
+      <div class="tw-mb-6">
+        <label>{{ $t('register.evmConnectLabel') }}</label>
+      </div>
       <div>
         <button v-if="!isConnected" class="btn" @click="connect">
           {{ $t('register.connectMetaMask') }}
@@ -18,24 +20,28 @@
       </div>
     </div>
     <!-- Todo: fix `:disabled` -->
-    <div v-if="!registered">
-      <label>{{ $t('register.registerLabel') }}</label>
+    <div v-if="!isRegistered">
+      <div class="tw-mb-6">
+        <label>{{ $t('register.registerLabel') }}</label>
+      </div>
       <div>
         <button :disabled="!isConnected" class="btn" @click="register">
           {{ $t('register.register') }}
         </button>
       </div>
     </div>
-    <div>{{ errorMessage }}</div>
-    <div v-if="registered">
-      <label>{{ $t('register.registerLabel') }}</label>
+    <div class="error">{{ errorMessage }}</div>
+    <div v-if="isRegistered">
+      <div class="tw-mb-6">
+        <label>{{ $t('register.registerLabel') }}</label>
+      </div>
       <div>
-        <button class="btn" @click="mintNft">
+        <button class="btn green">
           {{ $t('register.mintNft') }}
         </button>
       </div>
     </div>
-    <div v-if="registered" class="info-green">
+    <div v-if="isRegistered" class="info-green">
       {{ $t('register.registered') }}
       <a class="link" href="https://portal.astar.network/#/dapp-staking/discover">dapps-staking</a>
     </div>
@@ -54,7 +60,7 @@ export default defineComponent({
     const errorMessage = computed(() => store.getters['general/errorMessage']);
     const isConnected = computed(() => store.getters['general/isMetamaskConnected']);
     const account = computed(() => store.getters['general/ethereumAccount']);
-    const registered = computed(() => store.getters['general/registered']);
+    const isRegistered = computed(() => store.getters['general/isRegistered']);
     const { register } = useRegister();
 
     const connect = () => {
@@ -67,11 +73,11 @@ export default defineComponent({
 
     const mintNft = () => {
       console.log('go to mint site');
-      window.open('https://astarmint-28bcc.web.app/');
+      window.open('https://astarnaut.astar.network/');
     };
 
     return {
-      registered,
+      isRegistered,
       errorMessage,
       isConnected,
       account,
