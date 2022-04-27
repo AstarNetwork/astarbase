@@ -2,7 +2,7 @@ import { useStore } from 'src/store';
 import { computed } from 'vue';
 import { Contract } from 'web3-eth-contract';
 import { stringToHex } from '@polkadot/util';
-import { getInjector } from 'src/modules/wallet/utils';
+import { getInjector, getSelectedAccount } from 'src/modules/wallet/utils';
 import { decodeAddress } from '@polkadot/util-crypto';
 import { u8aToHex } from '@polkadot/util';
 
@@ -26,16 +26,34 @@ export const useRegister = () => {
   const register = async () => {
     const contract = registerContract.value as Contract;
     const injector = await getInjector(substrateAccounts.value);
+    const type = getSelectedAccount(substrateAccounts.value)?.type;
     const address = substrateAccount.value;
 
     const publicKey = decodeAddress(substrateAccount.value, undefined, 5);
-    const hexPublicKey: string = (window as any).ecdsaPublicKey || u8aToHex(publicKey);
+    let hexPublicKey: string = (window as any).ecdsaPublicKey || u8aToHex(publicKey);
+
+    if (type === 'ecdsa') {
+      const pubKeyReponse = prompt('Please provide your ECDSA address public key');
+
+      if (pubKeyReponse && pubKeyReponse.startsWith('0x')) {
+        const num = parseInt(pubKeyReponse, 16);
+
+        if (num.toString(16) === pubKeyReponse.slice(2)) {
+          hexPublicKey = pubKeyReponse;
+        } else {
+          return alert('Please provide a valid hexdecimal public key');
+        }
+      } else {
+        return alert('Please provide a valid hexdecimal public key');
+      }
+    }
 
     const signData =
       PREFIX + signMessage.slice(2) + hexPublicKey.slice(2) + account.value.slice(2) + POSTFIX;
 
     console.log(`Native account: ${substrateAccount.value}`);
     console.log(`H160 address: ${account.value}`);
+    console.log(`Hex public key: ${hexPublicKey}`);
     console.log(`signData: 0x${signData}`);
 
     const result = await injector.signer.signRaw({

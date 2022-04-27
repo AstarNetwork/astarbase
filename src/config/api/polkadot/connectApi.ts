@@ -3,6 +3,7 @@ import { getInjectedExtensions } from 'src/modules/wallet';
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import { web3Accounts } from '@polkadot/extension-dapp';
 import type { InjectedExtension } from '@polkadot/extension-inject/types';
+import type { KeypairType } from '@polkadot/util-crypto/types';
 import { keyring } from '@polkadot/ui-keyring';
 import { isTestChain } from '@polkadot/util';
 import { cryptoWaitReady } from '@polkadot/util-crypto';
@@ -14,6 +15,7 @@ interface InjectedAccountExt {
     source: string;
     whenCreated: number;
   };
+  type: KeypairType | undefined;
 }
 
 const loadAccounts = async (api: ApiPromise) => {
@@ -23,7 +25,7 @@ const loadAccounts = async (api: ApiPromise) => {
     api.rpc.system.chain() as any,
     web3Accounts().then((accounts): InjectedAccountExt[] =>
       accounts.map(
-        ({ address, meta }, whenCreated): InjectedAccountExt => ({
+        ({ address, meta, type }, whenCreated): InjectedAccountExt => ({
           address,
           meta: {
             ...meta,
@@ -31,6 +33,7 @@ const loadAccounts = async (api: ApiPromise) => {
               ${meta.source === 'polkadot-js' ? 'extension' : meta.source})`,
             whenCreated,
           },
+          type,
         })
       )
     ),
@@ -85,6 +88,7 @@ export async function connectApi(endpoint: string, store: any) {
             address,
             name: meta.name.replace('\n              ', ''),
             source: meta.source,
+            type: account.type,
           };
         });
 
