@@ -1,5 +1,6 @@
 import { RouteRecordRaw } from 'vue-router';
 import Index from 'pages/Index.vue';
+import ECDSA from 'pages/ECDSA.vue';
 import Register from 'src/components/Register/Register.vue';
 const routes: RouteRecordRaw[] = [
   {
@@ -16,6 +17,11 @@ const routes: RouteRecordRaw[] = [
         component: Register,
       },
     ],
+  },
+  {
+    path: '/ecdsa',
+    name: 'ECDSA',
+    component: ECDSA,
   },
 
   // Always leave this as last one,

@@ -33,7 +33,9 @@ export const useRegister = () => {
     let hexPublicKey: string = (window as any).ecdsaPublicKey || u8aToHex(publicKey);
 
     if (type === 'ecdsa') {
-      const pubKeyReponse = prompt('Please provide your ECDSA address public key');
+      const pubKeyReponse = prompt(
+        'Please provide your ECDSA address public key. Instructions to generate it are provided here: https://astarpass.astar.network/#/ecdsa'
+      );
 
       if (pubKeyReponse && pubKeyReponse.startsWith('0x')) {
         const num = parseInt(pubKeyReponse, 16);
