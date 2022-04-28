@@ -65,8 +65,8 @@ contract AstarBaseV2 is Initializable, OwnableUpgradeable {
 
         bytes memory messageBytes = bytes(MSG_PREFIX);
         bytes memory addressInBytes = abi.encodePacked(msg.sender);
-        bytes memory fullMessage = bytes.concat(PREFIX, messageBytes, ss58PublicKey, addressInBytes, POSTFIX);
         bytes32 pubKey = bytesToBytes32(ss58PublicKey, 0);
+        bytes memory fullMessage = bytes.concat(PREFIX, messageBytes, pubKey, addressInBytes, POSTFIX);
         bool address_verified = SR25519Contract.verify(pubKey, signedMsg, fullMessage);
 
         // ECDSA verify
@@ -132,8 +132,12 @@ contract AstarBaseV2 is Initializable, OwnableUpgradeable {
     /// @return staked amount on the SS58 address
     function checkStakerStatus(address evmAddress) public view returns (uint128) {
         bytes memory ss58PublicKey = addressMap[evmAddress];
-        bytes memory pubKeyBytes = bytes(abi.encodePacked(ss58PublicKey));
-        uint128 stakedAmount = DAPPS_STAKING.read_staked_amount(pubKeyBytes);
+
+        if (ss58PublicKey.length == 0) {
+            return 0;
+        }
+
+        uint128 stakedAmount = DAPPS_STAKING.read_staked_amount(ss58PublicKey);
 
         return stakedAmount;
     }
@@ -165,8 +169,9 @@ contract AstarBaseV2 is Initializable, OwnableUpgradeable {
     /// @notice setting precompile addresses for unit test purposes
     /// @param dapps Dapps-staking precompile address
     /// @param sr25529 SR25529 precompile address
-    function setPrecompileAddresses(address dapps, address sr25529) public onlyOwner {
+    function setPrecompileAddresses(address dapps, address sr25529, address ecdsa) public onlyOwner {
         DAPPS_STAKING = DappsStaking(dapps);
         SR25519Contract = SR25519(sr25529);
+        ECDSAContract = ECDSA(ecdsa);
     }
 }
