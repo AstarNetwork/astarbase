@@ -4,7 +4,7 @@ import { Contract } from 'web3-eth-contract';
 import { stringToHex } from '@polkadot/util';
 import { getInjector, getSelectedAccount } from 'src/modules/wallet/utils';
 import { decodeAddress } from '@polkadot/util-crypto';
-import { u8aToHex } from '@polkadot/util';
+import { isHex, u8aToHex } from '@polkadot/util';
 
 const signMessage = stringToHex('Sign this to register to AstarBase for:');
 const PREFIX = '3c42797465733e';
@@ -37,14 +37,8 @@ export const useRegister = () => {
         'Please provide your ECDSA address public key. Instructions to generate it are provided here: https://astarpass.astar.network/#/ecdsa'
       );
 
-      if (pubKeyReponse && pubKeyReponse.startsWith('0x')) {
-        const num = parseInt(pubKeyReponse, 16);
-
-        if (num.toString(16) === pubKeyReponse.slice(2)) {
-          hexPublicKey = pubKeyReponse;
-        } else {
-          return alert('Please provide a valid hexdecimal public key');
-        }
+      if (isHex(pubKeyReponse)) {
+        hexPublicKey = pubKeyReponse;
       } else {
         return alert('Please provide a valid hexdecimal public key');
       }
