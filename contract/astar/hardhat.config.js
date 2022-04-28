@@ -39,7 +39,7 @@ module.exports = {
     shibuya: {
       url: 'https://rpc.shibuya.astar.network:8545',
       chainId: 81,
-      accounts: [`0x${process.env.ACCOUNT_KEY}`]
+      accounts: [`0x${process.env.TEST_KEY}`]
     },
     astar: {
       url: 'https://rpc.astar.network:8545',
