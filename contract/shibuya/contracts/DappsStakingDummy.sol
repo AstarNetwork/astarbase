@@ -45,6 +45,22 @@ contract DappsStaking {
         }
     }
 
+    /// @notice Read Staked amount on a given contract for the staker
+    /// @param contract_id contract evm address
+    /// @param staker in form of 20 or 32 hex bytes
+    /// @return amount, Staked amount by the staker
+    function read_staked_amount_on_contract(address contract_id, bytes calldata staker) external pure returns (uint128){
+        if (staker[0] != 0) {
+            if (contract_id != address(0)){
+                return 1;
+            }
+        }
+        else{
+            return 0;
+        }
+        return 0;
+    }
+
     /// @notice Dummy implementation. This code is implemented in precompiled contract
     /// @return total, The most recent total staked amount on contract
     function read_contract_stake(address contract_id) external pure returns (uint128){
@@ -85,6 +101,12 @@ contract DappsStaking {
 
     /// @notice Dummy implementation. This code is implemented in precompiled contract
     function claim_dapp(address, uint128) external pure{
+        return;
+    }
+
+    enum RewardDestination {FreeBalance, StakeBalance}
+    /// @notice Set reward destination for staker rewards
+    function set_reward_destination(RewardDestination) external pure{
         return;
     }
 }
