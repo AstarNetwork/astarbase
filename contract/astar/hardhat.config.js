@@ -42,7 +42,7 @@ module.exports = {
       accounts: [`0x${process.env.TEST_KEY}`]
     },
     astar: {
-      url: 'https://rpc.astar.network:8545',
+      url: 'https://evm.astar.network',
       chainId: 592,
       accounts: [`0x${process.env.SUDO_KEY}`]
     }
