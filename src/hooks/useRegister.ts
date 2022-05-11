@@ -5,7 +5,9 @@ import { stringToHex } from '@polkadot/util';
 import { getInjector, getSelectedAccount } from 'src/modules/wallet/utils';
 import { decodeAddress } from '@polkadot/util-crypto';
 import { isHex, u8aToHex } from '@polkadot/util';
+import { init, recover } from './ecdsa_recover';
 
+const ecdsaSignMsg = '<Bytes>Sign to register for astarpass</Bytes>';
 const signMessage = stringToHex('Sign this to register to AstarBase for:');
 const PREFIX = '3c42797465733e';
 const POSTFIX = '3c2f42797465733e';
@@ -33,15 +35,19 @@ export const useRegister = () => {
     let hexPublicKey: string = (window as any).ecdsaPublicKey || u8aToHex(publicKey);
 
     if (type === 'ecdsa') {
-      const pubKeyReponse = prompt(
-        'Please provide your ECDSA address public key. Instructions to generate it are provided here: https://astarpass.astar.network/#/ecdsa'
-      );
+      await init();
 
-      if (isHex(pubKeyReponse)) {
-        hexPublicKey = pubKeyReponse;
-      } else {
-        return alert('Please provide a valid hexdecimal public key');
-      }
+      const hexMessage = stringToHex(ecdsaSignMsg);
+
+      const result = await injector.signer.signRaw({
+        address,
+        data: hexMessage,
+        type: 'bytes',
+      });
+
+      hexPublicKey = JSON.parse(recover(ecdsaSignMsg, result.signature.slice(2)));
+
+      hexPublicKey = `0x${hexPublicKey}`;
     }
 
     const signData =
