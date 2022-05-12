@@ -5,6 +5,7 @@
   "productName": "astar-base",
   "author": " ",
   "private": true,
+  "homepage": "https://astarnetwork.github.io/astarbase/",
   "scripts": {
     "dev": "quasar dev",
     "build": "yarn run build:spa",
@@ -13,7 +14,9 @@
     "format": "prettier --write **/*.{ts,vue}",
     "check-format": "prettier --check **/*.{ts,vue}",
     "lint": "yarn format && yarn check-format && prettier --write '**/*.{ts,vue,css,json,md,mdx,html}'",
-    "lint:check": "yarn check-format && eslint --ext .ts,.vue ./"
+    "lint:check": "yarn check-format && eslint --ext .ts,.vue ./",
+    "predeploy": "yarn run build",
+    "deploy": "gh-pages -d build"
   },
   "dependencies": {
     "@polkadot/api": "^7.11.1",
@@ -31,6 +34,7 @@
     "@quasar/extras": "^1.12.0",
     "bn.js": "^5.2.0",
     "ethers": "^5.5.4",
+    "gh-pages": "^4.0.0",
     "quasar": "^2.0.0",
     "store": "^2.0.12",
     "vue": "^3.0.0",
