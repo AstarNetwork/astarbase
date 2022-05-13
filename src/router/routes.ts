@@ -18,11 +18,6 @@ const routes: RouteRecordRaw[] = [
       },
     ],
   },
-  {
-    path: '/ecdsa',
-    name: 'ECDSA',
-    component: ECDSA,
-  },
 
   // Always leave this as last one,
   // but you can also remove it

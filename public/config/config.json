@@ -1,12 +1,12 @@
 {
   "mintContractAddress": "0xf008371a7EeD0AB54FDd975fE0d0f66fEFBA3415",
-  "astarBaseContractAddress": "0x8E2fa5A4D4e4f0581B69aF2f8F2Ef2CF205aE8F0",
+  "astarBaseContractAddress": "0xF183f51D3E8dfb2513c15B046F848D4a68bd3F5D",
   "network": {
-    "name": "Astar",
-    "symbol": "ASTR",
-    "id": 592,
+    "name": "shibuya",
+    "symbol": "SBY",
+    "id": 81,
     "decimals": 18,
-    "rpcUrl": "https://evm.astar.network",
-    "blockExplorerUrl": "https://blockscout.com/astar"
+    "rpcUrl": "https://rpc.shibuya.astar.network:8545",
+    "blockExplorerUrl": "https://blockscout.com/shibuya"
   }
 }
