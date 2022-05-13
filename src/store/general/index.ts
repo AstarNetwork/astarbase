@@ -70,7 +70,7 @@ const generalModule: Module<GeneralStateInterface, StateInterface> = {
       extensions: [],
     },
     extensionCount: 0,
-    currentNetworkIdx: endpointKey.SHIBUYA,
+    currentNetworkIdx: endpointKey.SHIDEN,
     registered: false,
     currentTheme:
       window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
