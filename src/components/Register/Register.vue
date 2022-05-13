@@ -2,7 +2,7 @@
   <div class="columns">
     <div class="first">
       <div class="header">
-        <img class="logo-head" src="/icons/AstarPass-logo.png" />
+        <h1>ShibuyaPass (Testnet)</h1>
       </div>
       <div class="info">
         <div>
