@@ -7,7 +7,14 @@
   row-gap: 24px;
   margin-left: 65px;
   padding: 0 85px;
-  background: linear-gradient(148.52deg, rgba(8, 210, 254, 0.1) -2.41%, rgba(7, 200, 254, 0.1) 27.4%, rgba(4, 160, 248, 0.1) 49.92%, rgba(122, 53, 187, 0.1) 92.32%, rgba(177, 18, 120, 0.1) 115.63%);
+  background: linear-gradient(
+    148.52deg,
+    rgba(8, 210, 254, 0.1) -2.41%,
+    rgba(7, 200, 254, 0.1) 27.4%,
+    rgba(4, 160, 248, 0.1) 49.92%,
+    rgba(122, 53, 187, 0.1) 92.32%,
+    rgba(177, 18, 120, 0.1) 115.63%
+  );
 
   @media (max-width: 756px) {
     height: 100%;
@@ -49,13 +56,15 @@
 
 .logo {
   width: 200px;
-  padding: 120px 50px
+  padding: 120px 50px;
 }
 
 .first {
   display: flex;
+  padding: 30px;
   flex-direction: column;
   justify-content: center;
+  background: lightgoldenrodyellow;
 }
 
 .blue {
@@ -76,7 +85,14 @@
 }
 
 .body--dark {
-  .stakerStatus  {
-    background: linear-gradient(100.5deg, #E6007A -16.32%, #703AC2 11.72%, #0070EB 47.31%, #0297FB 70.42%, #0AE2FF 94%);
+  .stakerStatus {
+    background: linear-gradient(
+      100.5deg,
+      #e6007a -16.32%,
+      #703ac2 11.72%,
+      #0070eb 47.31%,
+      #0297fb 70.42%,
+      #0ae2ff 94%
+    );
   }
 }
