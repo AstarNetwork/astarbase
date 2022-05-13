@@ -1,12 +1,12 @@
 {
-  "mintContractAddress": "0xf008371a7EeD0AB54FDd975fE0d0f66fEFBA3415",
-  "astarBaseContractAddress": "0xF183f51D3E8dfb2513c15B046F848D4a68bd3F5D",
+  "mintContractAddress": "",
+  "astarBaseContractAddress": "0x20044438CfaF684e251d1FfC70f999291D49e9a7",
   "network": {
-    "name": "shibuya",
-    "symbol": "SBY",
-    "id": 81,
+    "name": "Shiden",
+    "symbol": "SDN",
+    "id": 336,
     "decimals": 18,
-    "rpcUrl": "https://rpc.shibuya.astar.network:8545",
-    "blockExplorerUrl": "https://blockscout.com/shibuya"
+    "rpcUrl": "https://evm.shiden.astar.network",
+    "blockExplorerUrl": "https://blockscout.com/shiden/address/0x20044438CfaF684e251d1FfC70f999291D49e9a7/transactions"
   }
 }
