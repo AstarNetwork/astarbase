@@ -37,9 +37,14 @@ module.exports = {
       chainId: 31337
     },
     shibuya: {
-      url: 'https://rpc.shibuya.astar.network:8545',
+      url: 'https://evm.shibuya.astar.network',
       chainId: 81,
-      accounts: [`0x${process.env.ACCOUNT_KEY}`]
+      accounts: [`0x${process.env.TEST_KEY}`]
+    },
+    shiden: {
+      url: 'https://evm.shiden.astar.network',
+      chainId: 336,
+      accounts: [`0x${process.env.SUDO_KEY}`]
     },
     astar: {
       url: 'https://evm.astar.network',

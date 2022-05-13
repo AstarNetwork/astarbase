@@ -6,10 +6,11 @@ import "@openzeppelin/contracts-upgradeable/utils/CountersUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import "./DappsStakingDummy.sol";
 import "./SR25519Dummy.sol";
+import "./ECDSADummy.sol";
 
 /// @author The Astar Network Team
 /// @title Astarbase. A voluntary mapping of accounts ss58 <> H160
-contract AstarBase_example_upgrade is Initializable, OwnableUpgradeable {
+contract AstarBaseV2 is Initializable, OwnableUpgradeable {
     using CountersUpgradeable for CountersUpgradeable.Counter;
     CountersUpgradeable.Counter public registeredCnt;
     uint256 public version;
@@ -23,6 +24,7 @@ contract AstarBase_example_upgrade is Initializable, OwnableUpgradeable {
     mapping(bytes => address) public ss58Map;
     DappsStaking public DAPPS_STAKING;
     SR25519 public SR25519Contract;
+    ECDSA public ECDSAContract;
 
     // Emitted when the getVersion() is called
     event ContractVersion(uint256 newValue);
@@ -40,13 +42,14 @@ contract AstarBase_example_upgrade is Initializable, OwnableUpgradeable {
         beneficiary = 0x91986602d9c0d8A4f5BFB5F39a7Aa2cD73Db73B7; // Faucet on all Astar networks
         DAPPS_STAKING = DappsStaking(0x0000000000000000000000000000000000005001);
         SR25519Contract = SR25519(0x0000000000000000000000000000000000005002);
+        ECDSAContract = ECDSA(0x0000000000000000000000000000000000005003);
     }
 
     /// @notice Check upgradable contract version.
     /// @notice Change this version value for each new contract upgrade
     function getVersion() public {
-
-        emit ContractVersion(42);
+        version = 2;
+        emit ContractVersion(2);
     }
 
     /// @notice Register senders' address with corresponding SS58 address and store to mapping
@@ -62,9 +65,15 @@ contract AstarBase_example_upgrade is Initializable, OwnableUpgradeable {
 
         bytes memory messageBytes = bytes(MSG_PREFIX);
         bytes memory addressInBytes = abi.encodePacked(msg.sender);
+        bytes memory fullMessage = bytes.concat(PREFIX, messageBytes, ss58PublicKey, addressInBytes, POSTFIX);
         bytes32 pubKey = bytesToBytes32(ss58PublicKey, 0);
-        bytes memory fullMessage = bytes.concat(PREFIX, messageBytes, pubKey, addressInBytes, POSTFIX);
         bool address_verified = SR25519Contract.verify(pubKey, signedMsg, fullMessage);
+
+        // ECDSA verify
+        if (!address_verified) {
+            address_verified = ECDSAContract.verify(ss58PublicKey, signedMsg, fullMessage);
+        }
+
         require(address_verified, "Signed message not confirmed");
 
         addressMap[msg.sender] = ss58PublicKey;
@@ -105,7 +114,7 @@ contract AstarBase_example_upgrade is Initializable, OwnableUpgradeable {
         require(addressMap[evmAddress].length != 0, "Unregistring unknown entry");
 
         bytes memory ss58PublicKey = bytes(addressMap[evmAddress]);
-        addressMap[evmAddress] = new bytes(0);
+        addressMap[evmAddress] = "";
         ss58Map[ss58PublicKey] = address(0);
         registeredCnt.decrement();
     }
@@ -123,8 +132,12 @@ contract AstarBase_example_upgrade is Initializable, OwnableUpgradeable {
     /// @return staked amount on the SS58 address
     function checkStakerStatus(address evmAddress) public view returns (uint128) {
         bytes memory ss58PublicKey = addressMap[evmAddress];
-        bytes memory pubKeyBytes = bytes(abi.encodePacked(ss58PublicKey));
-        uint128 stakedAmount = DAPPS_STAKING.read_staked_amount(pubKeyBytes);
+
+        if (ss58PublicKey.length == 0) {
+            return 0;
+        }
+
+        uint128 stakedAmount = DAPPS_STAKING.read_staked_amount(ss58PublicKey);
 
         return stakedAmount;
     }
@@ -156,8 +169,9 @@ contract AstarBase_example_upgrade is Initializable, OwnableUpgradeable {
     /// @notice setting precompile addresses for unit test purposes
     /// @param dapps Dapps-staking precompile address
     /// @param sr25529 SR25529 precompile address
-    function setPrecompileAddresses(address dapps, address sr25529) public onlyOwner {
+    function setPrecompileAddresses(address dapps, address sr25529, address ecdsa) public onlyOwner {
         DAPPS_STAKING = DappsStaking(dapps);
         SR25519Contract = SR25519(sr25529);
+        ECDSAContract = ECDSA(ecdsa);
     }
 }
