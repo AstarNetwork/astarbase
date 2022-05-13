@@ -1,42 +1,60 @@
 <template>
   <div class="columns">
+    <div class="first">
+      <div class="header">
+        <img class="logo-head" src="/icons/AstarPass-logo.png" />
+      </div>
+      <div class="info">
+        <div>
+          AstarPass is the mapping between your Astar <span class="blue">Native Address*</span> and
+          your <span class="blue">Astar EVM address**</span>. Holding the AstarPass will allow
+          different projects in the Astar Network to offer something extra for you.<br /><br />
+          The AstarPass registration is completely free (excluding a small gas fee). The first step
+          you need to connect with your two wallets, the native and EVM wallet. For example your
+          Polkadot.js wallet and Metamask. The second step is to sign and register. Please check the
+          rpc endpoint for Astar is https://evm.astar.network in metamask. <br /><br /><br />
+          <span class="blue">
+            (*) Astar Native address is sometimes referred as Polkadot address.
+          </span>
+          <br />
+          <span class="blue">(**) Astar EVM address is also known as MetaMask Address.</span>
+        </div>
+      </div>
+    </div>
     <div class="container">
+      <div class="stakerStatus">
+        <div v-if="stakerStatus > 0">Your status: Staker</div>
+        <div v-else>
+          <div v-if="isRegistered">Your status: Pass Holder</div>
+          <div v-else>Your status: Not Registered</div>
+        </div>
+        <div v-if="stakerStatus > 0 || isRegistered">
+          <img src="/icons/AstarPass-logo.png" />
+        </div>
+        <div v-else>
+          <img src="/icons/AstarPass-logo-gray.png" />
+        </div>
+      </div>
       <SubstrateWallet />
       <EthereumWallet />
     </div>
-    <div class="logo">
-      <div v-if="ethereumAccount">
-        <img
-          v-if="isRegistered && stakerStatus > 0"
-          width="100"
-          src="/icons/shiden-pass-staker.png"
-        />
-        <img v-else-if="isRegistered" width="100" src="/icons/shiden-pass-registered.png" />
-        <img v-else width="100" src="/icons/shiden-pass-gray.png" />
-      </div>
-      <img v-else width="100" src="/icons/shiden-pass-gray.png" />
-    </div>
-    <div class="info">
-      <div>
-        {{ $t('register.info') }} <br /><br />
-        {{ $t('register.info2') }} <br /><br />
-        {{ $t('register.info3') }} <br />
-        {{ $t('register.info4') }}
-      </div>
-    </div>
+    <ModalMintNft v-if="modalName === WalletModalOption.MintNFT" :set-close-modal="setCloseModal" />
   </div>
 </template>
 
 <script lang="ts">
 import { useStore } from 'src/store';
-import { computed, defineComponent } from 'vue';
+import { useConnectWallet } from 'src/hooks';
+import { computed, defineComponent, watch } from 'vue';
 import EthereumWallet from './EthereumWallet.vue';
 import SubstrateWallet from './SubstrateWallet.vue';
+import ModalMintNft from './modals/ModalMintNft.vue';
 
 export default defineComponent({
   components: {
     EthereumWallet,
     SubstrateWallet,
+    ModalMintNft,
   },
   setup() {
     const store = useStore();
@@ -44,7 +62,27 @@ export default defineComponent({
     const stakerStatus = computed(() => store.getters['general/stakerStatus']);
     const isRegistered = computed(() => store.getters['general/isRegistered']);
 
+    const { modalName, selectedWallet, WalletModalOption, setCloseModal, openMintNFT } =
+      useConnectWallet();
+
+    watch(
+      [isRegistered],
+      () => {
+        if (isRegistered.value) {
+          setTimeout(() => {
+            openMintNFT();
+          }, 10);
+        }
+      },
+      { immediate: false }
+    );
+
     return {
+      WalletModalOption,
+      modalName,
+      selectedWallet,
+      setCloseModal,
+      openMintNFT,
       ethereumAccount,
       stakerStatus,
       isRegistered,

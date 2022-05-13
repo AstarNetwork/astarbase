@@ -1,12 +1,5 @@
 <template>
   <div>
-    <div class="header">
-      <h1 class="tw-text-6xl">
-        <img class="logo-head" width="50" src="/icons/shiden-pass.png" />{{
-          $t('common.shidenPass')
-        }}
-      </h1>
-    </div>
     <div class="main-wrapper">
       <main>
         <slot />

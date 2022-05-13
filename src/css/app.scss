@@ -9,15 +9,14 @@
 }
 
 .btn {
-  background: -webkit-gradient(linear, left top, right top, from(#a12bbe), color-stop(50%, #5928b1), to(#1297c0));
-  background: linear-gradient(90deg, #a12bbe 0%, #5928b1 50%, #1297c0 100%);
+  background: linear-gradient(100.5deg, #E6007A -16.32%, #703AC2 11.72%, #0070EB 47.31%, #0297FB 70.42%, #0AE2FF 94%);
   -webkit-box-shadow: 0px 2px 2px rgb(0 0 0 / 50%);
   box-shadow: 0px 2px 2px rgb(0 0 0 / 50%);
   border: 0;
   -webkit-transition: all 0.15s ease-in-out;
   transition: all 0.15s ease-in-out;
   color: white !important;
-  width: 280px;
+  width: 300px;
   @apply tw-shadow tw-rounded-lg
   dark:tw-bg-darkGray-800 tw-cursor-pointer tw-text-blue-900 dark:tw-text-darkGray-100 tw-font-bold tw-py-4 tw-text-lg;
 }
@@ -28,5 +27,11 @@
 }
 
 body {
-  @apply tw-bg-gray-50 dark:tw-bg-black;
+  font-family: 'Maven Pro', sans-serif;
+  font-family: 'Inter', sans-serif !important;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 27px;
 }
+

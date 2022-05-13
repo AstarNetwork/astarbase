@@ -27,6 +27,10 @@ export const useConnectWallet = () => {
     modalName.value = WalletModalOption.SelectWallet;
   };
 
+  const openMintNFT = () => {
+    modalName.value = WalletModalOption.MintNFT;
+  };
+
   const setWalletModal = (wallet: SupportWallet): void => {
     selectedWallet.value = wallet;
     modalName.value = wallet;
@@ -59,6 +63,7 @@ export const useConnectWallet = () => {
     modalAccountSelect,
     isConnectedNetwork,
     openSelectModal,
+    openMintNFT,
     setCloseModal,
     setWalletModal,
     disconnectAccount,

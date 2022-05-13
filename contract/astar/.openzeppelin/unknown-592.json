@@ -1,0 +1,893 @@
+{
+  "manifestVersion": "3.2",
+  "admin": {
+    "address": "0x033146746884B9591AdD6c8b4363D02983801d57",
+    "txHash": "0xd38935bc1bb3d95bda8aa1fb19178829e7f5b2ffe750ca2f18fd6baaa6c76a94"
+  },
+  "proxies": [
+    {
+      "address": "0x25257be737210F72DA4F51aCB66903A7520e59d6",
+      "txHash": "0x59e7ab91a84bfadef7331c37d0b82adb53b30bdbe0d7abc46500111c6581760e",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x8E2fa5A4D4e4f0581B69aF2f8F2Ef2CF205aE8F0",
+      "txHash": "0xdfdcf8064ba61349b817cac71ef6ecf036cfe57de5bd2e1156fc23d3406e5519",
+      "kind": "transparent"
+    }
+  ],
+  "impls": {
+    "a68827f5e2bbc4440fa3ad5f1022ea4e6c42f53c38404c2484c5e33a59ca78b3": {
+      "address": "0xE674517Dda8C4Cd66Ac2EBd8273026c5579CBFfA",
+      "txHash": "0x02746e91f268a35f764401b2917e350f85e22c13a844d56134264dd28c2afc06",
+      "layout": {
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:39"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:44"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_address",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:22"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:87"
+          },
+          {
+            "label": "registeredCnt",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_struct(Counter)488_storage",
+            "contract": "AstarBase",
+            "src": "contracts/AstarBase.sol:15"
+          },
+          {
+            "label": "version",
+            "offset": 0,
+            "slot": "102",
+            "type": "t_uint256",
+            "contract": "AstarBase",
+            "src": "contracts/AstarBase.sol:16"
+          },
+          {
+            "label": "PREFIX",
+            "offset": 0,
+            "slot": "103",
+            "type": "t_bytes_storage",
+            "contract": "AstarBase",
+            "src": "contracts/AstarBase.sol:17"
+          },
+          {
+            "label": "POSTFIX",
+            "offset": 0,
+            "slot": "104",
+            "type": "t_bytes_storage",
+            "contract": "AstarBase",
+            "src": "contracts/AstarBase.sol:18"
+          },
+          {
+            "label": "MSG_PREFIX",
+            "offset": 0,
+            "slot": "105",
+            "type": "t_string_storage",
+            "contract": "AstarBase",
+            "src": "contracts/AstarBase.sol:19"
+          },
+          {
+            "label": "beneficiary",
+            "offset": 0,
+            "slot": "106",
+            "type": "t_address",
+            "contract": "AstarBase",
+            "src": "contracts/AstarBase.sol:20"
+          },
+          {
+            "label": "unregisterFee",
+            "offset": 0,
+            "slot": "107",
+            "type": "t_uint256",
+            "contract": "AstarBase",
+            "src": "contracts/AstarBase.sol:21"
+          },
+          {
+            "label": "paused",
+            "offset": 0,
+            "slot": "108",
+            "type": "t_bool",
+            "contract": "AstarBase",
+            "src": "contracts/AstarBase.sol:22"
+          },
+          {
+            "label": "addressMap",
+            "offset": 0,
+            "slot": "109",
+            "type": "t_mapping(t_address,t_bytes_storage)",
+            "contract": "AstarBase",
+            "src": "contracts/AstarBase.sol:23"
+          },
+          {
+            "label": "ss58Map",
+            "offset": 0,
+            "slot": "110",
+            "type": "t_mapping(t_bytes_memory_ptr,t_address)",
+            "contract": "AstarBase",
+            "src": "contracts/AstarBase.sol:24"
+          },
+          {
+            "label": "DAPPS_STAKING",
+            "offset": 0,
+            "slot": "111",
+            "type": "t_contract(DappsStaking)1761",
+            "contract": "AstarBase",
+            "src": "contracts/AstarBase.sol:25"
+          },
+          {
+            "label": "SR25519Contract",
+            "offset": 0,
+            "slot": "112",
+            "type": "t_contract(SR25519)1837",
+            "contract": "AstarBase",
+            "src": "contracts/AstarBase.sol:26"
+          },
+          {
+            "label": "ECDSAContract",
+            "offset": 0,
+            "slot": "113",
+            "type": "t_contract(ECDSA)1800",
+            "contract": "AstarBase",
+            "src": "contracts/AstarBase.sol:27"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_bytes_memory_ptr": {
+            "label": "bytes",
+            "numberOfBytes": "32"
+          },
+          "t_bytes_storage": {
+            "label": "bytes",
+            "numberOfBytes": "32"
+          },
+          "t_contract(DappsStaking)1761": {
+            "label": "contract DappsStaking",
+            "numberOfBytes": "20"
+          },
+          "t_contract(ECDSA)1800": {
+            "label": "contract ECDSA",
+            "numberOfBytes": "20"
+          },
+          "t_contract(SR25519)1837": {
+            "label": "contract SR25519",
+            "numberOfBytes": "20"
+          },
+          "t_mapping(t_address,t_bytes_storage)": {
+            "label": "mapping(address => bytes)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_bytes_memory_ptr,t_address)": {
+            "label": "mapping(bytes => address)",
+            "numberOfBytes": "32"
+          },
+          "t_string_storage": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_struct(Counter)488_storage": {
+            "label": "struct CountersUpgradeable.Counter",
+            "members": [
+              {
+                "label": "_value",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          }
+        }
+      }
+    },
+    "0cb942993d556e7ecfb82b98d17d2a330850cf376204e80bcf54638c26ed7757": {
+      "address": "0x9452DF21eeAac61da490de821158791C296C27dB",
+      "txHash": "0x2966f088a5597c435357060e3d09f7ec66b09469043c83760d12d0b33e1cd6fc",
+      "layout": {
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:39"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:44"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_address",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:22"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:87"
+          },
+          {
+            "label": "registeredCnt",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_struct(Counter)488_storage",
+            "contract": "AstarBase",
+            "src": "contracts/AstarBase.sol:15"
+          },
+          {
+            "label": "version",
+            "offset": 0,
+            "slot": "102",
+            "type": "t_uint256",
+            "contract": "AstarBase",
+            "src": "contracts/AstarBase.sol:16"
+          },
+          {
+            "label": "PREFIX",
+            "offset": 0,
+            "slot": "103",
+            "type": "t_bytes_storage",
+            "contract": "AstarBase",
+            "src": "contracts/AstarBase.sol:17"
+          },
+          {
+            "label": "POSTFIX",
+            "offset": 0,
+            "slot": "104",
+            "type": "t_bytes_storage",
+            "contract": "AstarBase",
+            "src": "contracts/AstarBase.sol:18"
+          },
+          {
+            "label": "MSG_PREFIX",
+            "offset": 0,
+            "slot": "105",
+            "type": "t_string_storage",
+            "contract": "AstarBase",
+            "src": "contracts/AstarBase.sol:19"
+          },
+          {
+            "label": "beneficiary",
+            "offset": 0,
+            "slot": "106",
+            "type": "t_address",
+            "contract": "AstarBase",
+            "src": "contracts/AstarBase.sol:20"
+          },
+          {
+            "label": "unregisterFee",
+            "offset": 0,
+            "slot": "107",
+            "type": "t_uint256",
+            "contract": "AstarBase",
+            "src": "contracts/AstarBase.sol:21"
+          },
+          {
+            "label": "paused",
+            "offset": 0,
+            "slot": "108",
+            "type": "t_bool",
+            "contract": "AstarBase",
+            "src": "contracts/AstarBase.sol:22"
+          },
+          {
+            "label": "addressMap",
+            "offset": 0,
+            "slot": "109",
+            "type": "t_mapping(t_address,t_bytes_storage)",
+            "contract": "AstarBase",
+            "src": "contracts/AstarBase.sol:23"
+          },
+          {
+            "label": "ss58Map",
+            "offset": 0,
+            "slot": "110",
+            "type": "t_mapping(t_bytes_memory_ptr,t_address)",
+            "contract": "AstarBase",
+            "src": "contracts/AstarBase.sol:24"
+          },
+          {
+            "label": "DAPPS_STAKING",
+            "offset": 0,
+            "slot": "111",
+            "type": "t_contract(DappsStaking)1741",
+            "contract": "AstarBase",
+            "src": "contracts/AstarBase.sol:25"
+          },
+          {
+            "label": "SR25519Contract",
+            "offset": 0,
+            "slot": "112",
+            "type": "t_contract(SR25519)1817",
+            "contract": "AstarBase",
+            "src": "contracts/AstarBase.sol:26"
+          },
+          {
+            "label": "ECDSAContract",
+            "offset": 0,
+            "slot": "113",
+            "type": "t_contract(ECDSA)1780",
+            "contract": "AstarBase",
+            "src": "contracts/AstarBase.sol:27"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_bytes_memory_ptr": {
+            "label": "bytes",
+            "numberOfBytes": "32"
+          },
+          "t_bytes_storage": {
+            "label": "bytes",
+            "numberOfBytes": "32"
+          },
+          "t_contract(DappsStaking)1741": {
+            "label": "contract DappsStaking",
+            "numberOfBytes": "20"
+          },
+          "t_contract(ECDSA)1780": {
+            "label": "contract ECDSA",
+            "numberOfBytes": "20"
+          },
+          "t_contract(SR25519)1817": {
+            "label": "contract SR25519",
+            "numberOfBytes": "20"
+          },
+          "t_mapping(t_address,t_bytes_storage)": {
+            "label": "mapping(address => bytes)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_bytes_memory_ptr,t_address)": {
+            "label": "mapping(bytes => address)",
+            "numberOfBytes": "32"
+          },
+          "t_string_storage": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_struct(Counter)488_storage": {
+            "label": "struct CountersUpgradeable.Counter",
+            "members": [
+              {
+                "label": "_value",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          }
+        }
+      }
+    },
+    "eb5a962149a5866187ba57a2e6be70931d90985c467aa495cbdea3bf1bce2e9b": {
+      "address": "0x7B9006e6D92AE83a5Fdf4d1F4c12d603907AA180",
+      "txHash": "0x1b16c17099ff6fd37502c603d6f4f80538d32bdd769cf65840a9d5ab1e5777e1",
+      "layout": {
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:39"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:44"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_address",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:22"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:87"
+          },
+          {
+            "label": "registeredCnt",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_struct(Counter)488_storage",
+            "contract": "AstarBaseV2",
+            "src": "contracts/AstarBaseV2.sol:15"
+          },
+          {
+            "label": "version",
+            "offset": 0,
+            "slot": "102",
+            "type": "t_uint256",
+            "contract": "AstarBaseV2",
+            "src": "contracts/AstarBaseV2.sol:16"
+          },
+          {
+            "label": "PREFIX",
+            "offset": 0,
+            "slot": "103",
+            "type": "t_bytes_storage",
+            "contract": "AstarBaseV2",
+            "src": "contracts/AstarBaseV2.sol:17"
+          },
+          {
+            "label": "POSTFIX",
+            "offset": 0,
+            "slot": "104",
+            "type": "t_bytes_storage",
+            "contract": "AstarBaseV2",
+            "src": "contracts/AstarBaseV2.sol:18"
+          },
+          {
+            "label": "MSG_PREFIX",
+            "offset": 0,
+            "slot": "105",
+            "type": "t_string_storage",
+            "contract": "AstarBaseV2",
+            "src": "contracts/AstarBaseV2.sol:19"
+          },
+          {
+            "label": "beneficiary",
+            "offset": 0,
+            "slot": "106",
+            "type": "t_address",
+            "contract": "AstarBaseV2",
+            "src": "contracts/AstarBaseV2.sol:20"
+          },
+          {
+            "label": "unregisterFee",
+            "offset": 0,
+            "slot": "107",
+            "type": "t_uint256",
+            "contract": "AstarBaseV2",
+            "src": "contracts/AstarBaseV2.sol:21"
+          },
+          {
+            "label": "paused",
+            "offset": 0,
+            "slot": "108",
+            "type": "t_bool",
+            "contract": "AstarBaseV2",
+            "src": "contracts/AstarBaseV2.sol:22"
+          },
+          {
+            "label": "addressMap",
+            "offset": 0,
+            "slot": "109",
+            "type": "t_mapping(t_address,t_bytes_storage)",
+            "contract": "AstarBaseV2",
+            "src": "contracts/AstarBaseV2.sol:23"
+          },
+          {
+            "label": "ss58Map",
+            "offset": 0,
+            "slot": "110",
+            "type": "t_mapping(t_bytes_memory_ptr,t_address)",
+            "contract": "AstarBaseV2",
+            "src": "contracts/AstarBaseV2.sol:24"
+          },
+          {
+            "label": "DAPPS_STAKING",
+            "offset": 0,
+            "slot": "111",
+            "type": "t_contract(DappsStaking)1235",
+            "contract": "AstarBaseV2",
+            "src": "contracts/AstarBaseV2.sol:25"
+          },
+          {
+            "label": "SR25519Contract",
+            "offset": 0,
+            "slot": "112",
+            "type": "t_contract(SR25519)1311",
+            "contract": "AstarBaseV2",
+            "src": "contracts/AstarBaseV2.sol:26"
+          },
+          {
+            "label": "ECDSAContract",
+            "offset": 0,
+            "slot": "113",
+            "type": "t_contract(ECDSA)1274",
+            "contract": "AstarBaseV2",
+            "src": "contracts/AstarBaseV2.sol:27"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_bytes_memory_ptr": {
+            "label": "bytes",
+            "numberOfBytes": "32"
+          },
+          "t_bytes_storage": {
+            "label": "bytes",
+            "numberOfBytes": "32"
+          },
+          "t_contract(DappsStaking)1235": {
+            "label": "contract DappsStaking",
+            "numberOfBytes": "20"
+          },
+          "t_contract(ECDSA)1274": {
+            "label": "contract ECDSA",
+            "numberOfBytes": "20"
+          },
+          "t_contract(SR25519)1311": {
+            "label": "contract SR25519",
+            "numberOfBytes": "20"
+          },
+          "t_mapping(t_address,t_bytes_storage)": {
+            "label": "mapping(address => bytes)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_bytes_memory_ptr,t_address)": {
+            "label": "mapping(bytes => address)",
+            "numberOfBytes": "32"
+          },
+          "t_string_storage": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_struct(Counter)488_storage": {
+            "label": "struct CountersUpgradeable.Counter",
+            "members": [
+              {
+                "label": "_value",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          }
+        }
+      }
+    },
+    "f57070ed419cc28a2234a559c5b030dd77e435f7dcca00ae8fe84d9c67c6d409": {
+      "address": "0xAD53fE81703C679cfae453cCa245e9cA382A675C",
+      "txHash": "0x843714333afe292cea6c274d14cd85c587e5db486e919441a2f3d62adf6ce690",
+      "layout": {
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:39"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:44"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_address",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:22"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:87"
+          },
+          {
+            "label": "registeredCnt",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_struct(Counter)488_storage",
+            "contract": "AstarBaseV3",
+            "src": "contracts/AstarBaseV3.sol:16"
+          },
+          {
+            "label": "version",
+            "offset": 0,
+            "slot": "102",
+            "type": "t_uint256",
+            "contract": "AstarBaseV3",
+            "src": "contracts/AstarBaseV3.sol:17"
+          },
+          {
+            "label": "PREFIX",
+            "offset": 0,
+            "slot": "103",
+            "type": "t_bytes_storage",
+            "contract": "AstarBaseV3",
+            "src": "contracts/AstarBaseV3.sol:18"
+          },
+          {
+            "label": "POSTFIX",
+            "offset": 0,
+            "slot": "104",
+            "type": "t_bytes_storage",
+            "contract": "AstarBaseV3",
+            "src": "contracts/AstarBaseV3.sol:19"
+          },
+          {
+            "label": "MSG_PREFIX",
+            "offset": 0,
+            "slot": "105",
+            "type": "t_string_storage",
+            "contract": "AstarBaseV3",
+            "src": "contracts/AstarBaseV3.sol:20"
+          },
+          {
+            "label": "beneficiary",
+            "offset": 0,
+            "slot": "106",
+            "type": "t_address",
+            "contract": "AstarBaseV3",
+            "src": "contracts/AstarBaseV3.sol:21"
+          },
+          {
+            "label": "unregisterFee",
+            "offset": 0,
+            "slot": "107",
+            "type": "t_uint256",
+            "contract": "AstarBaseV3",
+            "src": "contracts/AstarBaseV3.sol:22"
+          },
+          {
+            "label": "paused",
+            "offset": 0,
+            "slot": "108",
+            "type": "t_bool",
+            "contract": "AstarBaseV3",
+            "src": "contracts/AstarBaseV3.sol:23"
+          },
+          {
+            "label": "addressMap",
+            "offset": 0,
+            "slot": "109",
+            "type": "t_mapping(t_address,t_bytes_storage)",
+            "contract": "AstarBaseV3",
+            "src": "contracts/AstarBaseV3.sol:24"
+          },
+          {
+            "label": "ss58Map",
+            "offset": 0,
+            "slot": "110",
+            "type": "t_mapping(t_bytes_memory_ptr,t_address)",
+            "contract": "AstarBaseV3",
+            "src": "contracts/AstarBaseV3.sol:25"
+          },
+          {
+            "label": "DAPPS_STAKING",
+            "offset": 0,
+            "slot": "111",
+            "type": "t_contract(DappsStaking)1315",
+            "contract": "AstarBaseV3",
+            "src": "contracts/AstarBaseV3.sol:26"
+          },
+          {
+            "label": "SR25519Contract",
+            "offset": 0,
+            "slot": "112",
+            "type": "t_contract(SR25519)1391",
+            "contract": "AstarBaseV3",
+            "src": "contracts/AstarBaseV3.sol:27"
+          },
+          {
+            "label": "ECDSAContract",
+            "offset": 0,
+            "slot": "113",
+            "type": "t_contract(ECDSA)1354",
+            "contract": "AstarBaseV3",
+            "src": "contracts/AstarBaseV3.sol:28"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_bytes_memory_ptr": {
+            "label": "bytes",
+            "numberOfBytes": "32"
+          },
+          "t_bytes_storage": {
+            "label": "bytes",
+            "numberOfBytes": "32"
+          },
+          "t_contract(DappsStaking)1315": {
+            "label": "contract DappsStaking",
+            "numberOfBytes": "20"
+          },
+          "t_contract(ECDSA)1354": {
+            "label": "contract ECDSA",
+            "numberOfBytes": "20"
+          },
+          "t_contract(SR25519)1391": {
+            "label": "contract SR25519",
+            "numberOfBytes": "20"
+          },
+          "t_mapping(t_address,t_bytes_storage)": {
+            "label": "mapping(address => bytes)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_bytes_memory_ptr,t_address)": {
+            "label": "mapping(bytes => address)",
+            "numberOfBytes": "32"
+          },
+          "t_string_storage": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_struct(Counter)488_storage": {
+            "label": "struct CountersUpgradeable.Counter",
+            "members": [
+              {
+                "label": "_value",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          }
+        }
+      }
+    }
+  }
+}

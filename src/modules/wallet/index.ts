@@ -21,6 +21,7 @@ export const WalletModalOption = {
   SelectWallet: 'SelectWallet',
   SelectSubstrateAccount: 'SelectSubstrateAccount',
   NoExtension: 'NoExtension',
+  MintNFT: 'MintNFT',
   PolkadotJs: SupportWallet.PolkadotJs,
   Clover: SupportWallet.Clover,
   Math: SupportWallet.Math,

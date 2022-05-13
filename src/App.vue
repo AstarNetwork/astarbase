@@ -89,12 +89,4 @@ export default defineComponent({
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
 }
-
-body {
-  background-image: url(/icons/bg.png);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  color: white;
-}
 </style>

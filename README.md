@@ -1,4 +1,4 @@
-# AstarBase (or AstarPass)
+# AstarBase (AstarPass/ShidenPass)
 
 ## Introduction
 
@@ -8,7 +8,7 @@ There are couple of facts for Shiden/Astar ecosystem:
 2. While we are building multi virtual Machine future, today most of the dApps are using Ethereum Virtual Machine (EVM) which uses Ethereum address space, usually referred as MetaMask accounts or H160.
 3. Our unique feature is dApps Staking which provides basic income for developers and a staking mechanism for the users. Both dApps developers and users benefit from it.
 
-## Goals
+More info for the developers can be found in [AstarBase documentation](https://docs.astar.network/build/smart-contracts/ethereum-virtual-machine/astarbase)
 
 The goals of this project:
 
@@ -19,7 +19,7 @@ The goals of this project:
 
 ## Scope
 
-The front-end implementation for AstarBase (or AstarPass) will allow user to connect with Polkadot and an EVM wallet (like MetaMask) at the same time and write this address pair to the EVM smart contract.
+The front-end implementation for AstarBase (called AstarPass on Astar and ShidenPass on Shiden) will allow user to connect with Polkadot and an EVM wallet (like MetaMask) at the same time and write this address pair to the EVM smart contract.
 The EVM smart contract (AstarBase) will verify on-chain that those addresses are valid and that users are participating in Astar dApps Staking.
 
 ## Targeted users
@@ -42,7 +42,3 @@ One of the biggest challenges for new projects is to attract users. The AstarBas
 ## Example Use Case
 <img width="632" alt="Screenshot 2022-03-16 at 14 32 41" src="https://user-images.githubusercontent.com/34627453/158603228-976d0559-42e3-4949-862d-4379b95a6c06.png">
 
-## How to motivate users to register in AstarBase?
-
-- Create articles and AMA sessions explaining benefits for users.
-- NFT airdrop for AstarBase users on both Shiden and Astar.
