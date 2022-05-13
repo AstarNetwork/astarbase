@@ -13,5 +13,5 @@ jobs:
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_ASTARPASS_979E5 }}'
-          projectId: astarpass-979e5
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_ASTARBASE_A4922 }}'
+          projectId: astarbase-a4922
