@@ -2,22 +2,24 @@
   <div class="columns">
     <div class="first">
       <div class="header">
-        <img class="logo-head" src="/icons/AstarPass-logo.png" />
+        <h1 class="tw-text-4xl tw-font-extrabold">Shiden Pass</h1>
       </div>
       <div class="info">
         <div>
-          AstarPass is the mapping between your Astar <span class="blue">Native Address*</span> and
-          your <span class="blue">Astar EVM address**</span>. Holding the AstarPass will allow
-          different projects in the Astar Network to offer something extra for you.<br /><br />
-          The AstarPass registration is completely free (excluding a small gas fee). The first step
+          ShidenPass is the mapping between your Shiden
+          <span class="blue">Native Address*</span> and your
+          <span class="blue">Shiden EVM address**</span>. Holding the ShidenPass will allow
+          different projects in the Shiden Network to offer something extra for you.<br /><br />
+          The ShidenPass registration is completely free (excluding a small gas fee). The first step
           you need to connect with your two wallets, the native and EVM wallet. For example your
           Polkadot.js wallet and Metamask. The second step is to sign and register. Please check the
-          rpc endpoint for Astar is https://evm.astar.network in metamask. <br /><br /><br />
+          rpc endpoint for Shiden is https://evm.shiden.astar.network in metamask.
+          <br /><br /><br />
           <span class="blue">
-            (*) Astar Native address is sometimes referred as Polkadot address.
+            (*) Shiden Native address is sometimes referred as Polkadot address.
           </span>
           <br />
-          <span class="blue">(**) Astar EVM address is also known as MetaMask Address.</span>
+          <span class="blue">(**) Shiden EVM address is also known as MetaMask Address.</span>
         </div>
       </div>
     </div>
@@ -28,12 +30,12 @@
           <div v-if="isRegistered">Your status: Pass Holder</div>
           <div v-else>Your status: Not Registered</div>
         </div>
-        <div v-if="stakerStatus > 0 || isRegistered">
-          <img src="/icons/AstarPass-logo.png" />
+        <!-- <div v-if="stakerStatus > 0 || isRegistered">
+          <div class="tw-text-3xl">Shiden Pass</div>
         </div>
         <div v-else>
-          <img src="/icons/AstarPass-logo-gray.png" />
-        </div>
+          <div class="tw-text-3xl tw-gray-100">Shiden Pass</div>
+        </div> -->
       </div>
       <SubstrateWallet />
       <EthereumWallet />
