@@ -2,7 +2,9 @@
   <div class="columns">
     <div class="first">
       <div class="header">
-        <h1 class="tw-text-4xl tw-font-extrabold">Shiden Pass</h1>
+        <div class="tw-text-4xl tw-font-bold tw-text-indigo-500">
+          <img width="50" src="/icons/shiden.webp" class="tw-inline-block" /> Shiden Pass
+        </div>
       </div>
       <div class="info">
         <div>
