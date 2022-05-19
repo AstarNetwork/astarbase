@@ -55,7 +55,7 @@ const actions: ActionTree<State, StateInterface> = {
     const { ethereum } = window as any;
     const isMetamaskInstalled = ethereum && ethereum.isMetaMask;
 
-    const configResponse = await fetch('/config/config.json', {
+    const configResponse = await fetch('/config/register_config.json', {
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
