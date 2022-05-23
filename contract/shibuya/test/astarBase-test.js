@@ -18,7 +18,7 @@ describe('AstarBaseV3 functions', function () {
     AstarBase = await ethers.getContractFactory('AstarBase');
     NewAstarBase = await ethers.getContractFactory('AstarBaseV3');
     DappsS = await ethers.getContractFactory('DappsStaking');
-    Sr25519 = await ethers.getContractFactory('SR25519');
+    Sr25519 = await ethers.getContractFactory('SR25519Mock');
     Ecdsa = await ethers.getContractFactory('ECDSA');
 
     astarBaseProxy = await upgrades.deployProxy(AstarBase);
@@ -45,17 +45,34 @@ describe('AstarBaseV3 functions', function () {
   });
 
   it('register ss58 works', async function () {
-    const ss58PublicKey = '0xe08631af2471a85e879e093250639f0b716cf912ec9a8aded40c8d8a824f0154';
+    // Mock contract checks only last byte
+    // for public key 1 is valid value
+    // for message 9 is valid value
+    const ss58PublicKey = '0x1111111111111111111111111111111111111111111111111111111111111111';
     const signedMsg =
-      '0xe622d5dc321cb568d02b388fb3a023f578f37772c0331ef3911600020dd7434edc5015210de0f15e54add7e9229ae1dcceadd4de53449e598793125baa59238a';
+      '0x99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999';
 
     expect(await ab.registeredCnt()).to.equal(0);
     let tx = await ab.connect(bob).register(ss58PublicKey, signedMsg);
     let receipt = await tx.wait();
-    console.log(await ab.registeredCnt());
     expect(await ab.registeredCnt()).to.equal(1);
 
     expect(receipt.events[0].args[0]).to.equal(bob.address);
     expect(receipt.events[0].event).to.equal('AstarBaseRegistered');
+  });
+
+  it('register fails, rejected by Sr25519.verify()', async function () {
+    // Mock contract checks only last byte
+    // for public key 1 is valid value
+    // for message 9 is valid value
+    const ss58PublicKey = '0x1111111111111111111111111111111111111111111111111111111111111110';
+    const signedMsg =
+      '0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000';
+
+    expect(await ab.registeredCnt()).to.equal(0);
+    await expect(ab.connect(bob).register(ss58PublicKey, signedMsg)).to.revertedWith(
+      'Signed message not confirmed'
+    );
+    expect(await ab.registeredCnt()).to.equal(0);
   });
 });

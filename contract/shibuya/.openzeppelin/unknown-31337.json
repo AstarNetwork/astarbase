@@ -32,7 +32,12 @@
     },
     {
       "address": "0x9A676e781A523b5d0C0e43731313A708CB607508",
-      "txHash": "0x010a67e9be712061376b6b2ce7ad1f5b9b3628c430b9d0a4eafa0abbc657fa6b",
+      "txHash": "0xbc3181f8ec2c96dc4e9aa82b2dada99ab5633a3f8a6b53ad27ef75e2e3aa8e73",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xc6e7DF5E7b4f2A278906862b61205850344D4e7d",
+      "txHash": "0xd48a74bcc483a2a6ea34794eb16e28de50ae647ff6f6ccd2075c91103e00e870",
       "kind": "transparent"
     }
   ],
