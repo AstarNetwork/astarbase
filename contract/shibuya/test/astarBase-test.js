@@ -12,14 +12,28 @@ describe('AstarBaseV3 functions', function () {
   let owner;
   let bob;
 
+  // Mock contract checks only last byte
+  // for public key 1 is valid value
+  // for message 9 is valid value
+  const validSs58PublicKey = '0x1111111111111111111111111111111111111111111111111111111111111111';
+  const invalidPublicKey = '0x0111111111111111111111111111111111111111111111111111111111111110';
+  const validECDSAPublicKey = '0x2222222222222222222222222222222222222222222222222222222222222222';
+  const stakedOnContract = 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA';
+  const validSignedMsg =
+    '0x99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999';
+  const invalidSignedMsg =
+    '0x88888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888';
+
+  const staked_amount = 50; // check dapps staking mock
+
   beforeEach(async function () {
     [owner, bob] = await ethers.getSigners();
 
     AstarBase = await ethers.getContractFactory('AstarBase');
     NewAstarBase = await ethers.getContractFactory('AstarBaseV3');
-    DappsS = await ethers.getContractFactory('DappsStaking');
+    DappsS = await ethers.getContractFactory('DappsStakingMock');
     Sr25519 = await ethers.getContractFactory('SR25519Mock');
-    Ecdsa = await ethers.getContractFactory('ECDSA');
+    Ecdsa = await ethers.getContractFactory('ECDSAMock');
 
     astarBaseProxy = await upgrades.deployProxy(AstarBase);
     ab = await upgrades.upgradeProxy(astarBaseProxy.address, NewAstarBase);
@@ -44,35 +58,58 @@ describe('AstarBaseV3 functions', function () {
     expect((await ab.unregisterFee()) - expectedFee).to.equal(0);
   });
 
-  it('register ss58 works', async function () {
-    // Mock contract checks only last byte
-    // for public key 1 is valid value
-    // for message 9 is valid value
-    const ss58PublicKey = '0x1111111111111111111111111111111111111111111111111111111111111111';
-    const signedMsg =
-      '0x99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999';
+  it('register ss58 OK', async function () {
+    // expect(await ab.registeredCnt()).to.equal(0);
+    // expect(await ab.isRegistered(bob.address)).to.be.false;
+    // let tx = await ab.connect(bob).register(validSs58PublicKey, validSignedMsg);
+    // let receipt = await tx.wait();
+    // expect(await ab.registeredCnt()).to.equal(1);
 
+    // expect(receipt.events[0].args[0]).to.equal(bob.address);
+    // expect(receipt.events[0].event).to.equal('AstarBaseRegistered');
+
+    // expect(await ab.isRegistered(bob.address)).to.be.true;
+    // console.log('Bob', bob.address);
+    register_and_verify(validSs58PublicKey, validSignedMsg, bob);
+  });
+
+  it('register ecdsa OK, rejected by Sr25519.verify() but Ecdsa is verified', async function () {
     expect(await ab.registeredCnt()).to.equal(0);
-    let tx = await ab.connect(bob).register(ss58PublicKey, signedMsg);
+    expect(await ab.isRegistered(bob.address)).to.be.false;
+    let tx = await ab.connect(bob).register(validECDSAPublicKey, validSignedMsg);
     let receipt = await tx.wait();
     expect(await ab.registeredCnt()).to.equal(1);
 
     expect(receipt.events[0].args[0]).to.equal(bob.address);
     expect(receipt.events[0].event).to.equal('AstarBaseRegistered');
+    expect(await ab.isRegistered(bob.address)).to.be.true;
   });
 
   it('register fails, rejected by Sr25519.verify()', async function () {
-    // Mock contract checks only last byte
-    // for public key 1 is valid value
-    // for message 9 is valid value
-    const ss58PublicKey = '0x1111111111111111111111111111111111111111111111111111111111111110';
-    const signedMsg =
-      '0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000';
-
     expect(await ab.registeredCnt()).to.equal(0);
-    await expect(ab.connect(bob).register(ss58PublicKey, signedMsg)).to.revertedWith(
+    await expect(ab.connect(bob).register(invalidPublicKey, invalidSignedMsg)).to.revertedWith(
       'Signed message not confirmed'
     );
     expect(await ab.registeredCnt()).to.equal(0);
+    expect(await ab.isRegistered(bob.address)).to.be.false;
+  });
+
+  it('read_staked_amount OK', async function () {
+    register_and_verify(validSs58PublicKey, validSignedMsg, bob);
+    expect(await dapps.read_staked_amount(bob.address)).to.be.equal(staked_amount);
   });
 });
+
+async function register_and_verify(pubKey, signedMsg, user) {
+  expect(await ab.registeredCnt()).to.equal(0);
+  expect(await ab.isRegistered(user.address)).to.be.false;
+  let tx = await ab.connect(user).register(pubKey, signedMsg);
+  let receipt = await tx.wait();
+  expect(await ab.registeredCnt()).to.equal(1);
+
+  expect(receipt.events[0].args[0]).to.equal(user.address);
+  expect(receipt.events[0].event).to.equal('AstarBaseRegistered');
+
+  expect(await ab.isRegistered(user.address)).to.be.true;
+  console.log('User:', user.address);
+}
