@@ -19,6 +19,7 @@ describe('AstarBaseV3 functions', function () {
   const invalidPublicKey = '0x0111111111111111111111111111111111111111111111111111111111111110';
   const validECDSAPublicKey = '0x2222222222222222222222222222222222222222222222222222222222222222';
   const stakedOnContract = '0xaAaAaAaaAaAaAaaAaAAAAAAAAaaaAaAaAaaAaaAa';
+  const notStakedContract = '0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB';
   const validSignedMsg =
     '0x99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999';
   const invalidSignedMsg =
@@ -95,13 +96,34 @@ describe('AstarBaseV3 functions', function () {
   });
 
   it('dapps staking precompile read_staked_amount OK', async function () {
-    register_and_verify(validSs58PublicKey, validSignedMsg, bob);
-    expect(await dapps.read_staked_amount(bob.address)).to.be.equal(staked_amount);
+    await register_and_verify(validSs58PublicKey, validSignedMsg, bob);
+    expect(await dapps.read_staked_amount(validSs58PublicKey)).to.be.equal(staked_amount);
   });
 
   it('dapps staking precompile read_staked_amount_on_contract OK', async function () {
     register_and_verify(validSs58PublicKey, validSignedMsg, bob);
-    expect(await dapps.read_staked_amount_on_contract(stakedOnContract, bob.address)).to.be.equal(
+    expect(
+      await dapps.read_staked_amount_on_contract(stakedOnContract, validSs58PublicKey)
+    ).to.be.equal(staked_amount);
+  });
+
+  it('dapps staking precompile read_staked_amount_on_contract NOK', async function () {
+    register_and_verify(validSs58PublicKey, validSignedMsg, bob);
+    expect(
+      await dapps.read_staked_amount_on_contract(notStakedContract, validSs58PublicKey)
+    ).to.be.equal(0);
+  });
+
+  it('dapps staking precompile read_staked_amount_on_contract OK', async function () {
+    await register_and_verify(validSs58PublicKey, validSignedMsg, bob);
+    expect(
+      await dapps.read_staked_amount_on_contract(stakedOnContract, validSs58PublicKey)
+    ).to.be.equal(staked_amount);
+  });
+
+  it('checkStakerStatusOnContract OK', async function () {
+    await register_and_verify(validSs58PublicKey, validSignedMsg, bob);
+    expect(await ab.checkStakerStatusOnContract(bob.address, stakedOnContract)).to.be.equal(
       staked_amount
     );
   });

@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: BSD-3-Clause
+import "hardhat/console.sol";
+import {Memory} from "./Memory.sol";
+
 
 pragma solidity 0.8.7;
 
@@ -36,11 +39,12 @@ contract DappsStakingMock {
     /// @notice Dummy implementation. This code is implemented in precompiled contract
     /// @param staker in form of 20 or 32 hex bytes
     /// @return amount, Staked amount by the staker
-    function read_staked_amount(bytes calldata staker) external pure returns (uint128){
+    function read_staked_amount(bytes calldata staker) external view returns (uint128){
         // make hardhat bob account to be staker
-        address bob = 0x70997970C51812dc3A010C7d01b50e0d17dc79C8;
-        address stakerAddress = bytesToAddress(staker);
-        if (stakerAddress == bob) {
+        bytes memory bobSS58 = bytes(hex"1111111111111111111111111111111111111111111111111111111111111111");
+        if (equals(staker, bobSS58)) {
+            console.log("staker confirmed:");
+            console.logBytes(staker);
             return 50;
         }
         else{
@@ -48,32 +52,49 @@ contract DappsStakingMock {
         }
     }
 
-    function bytesToAddress(bytes memory source) public pure returns(address addr) {
-        assembly {
-            addr := mload(add(source, 0x14))
-        }
-    }
-
     /// @notice Read Staked amount on a given contract for the staker
     /// @param contract_id contract evm address
     /// @param staker in form of 20 or 32 hex bytes
     /// @return amount, Staked amount by the staker
-    function read_staked_amount_on_contract(address contract_id, bytes calldata staker) external pure returns (uint128){
+    function read_staked_amount_on_contract(address contract_id, bytes calldata staker) external view returns (uint128){
         // make hardhat bob account to be staker
-        address bob = 0x70997970C51812dc3A010C7d01b50e0d17dc79C8;
-        address stakerAddress = bytesToAddress(staker);
+        bytes memory bobSS58 = bytes(hex"1111111111111111111111111111111111111111111111111111111111111111");
         address stakedContract = 0xaAaAaAaaAaAaAaaAaAAAAAAAAaaaAaAaAaaAaaAa;
-        if (stakerAddress == bob
+        console.log("contract %s", contract_id);
+        console.logBytes(staker);
+        if (equals(staker, bobSS58)
             && contract_id == stakedContract
         ) {
             if (contract_id != address(0)){
+                console.log("staker confirmed:");
+                console.logBytes(staker);
                 return 50;
             }
         }
         else{
+            console.log("staker not confirmed 1");
             return 0;
         }
+        console.log("staker not confirmed 2");
         return 0;
+    }
+
+    // Checks if two `bytes memory` variables are equal. This is done using hashing,
+    // which is much more gas efficient then comparing each byte individually.
+    // Equality means that:
+    //  - 'self.length == other.length'
+    //  - For 'n' in '[0, self.length)', 'self[n] == other[n]'
+    function equals(bytes memory self, bytes memory other) internal pure returns (bool equal) {
+        if (self.length != other.length) {
+            return false;
+        }
+        uint addr;
+        uint addr2;
+        assembly {
+            addr := add(self, /*BYTES_HEADER_SIZE*/32)
+            addr2 := add(other, /*BYTES_HEADER_SIZE*/32)
+        }
+        equal = Memory.equals(addr, addr2, self.length);
     }
 
     /// @notice Dummy implementation. This code is implemented in precompiled contract
