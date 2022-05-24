@@ -37,6 +37,7 @@ contract DappsStakingMock {
     /// @param staker in form of 20 or 32 hex bytes
     /// @return amount, Staked amount by the staker
     function read_staked_amount(bytes calldata staker) external pure returns (uint128){
+        // make hardhat bob account to be staker
         address bob = 0x70997970C51812dc3A010C7d01b50e0d17dc79C8;
         address stakerAddress = bytesToAddress(staker);
         if (stakerAddress == bob) {
@@ -58,9 +59,15 @@ contract DappsStakingMock {
     /// @param staker in form of 20 or 32 hex bytes
     /// @return amount, Staked amount by the staker
     function read_staked_amount_on_contract(address contract_id, bytes calldata staker) external pure returns (uint128){
-        if (staker[0] != 0) {
+        // make hardhat bob account to be staker
+        address bob = 0x70997970C51812dc3A010C7d01b50e0d17dc79C8;
+        address stakerAddress = bytesToAddress(staker);
+        address stakedContract = 0xaAaAaAaaAaAaAaaAaAAAAAAAAaaaAaAaAaaAaaAa;
+        if (stakerAddress == bob
+            && contract_id == stakedContract
+        ) {
             if (contract_id != address(0)){
-                return 1;
+                return 50;
             }
         }
         else{

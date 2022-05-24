@@ -18,7 +18,7 @@ describe('AstarBaseV3 functions', function () {
   const validSs58PublicKey = '0x1111111111111111111111111111111111111111111111111111111111111111';
   const invalidPublicKey = '0x0111111111111111111111111111111111111111111111111111111111111110';
   const validECDSAPublicKey = '0x2222222222222222222222222222222222222222222222222222222222222222';
-  const stakedOnContract = 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA';
+  const stakedOnContract = '0xaAaAaAaaAaAaAaaAaAAAAAAAAaaaAaAaAaaAaaAa';
   const validSignedMsg =
     '0x99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999';
   const invalidSignedMsg =
@@ -94,9 +94,16 @@ describe('AstarBaseV3 functions', function () {
     expect(await ab.isRegistered(bob.address)).to.be.false;
   });
 
-  it('read_staked_amount OK', async function () {
+  it('dapps staking precompile read_staked_amount OK', async function () {
     register_and_verify(validSs58PublicKey, validSignedMsg, bob);
     expect(await dapps.read_staked_amount(bob.address)).to.be.equal(staked_amount);
+  });
+
+  it('dapps staking precompile read_staked_amount_on_contract OK', async function () {
+    register_and_verify(validSs58PublicKey, validSignedMsg, bob);
+    expect(await dapps.read_staked_amount_on_contract(stakedOnContract, bob.address)).to.be.equal(
+      staked_amount
+    );
   });
 });
 
