@@ -53,60 +53,66 @@ describe('AstarBaseV3 functions', function () {
     expect(await ab.ECDSAContract()).to.be.equal(ecdsa.address);
   });
 
-  it('retrieve unregister fee', async function () {
-    fee = ethers.utils.parseUnits('1', 0);
-    const expectedFee = fee.mul(ethers.constants.WeiPerEther);
-    expect((await ab.unregisterFee()) - expectedFee).to.equal(0);
+  describe('General checks', function () {
+    it('retrieve unregister fee', async function () {
+      fee = ethers.utils.parseUnits('1', 0);
+      const expectedFee = fee.mul(ethers.constants.WeiPerEther);
+      expect((await ab.unregisterFee()) - expectedFee).to.equal(0);
+    });
   });
 
-  it('register ss58 OK', async function () {
-    await register_and_verify(validSs58PublicKey, validSignedMsg, bob);
+  describe('Registration checks', function () {
+    it('register ss58 OK', async function () {
+      await register_and_verify(validSs58PublicKey, validSignedMsg, bob);
+    });
+
+    it('register ecdsa OK, rejected by Sr25519.verify() but Ecdsa is verified', async function () {
+      await register_and_verify(validECDSAPublicKey, validSignedMsg, bob);
+    });
+
+    it('register fails, rejected by Sr25519.verify()', async function () {
+      expect(await ab.registeredCnt()).to.equal(0);
+      await expect(ab.connect(bob).register(invalidPublicKey, invalidSignedMsg)).to.revertedWith(
+        'Signed message not confirmed'
+      );
+      expect(await ab.registeredCnt()).to.equal(0);
+      expect(await ab.isRegistered(bob.address)).to.be.false;
+    });
   });
 
-  it('register ecdsa OK, rejected by Sr25519.verify() but Ecdsa is verified', async function () {
-    await register_and_verify(validECDSAPublicKey, validSignedMsg, bob);
+  describe('Checks for mocked precompiled contracts', function () {
+    it('dapps staking precompile read_staked_amount OK', async function () {
+      await register_and_verify(validSs58PublicKey, validSignedMsg, bob);
+      expect(await dapps.read_staked_amount(validSs58PublicKey)).to.be.equal(staked_amount);
+    });
+
+    it('dapps staking precompile read_staked_amount NOK', async function () {
+      await register_and_verify(validSs58PublicKey, validSignedMsg, bob);
+      expect(await dapps.read_staked_amount(invalidPublicKey)).to.be.equal(0);
+    });
+
+    it('dapps staking precompile read_staked_amount_on_contract OK', async function () {
+      await register_and_verify(validSs58PublicKey, validSignedMsg, bob);
+      expect(
+        await dapps.read_staked_amount_on_contract(stakedOnContract, validSs58PublicKey)
+      ).to.be.equal(staked_amount);
+    });
+
+    it('dapps staking precompile read_staked_amount_on_contract NOK', async function () {
+      await register_and_verify(validSs58PublicKey, validSignedMsg, bob);
+      expect(
+        await dapps.read_staked_amount_on_contract(notStakedContract, validSs58PublicKey)
+      ).to.be.equal(0);
+    });
   });
 
-  it('register fails, rejected by Sr25519.verify()', async function () {
-    expect(await ab.registeredCnt()).to.equal(0);
-    await expect(ab.connect(bob).register(invalidPublicKey, invalidSignedMsg)).to.revertedWith(
-      'Signed message not confirmed'
-    );
-    expect(await ab.registeredCnt()).to.equal(0);
-    expect(await ab.isRegistered(bob.address)).to.be.false;
-  });
-
-  it('dapps staking precompile read_staked_amount OK', async function () {
-    await register_and_verify(validSs58PublicKey, validSignedMsg, bob);
-    expect(await dapps.read_staked_amount(validSs58PublicKey)).to.be.equal(staked_amount);
-  });
-
-  it('dapps staking precompile read_staked_amount_on_contract OK', async function () {
-    await register_and_verify(validSs58PublicKey, validSignedMsg, bob);
-    expect(
-      await dapps.read_staked_amount_on_contract(stakedOnContract, validSs58PublicKey)
-    ).to.be.equal(staked_amount);
-  });
-
-  it('dapps staking precompile read_staked_amount_on_contract NOK', async function () {
-    await register_and_verify(validSs58PublicKey, validSignedMsg, bob);
-    expect(
-      await dapps.read_staked_amount_on_contract(notStakedContract, validSs58PublicKey)
-    ).to.be.equal(0);
-  });
-
-  it('dapps staking precompile read_staked_amount_on_contract OK', async function () {
-    await register_and_verify(validSs58PublicKey, validSignedMsg, bob);
-    expect(
-      await dapps.read_staked_amount_on_contract(stakedOnContract, validSs58PublicKey)
-    ).to.be.equal(staked_amount);
-  });
-
-  it('checkStakerStatusOnContract OK', async function () {
-    await register_and_verify(validSs58PublicKey, validSignedMsg, bob);
-    expect(await ab.checkStakerStatusOnContract(bob.address, stakedOnContract)).to.be.equal(
-      staked_amount
-    );
+  describe('Status checks', function () {
+    it('checkStakerStatusOnContract OK', async function () {
+      await register_and_verify(validSs58PublicKey, validSignedMsg, bob);
+      expect(await ab.checkStakerStatusOnContract(bob.address, stakedOnContract)).to.be.equal(
+        staked_amount
+      );
+    });
   });
 });
 
