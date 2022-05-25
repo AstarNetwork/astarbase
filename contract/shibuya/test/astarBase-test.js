@@ -1,4 +1,5 @@
-// test/AstarBaseV2.proxy.js
+// test/astarBase-test.js
+
 // Load dependencies
 const { expect, use } = require('chai');
 const { solidity } = require('ethereum-waffle');
@@ -12,9 +13,7 @@ describe('AstarBaseV3 functions', function () {
   let owner;
   let bob;
 
-  // Mock contract checks only last byte
-  // for public key 1 is valid value
-  // for message 9 is valid value
+  // These constants are used in Mock contracts
   const validSs58PublicKey = '0x1111111111111111111111111111111111111111111111111111111111111111';
   const invalidPublicKey = '0x0111111111111111111111111111111111111111111111111111111111111110';
   const validECDSAPublicKey = '0x2222222222222222222222222222222222222222222222222222222222222222';
@@ -25,7 +24,7 @@ describe('AstarBaseV3 functions', function () {
   const invalidSignedMsg =
     '0x88888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888';
 
-  const staked_amount = 50; // check dapps staking mock
+  const staked_amount = 50; // check dapps staking mock for used value
 
   beforeEach(async function () {
     [owner, bob] = await ethers.getSigners();
@@ -192,6 +191,7 @@ describe('AstarBaseV3 functions', function () {
   });
 });
 
+// Helper function for registration and verification of registration
 async function register_and_verify(pubKey, signedMsg, user) {
   expect(await ab.registeredCnt()).to.equal(0);
   expect(await ab.isRegistered(user.address)).to.be.false;
