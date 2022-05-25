@@ -21,18 +21,18 @@ contract SR25519Mock {
         bytes1 validKey = bytes1(uint8(0x11));
         bytes1 validMsg = bytes1(uint8(0x99));
 
-        console.logBytes1(public_key[0]);
-        console.logBytes1(signature[0]);
-        console.logBytes1(message[0]);
+        // console.logBytes1(public_key[0]);
+        // console.logBytes1(signature[0]);
+        // console.logBytes1(message[0]);
 
         if( public_key[0] == validKey
             && signature[0] == validMsg
         ){
-            console.log("valid sr25519 signature");
+            // console.log("valid sr25519 signature");
             return true;
         }
 
-        console.log("invalid sr25519 signature");
+        // console.log("invalid sr25519 signature");
         return false;
     }
 }

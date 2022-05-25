@@ -106,51 +106,49 @@ describe('AstarBaseV3 functions', function () {
       expect(await ab.registeredCnt()).to.equal(1);
       expect(await ab.isRegistered(bob.address)).to.be.true;
     });
+  });
 
-    describe('un Registration', function () {
-      it('unregister OK', async function () {
-        const fee = await ab.unregisterFee();
-        await register_and_verify(validSs58PublicKey, validSignedMsg, bob);
-        await ab.connect(bob).unRegister({ value: fee });
-        expect(await ab.registeredCnt()).to.equal(0);
-        expect(await ab.isRegistered(bob.address)).to.be.false;
-      });
+  describe('Un-Registration', function () {
+    it('unregister OK', async function () {
+      const fee = await ab.unregisterFee();
+      await register_and_verify(validSs58PublicKey, validSignedMsg, bob);
+      await ab.connect(bob).unRegister({ value: fee });
+      expect(await ab.registeredCnt()).to.equal(0);
+      expect(await ab.isRegistered(bob.address)).to.be.false;
+    });
 
-      it('unregister fails, Not enough funds to unregister', async function () {
-        await register_and_verify(validSs58PublicKey, validSignedMsg, bob);
+    it('unregister fails, Not enough funds to unregister', async function () {
+      await register_and_verify(validSs58PublicKey, validSignedMsg, bob);
 
-        await expect(ab.connect(bob).unRegister()).to.revertedWith(
-          'Not enough funds to unregister'
-        );
-        expect(await ab.registeredCnt()).to.equal(1);
-        expect(await ab.isRegistered(bob.address)).to.be.true;
-      });
+      await expect(ab.connect(bob).unRegister()).to.revertedWith('Not enough funds to unregister');
+      expect(await ab.registeredCnt()).to.equal(1);
+      expect(await ab.isRegistered(bob.address)).to.be.true;
+    });
 
-      it('unregister fails, unknown address', async function () {
-        await register_and_verify(validSs58PublicKey, validSignedMsg, bob);
-        const fee = await ab.unregisterFee();
-        await expect(ab.connect(owner).unRegister({ value: fee })).to.revertedWith(
-          'Unregistring unknown entry'
-        );
-        expect(await ab.registeredCnt()).to.equal(1);
-        expect(await ab.isRegistered(bob.address)).to.be.true;
-      });
+    it('unregister fails, unknown address', async function () {
+      await register_and_verify(validSs58PublicKey, validSignedMsg, bob);
+      const fee = await ab.unregisterFee();
+      await expect(ab.connect(owner).unRegister({ value: fee })).to.revertedWith(
+        'Unregistring unknown entry'
+      );
+      expect(await ab.registeredCnt()).to.equal(1);
+      expect(await ab.isRegistered(bob.address)).to.be.true;
+    });
 
-      it('sudo unregister OK', async function () {
-        await register_and_verify(validSs58PublicKey, validSignedMsg, bob);
-        await ab.connect(owner).sudoUnRegister(bob.address);
-        expect(await ab.registeredCnt()).to.equal(0);
-        expect(await ab.isRegistered(bob.address)).to.be.false;
-      });
+    it('sudo unregister OK', async function () {
+      await register_and_verify(validSs58PublicKey, validSignedMsg, bob);
+      await ab.connect(owner).sudoUnRegister(bob.address);
+      expect(await ab.registeredCnt()).to.equal(0);
+      expect(await ab.isRegistered(bob.address)).to.be.false;
+    });
 
-      it('sudo unregister fails, not owner', async function () {
-        await register_and_verify(validSs58PublicKey, validSignedMsg, bob);
-        await expect(ab.connect(bob).sudoUnRegister(bob.address)).to.revertedWith(
-          'Ownable: caller is not the owner'
-        );
-        expect(await ab.registeredCnt()).to.equal(1);
-        expect(await ab.isRegistered(bob.address)).to.be.true;
-      });
+    it('sudo unregister fails, not owner', async function () {
+      await register_and_verify(validSs58PublicKey, validSignedMsg, bob);
+      await expect(ab.connect(bob).sudoUnRegister(bob.address)).to.revertedWith(
+        'Ownable: caller is not the owner'
+      );
+      expect(await ab.registeredCnt()).to.equal(1);
+      expect(await ab.isRegistered(bob.address)).to.be.true;
     });
   });
 
@@ -181,6 +179,10 @@ describe('AstarBaseV3 functions', function () {
   });
 
   describe('Status checks', function () {
+    it('checkStakerStatus OK', async function () {
+      await register_and_verify(validSs58PublicKey, validSignedMsg, bob);
+      expect(await ab.checkStakerStatus(bob.address)).to.be.equal(staked_amount);
+    });
     it('checkStakerStatusOnContract OK', async function () {
       await register_and_verify(validSs58PublicKey, validSignedMsg, bob);
       expect(await ab.checkStakerStatusOnContract(bob.address, stakedOnContract)).to.be.equal(
@@ -201,5 +203,4 @@ async function register_and_verify(pubKey, signedMsg, user) {
   expect(receipt.events[0].event).to.equal('AstarBaseRegistered');
 
   expect(await ab.isRegistered(user.address)).to.be.true;
-  console.log('User:', user.address);
 }

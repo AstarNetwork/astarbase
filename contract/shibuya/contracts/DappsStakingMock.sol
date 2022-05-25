@@ -43,8 +43,8 @@ contract DappsStakingMock {
         // make hardhat bob account to be staker
         bytes memory bobSS58 = bytes(hex"1111111111111111111111111111111111111111111111111111111111111111");
         if (equals(staker, bobSS58)) {
-            console.log("staker confirmed:");
-            console.logBytes(staker);
+            // console.log("staker confirmed:");
+            // console.logBytes(staker);
             return 50;
         }
         else{
@@ -60,19 +60,19 @@ contract DappsStakingMock {
         // make hardhat bob account to be staker
         bytes memory bobSS58 = bytes(hex"1111111111111111111111111111111111111111111111111111111111111111");
         address stakedContract = 0xaAaAaAaaAaAaAaaAaAAAAAAAAaaaAaAaAaaAaaAa;
-        console.log("contract %s", contract_id);
-        console.logBytes(staker);
+        // console.log("contract %s", contract_id);
+        // console.logBytes(staker);
         if (equals(staker, bobSS58)
             && contract_id == stakedContract
         ) {
             if (contract_id != address(0)){
-                console.log("staker confirmed:");
-                console.logBytes(staker);
+                // console.log("staker confirmed:");
+                // console.logBytes(staker);
                 return 50;
             }
         }
         else{
-            console.log("staker not confirmed 1");
+            // console.log("staker not confirmed 1");
             return 0;
         }
         console.log("staker not confirmed 2");
