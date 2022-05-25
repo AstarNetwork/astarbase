@@ -78,6 +78,80 @@ describe('AstarBaseV3 functions', function () {
       expect(await ab.registeredCnt()).to.equal(0);
       expect(await ab.isRegistered(bob.address)).to.be.false;
     });
+
+    it('register fails, double use of ss5 public key', async function () {
+      await register_and_verify(validSs58PublicKey, validSignedMsg, bob);
+
+      await expect(ab.connect(bob).register(validSs58PublicKey, validSignedMsg)).to.revertedWith(
+        'Already used ss58 Public Key'
+      );
+      expect(await ab.registeredCnt()).to.equal(1);
+      expect(await ab.isRegistered(bob.address)).to.be.true;
+    });
+
+    // it('register fails, ss5 public key is 0', async function () {
+    //   await expect(ab.connect(bob).register(0, validSignedMsg)).to.revertedWith(
+    //     "Can't register ss58PublicKey with 0"
+    //   );
+    //   expect(await ab.registeredCnt()).to.equal(0);
+    //   expect(await ab.isRegistered(bob.address)).to.be.false;
+    // });
+
+    it('register fails, double use of evm address', async function () {
+      await register_and_verify(validSs58PublicKey, validSignedMsg, bob);
+
+      await expect(ab.connect(bob).register(validECDSAPublicKey, validSignedMsg)).to.revertedWith(
+        'Already registered evm address'
+      );
+      expect(await ab.registeredCnt()).to.equal(1);
+      expect(await ab.isRegistered(bob.address)).to.be.true;
+    });
+
+    describe('un Registration', function () {
+      it('unregister OK', async function () {
+        const fee = await ab.unregisterFee();
+        await register_and_verify(validSs58PublicKey, validSignedMsg, bob);
+        await ab.connect(bob).unRegister({ value: fee });
+        expect(await ab.registeredCnt()).to.equal(0);
+        expect(await ab.isRegistered(bob.address)).to.be.false;
+      });
+
+      it('unregister fails, Not enough funds to unregister', async function () {
+        await register_and_verify(validSs58PublicKey, validSignedMsg, bob);
+
+        await expect(ab.connect(bob).unRegister()).to.revertedWith(
+          'Not enough funds to unregister'
+        );
+        expect(await ab.registeredCnt()).to.equal(1);
+        expect(await ab.isRegistered(bob.address)).to.be.true;
+      });
+
+      it('unregister fails, unknown address', async function () {
+        await register_and_verify(validSs58PublicKey, validSignedMsg, bob);
+        const fee = await ab.unregisterFee();
+        await expect(ab.connect(owner).unRegister({ value: fee })).to.revertedWith(
+          'Unregistring unknown entry'
+        );
+        expect(await ab.registeredCnt()).to.equal(1);
+        expect(await ab.isRegistered(bob.address)).to.be.true;
+      });
+
+      it('sudo unregister OK', async function () {
+        await register_and_verify(validSs58PublicKey, validSignedMsg, bob);
+        await ab.connect(owner).sudoUnRegister(bob.address);
+        expect(await ab.registeredCnt()).to.equal(0);
+        expect(await ab.isRegistered(bob.address)).to.be.false;
+      });
+
+      it('sudo unregister fails, not owner', async function () {
+        await register_and_verify(validSs58PublicKey, validSignedMsg, bob);
+        await expect(ab.connect(bob).sudoUnRegister(bob.address)).to.revertedWith(
+          'Ownable: caller is not the owner'
+        );
+        expect(await ab.registeredCnt()).to.equal(1);
+        expect(await ab.isRegistered(bob.address)).to.be.true;
+      });
+    });
   });
 
   describe('Checks for mocked precompiled contracts', function () {

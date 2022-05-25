@@ -16,6 +16,56 @@
       "kind": "transparent"
     },
     {
+      "address": "0x04C89607413713Ec9775E14b954286519d836FEf",
+      "txHash": "0x55ae26cd05bc2e9b521c6a7d44fb014ec8d1f8c0d1d080e4ad58a12eae4875bc",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x51A1ceB83B83F1985a81C295d1fF28Afef186E02",
+      "txHash": "0xc9eff0c21054253883ab6b442beb956547f53e17073b82bc28e51beb3a8cde19",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x172076E0166D1F9Cc711C77Adf8488051744980C",
+      "txHash": "0x8cc18c81fd99146f00b38df68d3849d5f683b3209f4cb1fdef9befe0ff6870f0",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xB0D4afd8879eD9F52b28595d31B441D079B2Ca07",
+      "txHash": "0x7757b7feafd27764959bfd0690d96076af06294f0b10c6032b64d1844de544dc",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x4C4a2f8c81640e47606d3fd77B353E87Ba015584",
+      "txHash": "0x7a9ca997c58d5a8cee0604da47222f25aa0635d7c14831e074600745b1b913b0",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x36b58F5C1969B7b6591D752ea6F5486D069010AB",
+      "txHash": "0xee6b927134a180bdbd1d2e5057df1b8a0a7d368364ffe2323b4d93aa523f56cc",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x4EE6eCAD1c2Dae9f525404De8555724e3c35d07B",
+      "txHash": "0x431cb6f5b98a70c634e6c3c5a293977603e45dbb5b279ccd053e4304c161d980",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xC9a43158891282A2B1475592D5719c001986Aaec",
+      "txHash": "0xf0b51aaf35f58d06bdf90f790e8708ecc7dfda8c25d090be8a00a8ed84855503",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x4631BCAbD6dF18D94796344963cB60d44a4136b6",
+      "txHash": "0xa69837a9e8b63c9063ceea527756331662fa1fb223f4aa8b20de384f95c4120d",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x7bc06c482DEAd17c0e297aFbC32f6e63d3846650",
+      "txHash": "0x63c0b40e3341d729d98a45fbc7fad857e703ba498977101781bef0842c6cae74",
+      "kind": "transparent"
+    },
+    {
       "address": "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
       "txHash": "0x83e51417d44586d0fdc38e59c7cc0ba92aa4e2b5ce5c1809c57d32a2baf93c06",
       "kind": "transparent"
@@ -52,22 +102,57 @@
     },
     {
       "address": "0x95401dc811bb5740090279Ba06cfA8fcF6113778",
-      "txHash": "0x4a46f248f08151bcc2b78db3608d52175861e5c64096c1d651963be28101c730",
+      "txHash": "0x40dc1fac4c9c85545ba84f3445e0ed05297f3e41f3ff69e6d319f115e429e8c5",
       "kind": "transparent"
     },
     {
       "address": "0x8f86403A4DE0BB5791fa46B8e795C547942fE4Cf",
-      "txHash": "0x8d87215b54ebe624ef7b588d1b176875897e3c47d75a453d7fc0b1578731bacc",
+      "txHash": "0x0bc0b450e7f238f00424ea1111325c5fd9247d0be898565bffe0f2cf91a5f5cf",
       "kind": "transparent"
     },
     {
       "address": "0x1291Be112d480055DaFd8a610b7d1e203891C274",
-      "txHash": "0xcebf2aa5cfc6e23483c414e5243b94378a91c28446b82392c85518f0c8c4a338",
+      "txHash": "0x936e4f4179167c2549fd861ece48cef673131e4ad7f1175ea16e7bbe9ab070c5",
       "kind": "transparent"
     },
     {
       "address": "0x7969c5eD335650692Bc04293B07F5BF2e7A673C0",
-      "txHash": "0x665a3bac5a6779793907c08db4dc48d5ea4bb46b1bf121fa80c57bbe07a224a2",
+      "txHash": "0x0727581265afb3bee895444ad7d0b778108b87b9845adaa25709956eb80a0e50",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x162A433068F51e18b7d13932F27e66a3f99E6890",
+      "txHash": "0xb16b3eaaba45a30760fc8b9aae173f14b6086e6f5c8bea1c0e0d8a222d5e1411",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x21dF544947ba3E8b3c32561399E88B52Dc8b2823",
+      "txHash": "0x524026b2d5a51ad69f2907621fa35f61a14e30aedef6b50e74c1bf2f203615d9",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x8198f5d8F8CfFE8f9C413d98a0A55aEB8ab9FbB7",
+      "txHash": "0x240ce33f2dfe73ffbdd4132434ddf79281c2d80e6535580d446bd3d0cca8a5f8",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xBEc49fA140aCaA83533fB00A2BB19bDdd0290f25",
+      "txHash": "0xaf290ed723bd46992304950cef9a4f12685d98d2c9cddf6c18ddf2cbd0a3f2b6",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x1c85638e118b37167e9298c2268758e058DdfDA0",
+      "txHash": "0x695cda06f47ea99deb6c5a6c9dd32ce0bf17808867befde8842c8609483afca0",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x86A2EE8FAf9A840F7a2c64CA3d51209F9A02081D",
+      "txHash": "0x107657218b430e58a08641a8080ad56b7bd49b0d34c517944b1fa3fdd627c671",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xe8D2A1E88c91DCd5433208d4152Cc4F399a7e91d",
+      "txHash": "0x960d07234e192aa24babcf12773c0e6e89827af2d93592798a88164808cd44b5",
       "kind": "transparent"
     }
   ],
@@ -425,7 +510,7 @@
             "label": "DAPPS_STAKING",
             "offset": 0,
             "slot": "111",
-            "type": "t_contract(DappsStaking)1916",
+            "type": "t_contract(DappsStaking)1383",
             "contract": "AstarBaseV3",
             "src": "contracts/AstarBaseV3.sol:26"
           },
@@ -433,7 +518,7 @@
             "label": "SR25519Contract",
             "offset": 0,
             "slot": "112",
-            "type": "t_contract(SR25519)1992",
+            "type": "t_contract(SR25519)1459",
             "contract": "AstarBaseV3",
             "src": "contracts/AstarBaseV3.sol:27"
           },
@@ -441,7 +526,7 @@
             "label": "ECDSAContract",
             "offset": 0,
             "slot": "113",
-            "type": "t_contract(ECDSA)1955",
+            "type": "t_contract(ECDSA)1422",
             "contract": "AstarBaseV3",
             "src": "contracts/AstarBaseV3.sol:28"
           }
@@ -471,15 +556,15 @@
             "label": "bytes",
             "numberOfBytes": "32"
           },
-          "t_contract(DappsStaking)1916": {
+          "t_contract(DappsStaking)1383": {
             "label": "contract DappsStaking",
             "numberOfBytes": "20"
           },
-          "t_contract(ECDSA)1955": {
+          "t_contract(ECDSA)1422": {
             "label": "contract ECDSA",
             "numberOfBytes": "20"
           },
-          "t_contract(SR25519)1992": {
+          "t_contract(SR25519)1459": {
             "label": "contract SR25519",
             "numberOfBytes": "20"
           },
