@@ -148,7 +148,12 @@ contract AstarBaseV4
                 ss58PublicKey = externalAstarBaseCheck(evmAddress);
             }
         }
-        console.log(ss58PublicKey.length != 0);
+        // console.log(ss58PublicKey.length != 0);
+
+        // if (ss58PublicKey.length == 0) {
+        //     console.log(externalAstarbaseAddress);
+        //     ss58PublicKey = externalAstarBaseCheck(evmAddress);
+        // }
 
         return ss58PublicKey.length != 0;
     }
@@ -165,11 +170,30 @@ contract AstarBaseV4
     /// @param evmAddress, EVM address of external Astarbase contract
     function externalAstarBaseCheck(address evmAddress) public returns (bytes memory){
         require(externalAstarbaseAddress != address(0), "Unknown external Astarbase address");
+        // console.log(externalAstarbaseAddress);
+        // bytes memory ss58PublicKey = new bytes(32);
+        // ss58PublicKey[0] = 0;
+        // // if (externalAstarbaseAddress == address(0)){
+        // //         return ss58PublicKey;
+        // // }
+        // console.log("do externalAstarBaseCheck");
+
+        // AstarBaseExt externalAstarBase = AstarBaseExt(externalAstarbaseAddress);
+        // bytes32 ss58PublicKey32 = externalAstarBase.addressMap(evmAddress);
+        // ss58PublicKey = abi.encodePacked(ss58PublicKey32);
+
+
+        bytes memory ss58PublicKey = new bytes(32);
+        if (externalAstarbaseAddress == address(0)){
+                return ss58PublicKey;
+        }
+
+
         console.log("externalAstarBaseCheck");
 
         AstarBaseExt externalAstarBase = AstarBaseExt(externalAstarbaseAddress);
         bytes32 ss58PublicKey32 = externalAstarBase.addressMap(evmAddress);
-        bytes memory ss58PublicKey = abi.encodePacked(ss58PublicKey32);
+        ss58PublicKey = abi.encodePacked(ss58PublicKey32);
         if (ss58PublicKey32 != 0){
             console.log("external ss58PublicKey32 found");
             console.logBytes32(ss58PublicKey32);
@@ -178,7 +202,6 @@ contract AstarBaseV4
         }
         return ss58PublicKey;
     }
-
 
     /// @notice Check if given address was registered and return staked amount on contract
     /// @param evmAddress, EVM address used for registration
