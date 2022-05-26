@@ -9,7 +9,7 @@ use(solidity);
 let ab;
 
 // Start test block
-describe('AstarBaseV3 functions', function () {
+describe('AstarBaseV4 functions', function () {
   let owner;
   let bob;
 
@@ -30,7 +30,8 @@ describe('AstarBaseV3 functions', function () {
     [owner, bob] = await ethers.getSigners();
 
     AstarBase = await ethers.getContractFactory('AstarBase');
-    NewAstarBase = await ethers.getContractFactory('AstarBaseV3');
+    AstarBaseExternal = await ethers.getContractFactory('AstarBaseExt');
+    NewAstarBase = await ethers.getContractFactory('AstarBaseV4');
     DappsS = await ethers.getContractFactory('DappsStakingMock');
     Sr25519 = await ethers.getContractFactory('SR25519Mock');
     Ecdsa = await ethers.getContractFactory('ECDSAMock');
@@ -38,18 +39,33 @@ describe('AstarBaseV3 functions', function () {
     astarBaseProxy = await upgrades.deployProxy(AstarBase);
     ab = await upgrades.upgradeProxy(astarBaseProxy.address, NewAstarBase);
 
+    abExternal = await AstarBaseExternal.deploy();
     dapps = await DappsS.deploy();
     sr25519 = await Sr25519.deploy();
     ecdsa = await Ecdsa.deploy();
     await dapps.deployed();
     await sr25519.deployed();
     await ecdsa.deployed();
+    await abExternal.deployed();
 
     await ab.setPrecompileAddresses(dapps.address, sr25519.address, ecdsa.address);
+    await abExternal.connect(owner).setPrecompileAddresses(dapps.address, sr25519.address);
 
     expect(await ab.DAPPS_STAKING()).to.be.equal(dapps.address);
     expect(await ab.SR25519Contract()).to.be.equal(sr25519.address);
     expect(await ab.ECDSAContract()).to.be.equal(ecdsa.address);
+  });
+
+  describe('External AstarBase checks', function () {
+    it('External isRegistar works', async function () {
+      // register in external astarbase and check in upgradable contract
+      // this should return false since there is no externalAstarbaseAddress set
+      await external_register_and_verify(validSs58PublicKey, validSignedMsg, bob);
+      expect(await ab.callStatic.isRegistered(bob.address)).to.be.false;
+
+      await ab.setExternalAstarbaseAddress(abExternal.address);
+      expect(await ab.callStatic.isRegistered(bob.address)).to.be.true;
+    });
   });
 
   describe('General checks', function () {
@@ -75,7 +91,7 @@ describe('AstarBaseV3 functions', function () {
         'Signed message not confirmed'
       );
       expect(await ab.registeredCnt()).to.equal(0);
-      expect(await ab.isRegistered(bob.address)).to.be.false;
+      expect(await ab.callStatic.isRegistered(bob.address)).to.be.false;
     });
 
     it('register fails, double use of ss5 public key', async function () {
@@ -85,7 +101,7 @@ describe('AstarBaseV3 functions', function () {
         'Already used ss58 Public Key'
       );
       expect(await ab.registeredCnt()).to.equal(1);
-      expect(await ab.isRegistered(bob.address)).to.be.true;
+      expect(await ab.callStatic.isRegistered(bob.address)).to.be.true;
     });
 
     // it('register fails, ss5 public key is 0', async function () {
@@ -93,7 +109,7 @@ describe('AstarBaseV3 functions', function () {
     //     "Can't register ss58PublicKey with 0"
     //   );
     //   expect(await ab.registeredCnt()).to.equal(0);
-    //   expect(await ab.isRegistered(bob.address)).to.be.false;
+    //   expect(await ab.callStatic.isRegistered(bob.address)).to.be.false;
     // });
 
     it('register fails, double use of evm address', async function () {
@@ -103,7 +119,7 @@ describe('AstarBaseV3 functions', function () {
         'Already registered evm address'
       );
       expect(await ab.registeredCnt()).to.equal(1);
-      expect(await ab.isRegistered(bob.address)).to.be.true;
+      expect(await ab.callStatic.isRegistered(bob.address)).to.be.true;
     });
   });
 
@@ -113,7 +129,7 @@ describe('AstarBaseV3 functions', function () {
       await register_and_verify(validSs58PublicKey, validSignedMsg, bob);
       await ab.connect(bob).unRegister({ value: fee });
       expect(await ab.registeredCnt()).to.equal(0);
-      expect(await ab.isRegistered(bob.address)).to.be.false;
+      expect(await ab.callStatic.isRegistered(bob.address)).to.be.false;
     });
 
     it('unregister fails, Not enough funds to unregister', async function () {
@@ -121,7 +137,7 @@ describe('AstarBaseV3 functions', function () {
 
       await expect(ab.connect(bob).unRegister()).to.revertedWith('Not enough funds to unregister');
       expect(await ab.registeredCnt()).to.equal(1);
-      expect(await ab.isRegistered(bob.address)).to.be.true;
+      expect(await ab.callStatic.isRegistered(bob.address)).to.be.true;
     });
 
     it('unregister fails, unknown address', async function () {
@@ -131,14 +147,14 @@ describe('AstarBaseV3 functions', function () {
         'Unregistring unknown entry'
       );
       expect(await ab.registeredCnt()).to.equal(1);
-      expect(await ab.isRegistered(bob.address)).to.be.true;
+      expect(await ab.callStatic.isRegistered(bob.address)).to.be.true;
     });
 
     it('sudo unregister OK', async function () {
       await register_and_verify(validSs58PublicKey, validSignedMsg, bob);
       await ab.connect(owner).sudoUnRegister(bob.address);
       expect(await ab.registeredCnt()).to.equal(0);
-      expect(await ab.isRegistered(bob.address)).to.be.false;
+      expect(await ab.callStatic.isRegistered(bob.address)).to.be.false;
     });
 
     it('sudo unregister fails, not owner', async function () {
@@ -147,7 +163,7 @@ describe('AstarBaseV3 functions', function () {
         'Ownable: caller is not the owner'
       );
       expect(await ab.registeredCnt()).to.equal(1);
-      expect(await ab.isRegistered(bob.address)).to.be.true;
+      expect(await ab.callStatic.isRegistered(bob.address)).to.be.true;
     });
   });
 
@@ -194,7 +210,7 @@ describe('AstarBaseV3 functions', function () {
 // Helper function for registration and verification of registration
 async function register_and_verify(pubKey, signedMsg, user) {
   expect(await ab.registeredCnt()).to.equal(0);
-  expect(await ab.isRegistered(user.address)).to.be.false;
+  expect(await ab.callStatic.isRegistered(user.address)).to.be.false;
   let tx = await ab.connect(user).register(pubKey, signedMsg);
   let receipt = await tx.wait();
   expect(await ab.registeredCnt()).to.equal(1);
@@ -202,5 +218,15 @@ async function register_and_verify(pubKey, signedMsg, user) {
   expect(receipt.events[0].args[0]).to.equal(user.address);
   expect(receipt.events[0].event).to.equal('AstarBaseRegistered');
 
-  expect(await ab.isRegistered(user.address)).to.be.true;
+  expect(await ab.callStatic.isRegistered(user.address)).to.be.true;
+}
+
+// Helper function for external registration and verification
+async function external_register_and_verify(pubKey, signedMsg, user) {
+  expect(await abExternal.registeredCnt()).to.equal(0);
+  expect(await abExternal.isRegistered(user.address)).to.be.false;
+  let tx = await abExternal.connect(user).register(pubKey, signedMsg);
+  let receipt = await tx.wait();
+  expect(await abExternal.registeredCnt()).to.equal(1);
+  expect(await abExternal.isRegistered(user.address)).to.be.true;
 }

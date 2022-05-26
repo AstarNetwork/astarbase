@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@ericxstone/hardhat-blockscout-verify": "^1.0.0",
+    "@openzeppelin/contracts": "^4.6.0",
     "@openzeppelin/contracts-upgradeable": "^4.5.2"
   }
 }
