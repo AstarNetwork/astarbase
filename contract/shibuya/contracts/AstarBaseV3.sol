@@ -138,22 +138,11 @@ contract AstarBaseV4
     function isRegistered(address evmAddress) public returns (bool) {
         require(evmAddress != address(0), "Bad input address");
         bytes memory ss58PublicKey = addressMap[evmAddress];
-        console.log("isRegistered enter in V4");
 
-        // check external Astarbase - applicable only for Shiden Network
+        // check external Astarbase - it exists only for Shiden Network
         if (ss58PublicKey.length == 0) {
-            console.log(externalAstarbaseAddress);
-            if (externalAstarbaseAddress != address(0)){
-                console.log("call externalAstarBaseCheck");
-                ss58PublicKey = externalAstarBaseCheck(evmAddress);
-            }
+            ss58PublicKey = externalAstarBaseCheck(evmAddress);
         }
-        // console.log(ss58PublicKey.length != 0);
-
-        // if (ss58PublicKey.length == 0) {
-        //     console.log(externalAstarbaseAddress);
-        //     ss58PublicKey = externalAstarBaseCheck(evmAddress);
-        // }
 
         return ss58PublicKey.length != 0;
     }
@@ -162,41 +151,21 @@ contract AstarBaseV4
     /// @param _externalAstarbaseAddress, EVM address of external Astarbase contract
     function setExternalAstarbaseAddress(address _externalAstarbaseAddress) external onlyOwner {
         externalAstarbaseAddress = _externalAstarbaseAddress;
-        console.log("externalAstarBase is set");
     }
 
     /// @notice sets external Astarbase contract address - applicable for Shiden only
     ///         The external (old) Astarbase used bytes32 for private key
     /// @param evmAddress, EVM address of external Astarbase contract
     function externalAstarBaseCheck(address evmAddress) public returns (bytes memory){
-        require(externalAstarbaseAddress != address(0), "Unknown external Astarbase address");
-        // console.log(externalAstarbaseAddress);
-        // bytes memory ss58PublicKey = new bytes(32);
-        // ss58PublicKey[0] = 0;
-        // // if (externalAstarbaseAddress == address(0)){
-        // //         return ss58PublicKey;
-        // // }
-        // console.log("do externalAstarBaseCheck");
-
-        // AstarBaseExt externalAstarBase = AstarBaseExt(externalAstarbaseAddress);
-        // bytes32 ss58PublicKey32 = externalAstarBase.addressMap(evmAddress);
-        // ss58PublicKey = abi.encodePacked(ss58PublicKey32);
-
-
-        bytes memory ss58PublicKey = new bytes(32);
+        bytes memory ss58PublicKey = new bytes(0);
         if (externalAstarbaseAddress == address(0)){
                 return ss58PublicKey;
         }
-
-
-        console.log("externalAstarBaseCheck");
 
         AstarBaseExt externalAstarBase = AstarBaseExt(externalAstarbaseAddress);
         bytes32 ss58PublicKey32 = externalAstarBase.addressMap(evmAddress);
         ss58PublicKey = abi.encodePacked(ss58PublicKey32);
         if (ss58PublicKey32 != 0){
-            console.log("external ss58PublicKey32 found");
-            console.logBytes32(ss58PublicKey32);
             // register to avoid check in external astarbase next time
             registerExecute(evmAddress, ss58PublicKey);
         }
