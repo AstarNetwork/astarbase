@@ -1,7 +1,5 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.7;
-import "hardhat/console.sol";
-
 
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts-upgradeable/utils/CountersUpgradeable.sol";
@@ -158,6 +156,8 @@ contract AstarBaseV4
     /// @param evmAddress, EVM address of external Astarbase contract
     function externalAstarBaseCheck(address evmAddress) public returns (bytes memory){
         bytes memory ss58PublicKey = new bytes(0);
+
+        // do not check external astarbase if it is not set
         if (externalAstarbaseAddress == address(0)){
                 return ss58PublicKey;
         }
@@ -176,11 +176,14 @@ contract AstarBaseV4
     /// @param evmAddress, EVM address used for registration
     /// @param stakingContract, contract address
     /// @return staked amount for the SS58 address
-    function checkStakerStatusOnContract(address evmAddress, address stakingContract) public view returns (uint128) {
+    function checkStakerStatusOnContract(address evmAddress, address stakingContract) public returns (uint128) {
         bytes memory ss58PublicKey = addressMap[evmAddress];
 
         if (ss58PublicKey.length == 0) {
-            return 0;
+            ss58PublicKey = externalAstarBaseCheck(evmAddress);
+            if (ss58PublicKey.length == 0) {
+                return 0;
+            }
         }
 
         uint128 stakedAmount = DAPPS_STAKING.read_staked_amount_on_contract(stakingContract, ss58PublicKey);
@@ -191,11 +194,14 @@ contract AstarBaseV4
     /// @notice Check if given address was registered and return staked amount
     /// @param evmAddress, EVM address used for registration
     /// @return staked amount on the SS58 address
-    function checkStakerStatus(address evmAddress) public view returns (uint128) {
+    function checkStakerStatus(address evmAddress) public returns (uint128) {
         bytes memory ss58PublicKey = addressMap[evmAddress];
 
         if (ss58PublicKey.length == 0) {
-            return 0;
+            ss58PublicKey = externalAstarBaseCheck(evmAddress);
+            if (ss58PublicKey.length == 0) {
+                return 0;
+            }
         }
 
         uint128 stakedAmount = DAPPS_STAKING.read_staked_amount(ss58PublicKey);
