@@ -38,7 +38,7 @@
         <div class="tw-mt-4">
           <div v-if="stakerStatus > 0">Your status : Staker</div>
           <div v-else>
-            <div v-if="isRegistered">Your status : Pass Holder</div>
+            <div v-if="isRegistered">Your status : Registered</div>
             <div v-else>Your status : Not Registered</div>
           </div>
         </div>
