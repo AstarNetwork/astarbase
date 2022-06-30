@@ -3,6 +3,8 @@ export default {
     astarBase: 'Astar Base',
     address: 'Address: {value}',
     shidenPass: 'Astar Pass',
+    native: 'Native',
+    evm: 'EVM',
   },
   register: {
     polkadotConnectLabel: '1. Connect Your Astar Native Wallet',
