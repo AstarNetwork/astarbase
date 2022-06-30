@@ -105,7 +105,7 @@ module.exports = configure(function (ctx) {
       // directives: [],
 
       config: {
-        dark: 'auto',
+        dark: 'false',
       },
 
       // Quasar plugins
