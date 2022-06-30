@@ -17,7 +17,13 @@
             (*) Astar Native address is sometimes referred as Polkadot address.
           </span>
           <br />
-          <span class="blue">(**) Astar EVM address is also known as MetaMask Address.</span>
+          <span class="blue">(**) Astar EVM address is also known as MetaMask Address.</span
+          ><br /><br />
+          <span class="red">
+            Note: AstarPass can only be created once every Native address. If you wish to have a
+            different EVM address to be registered you would need an unregistered Native
+            address.</span
+          >
         </div>
       </div>
     </div>
