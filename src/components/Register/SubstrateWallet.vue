@@ -12,15 +12,12 @@
         </div>
         <div v-else>
           <button class="btn" @click="disconnectAccount">
-            {{ $t('register.connectedWallet') }}
+            {{ $t('register.connectedWallet', { value: getShortenAddress(substrateAddress) }) }}
           </button>
         </div>
       </div>
 
       <div v-if="substrateAddress">
-        <div class="tw-text-lg info-green">
-          {{ $t('common.address', { value: getShortenAddress(substrateAddress) }) }}
-        </div>
         <div v-if="stakedDapps.length > 0">
           <span class="tw-text-lg">
             {{ $t('register.stakedDapps') }}

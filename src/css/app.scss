@@ -17,6 +17,7 @@
   transition: all 0.15s ease-in-out;
   color: white !important;
   width: 300px;
+  font-size: 1rem !important;
   @apply tw-shadow tw-rounded-lg
   dark:tw-bg-darkGray-800 tw-cursor-pointer tw-text-blue-900 dark:tw-text-darkGray-100 tw-font-bold tw-py-4 tw-text-lg;
 }
