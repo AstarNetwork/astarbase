@@ -32,19 +32,19 @@ module.exports = {
   paths: {
     artifacts: './src/artifacts',
   },
-  networks: {
-    hardhat: {
-      chainId: 31337
-    },
-    shibuya: {
-      url: 'https://rpc.shibuya.astar.network:8545',
-      chainId: 81,
-      accounts: [`0x${process.env.ACCOUNT_KEY}`]
-    },
-    astar: {
-      url: 'https://evm.astar.network',
-      chainId: 592,
-      accounts: [`0x${process.env.SUDO_KEY}`]
-    }
-  }
+  // networks: {
+  //   hardhat: {
+  //     chainId: 31337
+  //   },
+  //   shibuya: {
+  //     url: 'https://rpc.shibuya.astar.network:8545',
+  //     chainId: 81,
+  //     accounts: [`0x${process.env.ACCOUNT_KEY}`]
+  //   },
+  //   astar: {
+  //     url: 'https://evm.astar.network',
+  //     chainId: 592,
+  //     accounts: [`0x${process.env.SUDO_KEY}`]
+  //   }
+  // }
 };

@@ -1,11 +1,12 @@
+// SPDX-License-Identifier: MIT
+
 // Sources flattened with hardhat v2.9.1 https://hardhat.org
 
 // File @openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol@v4.5.2
 
-// SPDX-License-Identifier: MIT
 // OpenZeppelin Contracts (last updated v4.5.0) (utils/Address.sol)
 
-pragma solidity ^0.8.1;
+pragma solidity ^0.8.7;
 
 /**
  * @dev Collection of functions related to the address type
@@ -201,10 +202,7 @@ library AddressUpgradeable {
 
 // File @openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol@v4.5.2
 
-// SPDX-License-Identifier: MIT
-// OpenZeppelin Contracts (last updated v4.5.0) (proxy/utils/Initializable.sol)
 
-pragma solidity ^0.8.0;
 
 /**
  * @dev This is a base contract to aid in writing upgradeable contracts, or any kind of contract that will be deployed
@@ -283,10 +281,8 @@ abstract contract Initializable {
 
 // File @openzeppelin/contracts-upgradeable/utils/CountersUpgradeable.sol@v4.5.2
 
-// SPDX-License-Identifier: MIT
 // OpenZeppelin Contracts v4.4.1 (utils/Counters.sol)
 
-pragma solidity ^0.8.0;
 
 /**
  * @title Counters
@@ -330,10 +326,8 @@ library CountersUpgradeable {
 
 // File @openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol@v4.5.2
 
-// SPDX-License-Identifier: MIT
 // OpenZeppelin Contracts v4.4.1 (utils/Context.sol)
 
-pragma solidity ^0.8.0;
 
 /**
  * @dev Provides information about the current execution context, including the
@@ -370,10 +364,8 @@ abstract contract ContextUpgradeable is Initializable {
 
 // File @openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol@v4.5.2
 
-// SPDX-License-Identifier: MIT
 // OpenZeppelin Contracts v4.4.1 (access/Ownable.sol)
 
-pragma solidity ^0.8.0;
 
 
 /**
@@ -460,9 +452,7 @@ abstract contract OwnableUpgradeable is Initializable, ContextUpgradeable {
 
 // File contracts/DappsStakingDummy.sol
 
-// SPDX-License-Identifier: BSD-3-Clause
 
-pragma solidity 0.8.7;
 
 /**
  * @title Dummy implementation for DappsStaking precompiled contract
@@ -576,9 +566,7 @@ contract DappsStaking {
 
 // File contracts/SR25519Dummy.sol
 
-// SPDX-License-Identifier: BSD-3-Clause
 
-pragma solidity 0.8.7;
 
 /**
  * @title Dummy implementation for SR25519
@@ -602,9 +590,7 @@ contract SR25519 {
 
 // File contracts/ECDSADummy.sol
 
-// SPDX-License-Identifier: BSD-3-Clause
 
-pragma solidity >=0.7.0;
 
 /**
  * @title Dummy implementation for SR25519
@@ -627,13 +613,6 @@ contract ECDSA {
 
 
 // File contracts/AstarBaseV3.sol
-
-// SPDX-License-Identifier: MIT
-pragma solidity 0.8.7;
-
-
-
-
 
 
 /// @author The Astar Network Team

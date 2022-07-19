@@ -1,16 +1,18 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.7;
 
+
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts-upgradeable/utils/CountersUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import "./DappsStakingDummy.sol";
 import "./SR25519Dummy.sol";
 import "./ECDSADummy.sol";
+import "./AstarBaseExt.sol";
 
 /// @author The Astar Network Team
 /// @title Astarbase. A voluntary mapping of accounts ss58 <> H160
-contract AstarBaseV3
+contract AstarBaseV4
  is Initializable, OwnableUpgradeable {
     using CountersUpgradeable for CountersUpgradeable.Counter;
     CountersUpgradeable.Counter public registeredCnt;
@@ -31,6 +33,9 @@ contract AstarBaseV3
     event ContractVersion(uint256 newValue);
     event AstarBaseRegistered(address newEntry);
 
+    // New global variables need to be added at the end, due to upgradable contract
+    address public externalAstarbaseAddress;
+
     function initialize() public initializer {
         __Ownable_init();
         registeredCnt.reset();
@@ -49,8 +54,8 @@ contract AstarBaseV3
     /// @notice Check upgradable contract version.
     /// @notice Change this version value for each new contract upgrade
     function getVersion() public {
-        version = 3;
-        emit ContractVersion(3);
+        version = 4;
+        emit ContractVersion(4);
     }
 
     /// @notice Register senders' address with corresponding SS58 address and store to mapping
@@ -77,8 +82,15 @@ contract AstarBaseV3
 
         require(address_verified, "Signed message not confirmed");
 
-        addressMap[msg.sender] = ss58PublicKey;
-        ss58Map[ss58PublicKey] = msg.sender;
+        registerExecute(msg.sender, ss58PublicKey);
+    }
+
+    /// @notice Execute register function
+    /// @param evmAddress, EVM address used for registration
+    /// @param ss58PublicKey, SS58 address used for signing
+    function registerExecute(address evmAddress, bytes memory ss58PublicKey) private {
+        addressMap[evmAddress] = ss58PublicKey;
+        ss58Map[ss58PublicKey] = evmAddress;
         registeredCnt.increment();
         emit AstarBaseRegistered(msg.sender);
     }
@@ -122,10 +134,42 @@ contract AstarBaseV3
 
     /// @notice Check if given address was registered
     /// @param evmAddress, EVM address used for registration
-    function isRegistered(address evmAddress) public view returns (bool) {
+    function isRegistered(address evmAddress) public returns (bool) {
+        require(evmAddress != address(0), "Bad input address");
         bytes memory ss58PublicKey = addressMap[evmAddress];
 
+        // check external Astarbase - applicable only for Shiden Network
+        if (ss58PublicKey.length == 0) {
+            if (externalAstarbaseAddress != address(0)){
+                ss58PublicKey = externalAstarBaseCheck(evmAddress);
+            }
+        }
+
         return ss58PublicKey.length != 0;
+    }
+
+    /// @notice sets external Astarbase contract address - applicable for Shiden only
+    /// @param _externalAstarbaseAddress, EVM address of external Astarbase contract
+    function setExternalAstarbaseAddress(address _externalAstarbaseAddress) external onlyOwner {
+        externalAstarbaseAddress = _externalAstarbaseAddress;
+    }
+
+    /// @notice sets external Astarbase contract address - applicable for Shiden only
+    ///         The external (old) Astarbase used bytes32 for private key
+    /// @param evmAddress, EVM address of external Astarbase contract
+    function externalAstarBaseCheck(address evmAddress) public returns (bytes memory){
+        require(externalAstarbaseAddress != address(0), "Unknown external Astarbase address");
+
+        bytes memory ss58PublicKey = new bytes(32);
+
+        AstarBaseExt externalAstarBase = AstarBaseExt(externalAstarbaseAddress);
+        bytes32 ss58PublicKey32 = externalAstarBase.addressMap(evmAddress);
+        ss58PublicKey = abi.encodePacked(ss58PublicKey32);
+        if (ss58PublicKey32 != 0){
+            // register to avoid check in external astarbase next time
+            registerExecute(evmAddress, ss58PublicKey);
+        }
+        return ss58PublicKey;
     }
 
     /// @notice Check if given address was registered and return staked amount on contract

@@ -3,7 +3,6 @@
 // Load dependencies
 const { expect, use } = require('chai');
 const { solidity } = require('ethereum-waffle');
-const { constants } = require('@openzeppelin/test-helpers');
 
 use(solidity);
 
@@ -57,6 +56,18 @@ describe('AstarBaseV4 functions', function () {
     expect(await ab.ECDSAContract()).to.be.equal(ecdsa.address);
   });
 
+  describe('External AstarBase checks', function () {
+    it('External isRegistar works', async function () {
+      // register in external astarbase and check in upgradable contract
+      // this should return false since there is no externalAstarbaseAddress set
+      await external_register_and_verify(validSs58PublicKey, validSignedMsg, bob);
+      expect(await ab.callStatic.isRegistered(bob.address)).to.be.false;
+
+      await ab.setExternalAstarbaseAddress(abExternal.address);
+      expect(await ab.callStatic.isRegistered(bob.address)).to.be.true;
+    });
+  });
+
   describe('General checks', function () {
     it('retrieve unregister fee', async function () {
       fee = ethers.utils.parseUnits('1', 0);
@@ -93,31 +104,22 @@ describe('AstarBaseV4 functions', function () {
       expect(await ab.callStatic.isRegistered(bob.address)).to.be.true;
     });
 
-    it('isRegistered fails, address is 0', async function () {
-      await expect(ab.isRegistered(constants.ZERO_ADDRESS)).to.revertedWith('Bad input address');
-    });
+    // it('register fails, ss5 public key is 0', async function () {
+    //   await expect(ab.connect(bob).register(0, validSignedMsg)).to.revertedWith(
+    //     "Can't register ss58PublicKey with 0"
+    //   );
+    //   expect(await ab.registeredCnt()).to.equal(0);
+    //   expect(await ab.callStatic.isRegistered(bob.address)).to.be.false;
+    // });
 
-    it('register fails, ss5 public key is already used', async function () {
+    it('register fails, double use of evm address', async function () {
       await register_and_verify(validSs58PublicKey, validSignedMsg, bob);
-      await expect(ab.connect(owner).register(validSs58PublicKey, validSignedMsg)).to.revertedWith(
-        'Already used ss58 Public Key'
-      );
-      expect(await ab.registeredCnt()).to.equal(1);
-    });
 
-    it('register fails, Already registered evm address', async function () {
-      await register_and_verify(validSs58PublicKey, validSignedMsg, bob);
       await expect(ab.connect(bob).register(validECDSAPublicKey, validSignedMsg)).to.revertedWith(
         'Already registered evm address'
       );
       expect(await ab.registeredCnt()).to.equal(1);
-    });
-
-    it('register fails, Can not register ss58PublicKey', async function () {
-      await expect(ab.connect(bob).register([], validSignedMsg)).to.revertedWith(
-        "Can't register ss58PublicKey with 0"
-      );
-      expect(await ab.registeredCnt()).to.equal(0);
+      expect(await ab.callStatic.isRegistered(bob.address)).to.be.true;
     });
   });
 
@@ -194,68 +196,13 @@ describe('AstarBaseV4 functions', function () {
   describe('Status checks', function () {
     it('checkStakerStatus OK', async function () {
       await register_and_verify(validSs58PublicKey, validSignedMsg, bob);
-      expect(await ab.callStatic.checkStakerStatus(bob.address)).to.be.equal(staked_amount);
+      expect(await ab.checkStakerStatus(bob.address)).to.be.equal(staked_amount);
     });
     it('checkStakerStatusOnContract OK', async function () {
       await register_and_verify(validSs58PublicKey, validSignedMsg, bob);
-      expect(
-        await ab.callStatic.checkStakerStatusOnContract(bob.address, stakedOnContract)
-      ).to.be.equal(staked_amount);
-    });
-  });
-
-  describe('External AstarBase checks', function () {
-    it('External isRegistar works', async function () {
-      // register in external astarbase and check in local contract
-      // this should return false since there is no externalAstarbaseAddress set
-      expect(await ab.registeredCnt()).to.equal(0);
-      await external_register_and_verify(validSs58PublicKey, validSignedMsg, bob);
-      expect(await ab.callStatic.isRegistered(bob.address)).to.be.false;
-
-      // now set external astarbase address and it should be registered
-      await ab.setExternalAstarbaseAddress(abExternal.address);
-      let tx = await ab.isRegistered(bob.address);
-      let receipt = await tx.wait();
-      expect(receipt.events[0].event).to.be.equal('AstarBaseRegistered');
-
-      // remove external astarbase and check that now it is registered locally
-      await ab.setExternalAstarbaseAddress(constants.ZERO_ADDRESS);
-      expect(await ab.callStatic.isRegistered(bob.address)).to.be.true;
-      expect(await ab.registeredCnt()).to.equal(1);
-    });
-
-    it('External checkStakerStatus works', async function () {
-      // register in external astarbase
-      expect(await ab.registeredCnt()).to.equal(0);
-      await external_register_and_verify(validSs58PublicKey, validSignedMsg, bob);
-
-      // eneable external reading
-      await ab.setExternalAstarbaseAddress(abExternal.address);
-
-      // check locally, it should return staked amount
-      expect(await ab.callStatic.checkStakerStatus(bob.address)).to.be.equal(staked_amount);
-      let tx = await ab.checkStakerStatus(bob.address);
-      let receipt = await tx.wait();
-      expect(receipt.events[0].event).to.be.equal('AstarBaseRegistered');
-      expect(await ab.registeredCnt()).to.equal(1);
-    });
-
-    it('External checkStakerStatusOnContract works', async function () {
-      // register in external astarbase
-      expect(await ab.registeredCnt()).to.equal(0);
-      await external_register_and_verify(validSs58PublicKey, validSignedMsg, bob);
-
-      // eneable external reading
-      await ab.setExternalAstarbaseAddress(abExternal.address);
-
-      // check locally, it should return staked amount
-      expect(
-        await ab.callStatic.checkStakerStatusOnContract(bob.address, stakedOnContract)
-      ).to.be.equal(staked_amount);
-      let tx = await ab.checkStakerStatusOnContract(bob.address, stakedOnContract);
-      let receipt = await tx.wait();
-      expect(receipt.events[0].event).to.be.equal('AstarBaseRegistered');
-      expect(await ab.registeredCnt()).to.equal(1);
+      expect(await ab.checkStakerStatusOnContract(bob.address, stakedOnContract)).to.be.equal(
+        staked_amount
+      );
     });
   });
 });

@@ -7,12 +7,10 @@ import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import "./DappsStakingDummy.sol";
 import "./SR25519Dummy.sol";
 import "./ECDSADummy.sol";
-import "./AstarBaseExt.sol";
 
 /// @author The Astar Network Team
 /// @title Astarbase. A voluntary mapping of accounts ss58 <> H160
-contract AstarBaseV4
- is Initializable, OwnableUpgradeable {
+contract AstarBase is Initializable, OwnableUpgradeable {
     using CountersUpgradeable for CountersUpgradeable.Counter;
     CountersUpgradeable.Counter public registeredCnt;
     uint256 public version;
@@ -32,9 +30,6 @@ contract AstarBaseV4
     event ContractVersion(uint256 newValue);
     event AstarBaseRegistered(address newEntry);
 
-    // New global variables need to be added at the end, due to upgradable contract
-    address public externalAstarbaseAddress;
-
     function initialize() public initializer {
         __Ownable_init();
         registeredCnt.reset();
@@ -53,8 +48,8 @@ contract AstarBaseV4
     /// @notice Check upgradable contract version.
     /// @notice Change this version value for each new contract upgrade
     function getVersion() public {
-        version = 4;
-        emit ContractVersion(4);
+
+        emit ContractVersion(1);
     }
 
     /// @notice Register senders' address with corresponding SS58 address and store to mapping
@@ -70,8 +65,8 @@ contract AstarBaseV4
 
         bytes memory messageBytes = bytes(MSG_PREFIX);
         bytes memory addressInBytes = abi.encodePacked(msg.sender);
-        bytes memory fullMessage = bytes.concat(PREFIX, messageBytes, ss58PublicKey, addressInBytes, POSTFIX);
         bytes32 pubKey = bytesToBytes32(ss58PublicKey, 0);
+        bytes memory fullMessage = bytes.concat(PREFIX, messageBytes, pubKey, addressInBytes, POSTFIX);
         bool address_verified = SR25519Contract.verify(pubKey, signedMsg, fullMessage);
 
         // ECDSA verify
@@ -81,15 +76,8 @@ contract AstarBaseV4
 
         require(address_verified, "Signed message not confirmed");
 
-        registerExecute(msg.sender, ss58PublicKey);
-    }
-
-    /// @notice Execute register function
-    /// @param evmAddress, EVM address used for registration
-    /// @param ss58PublicKey, SS58 address used for signing
-    function registerExecute(address evmAddress, bytes memory ss58PublicKey) private {
-        addressMap[evmAddress] = ss58PublicKey;
-        ss58Map[ss58PublicKey] = evmAddress;
+        addressMap[msg.sender] = ss58PublicKey;
+        ss58Map[ss58PublicKey] = msg.sender;
         registeredCnt.increment();
         emit AstarBaseRegistered(msg.sender);
     }
@@ -126,85 +114,26 @@ contract AstarBaseV4
         require(addressMap[evmAddress].length != 0, "Unregistring unknown entry");
 
         bytes memory ss58PublicKey = bytes(addressMap[evmAddress]);
-        addressMap[evmAddress] = "";
+        addressMap[evmAddress] = new bytes(0);
         ss58Map[ss58PublicKey] = address(0);
         registeredCnt.decrement();
     }
 
     /// @notice Check if given address was registered
     /// @param evmAddress, EVM address used for registration
-    function isRegistered(address evmAddress) public returns (bool) {
-        require(evmAddress != address(0), "Bad input address");
+    function isRegistered(address evmAddress) public view returns (bool) {
         bytes memory ss58PublicKey = addressMap[evmAddress];
-
-        // check external Astarbase - it exists only for Shiden Network
-        if (ss58PublicKey.length == 0) {
-            ss58PublicKey = externalAstarBaseCheck(evmAddress);
-        }
 
         return ss58PublicKey.length != 0;
-    }
-
-    /// @notice sets external Astarbase contract address - applicable for Shiden only
-    /// @param _externalAstarbaseAddress, EVM address of external Astarbase contract
-    function setExternalAstarbaseAddress(address _externalAstarbaseAddress) external onlyOwner {
-        externalAstarbaseAddress = _externalAstarbaseAddress;
-    }
-
-    /// @notice sets external Astarbase contract address - applicable for Shiden only
-    ///         The external (old) Astarbase used bytes32 for private key
-    /// @param evmAddress, EVM address of external Astarbase contract
-    function externalAstarBaseCheck(address evmAddress) public returns (bytes memory){
-        bytes memory ss58PublicKey = new bytes(0);
-
-        // do not check external astarbase if it is not set
-        if (externalAstarbaseAddress == address(0)){
-                return ss58PublicKey;
-        }
-
-        AstarBaseExt externalAstarBase = AstarBaseExt(externalAstarbaseAddress);
-        bytes32 ss58PublicKey32 = externalAstarBase.addressMap(evmAddress);
-        ss58PublicKey = abi.encodePacked(ss58PublicKey32);
-        if (ss58PublicKey32 != 0){
-            // register to avoid check in external astarbase next time
-            registerExecute(evmAddress, ss58PublicKey);
-        }
-        return ss58PublicKey;
-    }
-
-    /// @notice Check if given address was registered and return staked amount on contract
-    /// @param evmAddress, EVM address used for registration
-    /// @param stakingContract, contract address
-    /// @return staked amount for the SS58 address
-    function checkStakerStatusOnContract(address evmAddress, address stakingContract) public returns (uint128) {
-        bytes memory ss58PublicKey = addressMap[evmAddress];
-
-        if (ss58PublicKey.length == 0) {
-            ss58PublicKey = externalAstarBaseCheck(evmAddress);
-            if (ss58PublicKey.length == 0) {
-                return 0;
-            }
-        }
-
-        uint128 stakedAmount = DAPPS_STAKING.read_staked_amount_on_contract(stakingContract, ss58PublicKey);
-
-        return stakedAmount;
     }
 
     /// @notice Check if given address was registered and return staked amount
     /// @param evmAddress, EVM address used for registration
     /// @return staked amount on the SS58 address
-    function checkStakerStatus(address evmAddress) public returns (uint128) {
+    function checkStakerStatus(address evmAddress) public view returns (uint128) {
         bytes memory ss58PublicKey = addressMap[evmAddress];
-
-        if (ss58PublicKey.length == 0) {
-            ss58PublicKey = externalAstarBaseCheck(evmAddress);
-            if (ss58PublicKey.length == 0) {
-                return 0;
-            }
-        }
-
-        uint128 stakedAmount = DAPPS_STAKING.read_staked_amount(ss58PublicKey);
+        bytes memory pubKeyBytes = bytes(abi.encodePacked(ss58PublicKey));
+        uint128 stakedAmount = DAPPS_STAKING.read_staked_amount(pubKeyBytes);
 
         return stakedAmount;
     }
@@ -236,9 +165,8 @@ contract AstarBaseV4
     /// @notice setting precompile addresses for unit test purposes
     /// @param dapps Dapps-staking precompile address
     /// @param sr25529 SR25529 precompile address
-    function setPrecompileAddresses(address dapps, address sr25529, address ecdsa) public onlyOwner {
+    function setPrecompileAddresses(address dapps, address sr25529) public onlyOwner {
         DAPPS_STAKING = DappsStaking(dapps);
         SR25519Contract = SR25519(sr25529);
-        ECDSAContract = ECDSA(ecdsa);
     }
 }
