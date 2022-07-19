@@ -1,10 +1,12 @@
-import { StateInterface } from './../index';
 import { ActionTree } from 'vuex';
 import Web3EthContract from 'web3-eth-contract';
 import Web3 from 'web3';
+import { decodeAddress } from '@polkadot/util-crypto';
+import { StateInterface } from './../index';
 import { Config } from '../../types/config';
 import { ConnectPayload } from './mutations';
 import { GeneralStateInterface as State } from './index';
+import { LOCAL_STORAGE } from 'src/config/localStorage';
 
 const UNRECOGNIZED_CHAIN_ID_ERROR_CODE = 4902;
 const toastTimeout = 5000;
@@ -54,6 +56,7 @@ const actions: ActionTree<State, StateInterface> = {
   async connect({ commit }) {
     const { ethereum } = window as any;
     const isMetamaskInstalled = ethereum && ethereum.isMetaMask;
+    const { SELECTED_ADDRESS } = LOCAL_STORAGE;
 
     const configResponse = await fetch('/config/register_config.json', {
       headers: {
@@ -89,9 +92,9 @@ const actions: ActionTree<State, StateInterface> = {
 
         web3.eth.handleRevert = true;
 
-        const registerContract = new web3.eth.Contract(abi, config.astarBaseContractAddress);
+        let registeredEvm = '';
 
-        // TODO create Astar base contract here and put it to vuex
+        const registerContract = new web3.eth.Contract(abi, config.astarBaseContractAddress);
 
         const stakerStatus = await registerContract.methods.checkStakerStatus(account).call();
         const isRegistered = await registerContract.methods.isRegistered(account).call();
@@ -99,12 +102,36 @@ const actions: ActionTree<State, StateInterface> = {
         console.log('stakerStatus', stakerStatus);
         console.log('isRegistered', isRegistered);
 
+        const substrateAddress = localStorage.getItem(SELECTED_ADDRESS);
+
+        console.log(substrateAddress);
+
+        if (substrateAddress) {
+          const publicKey = decodeAddress(substrateAddress, undefined, 5);
+
+          try {
+            const registeredAddress = await registerContract.methods.ss58Map(publicKey).call();
+
+            if (
+              registeredAddress &&
+              registeredAddress !== '0x0000000000000000000000000000000000000000'
+            ) {
+              registeredEvm = registeredAddress;
+            }
+
+            console.log('registeredEvm', registeredEvm);
+          } catch (error: any) {
+            console.error(error);
+          }
+        }
+
         commit('connectSuccess', {
           ethereumAccount: account,
           registerContract,
           astarBaseContractAddress: config.astarBaseContractAddress,
           stakerStatus,
           isRegistered,
+          registeredEvm,
         } as ConnectPayload);
 
         // Register listeners
@@ -145,6 +172,7 @@ const actions: ActionTree<State, StateInterface> = {
     commit('changeEthereumAccount', '');
     commit('changeStakerStatus', 0);
     commit('changeIsRegistered', false);
+    commit('setRegisteredEvm', '');
   },
   showAlertMsg({ commit }, { msg, alertType }) {
     commit('setShowAlertMsg', true);

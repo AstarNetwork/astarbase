@@ -11,6 +11,7 @@ export interface GeneralGetters {
   isMetamaskConnected(state: State): boolean;
   errorMessage(state: State): string;
   registered(state: State): boolean;
+  registeredEvm(state: State): string;
   registerContract(state: State): Contract | undefined;
   astarBaseContractAddress(state: State): string;
   ethereumAccount(state: State): string;
@@ -35,6 +36,7 @@ const getters: GetterTree<State, StateInterface> & GeneralGetters = {
   isMetamaskConnected: (state) => !!state.ethereumAccount,
   errorMessage: (state) => state.errorMessage,
   registered: (state) => state.registered,
+  registeredEvm: (state) => state.registeredEvm,
   registerContract: (state) => state.registerContract,
   astarBaseContractAddress: (state) => state.astarBaseContractAddress,
   ethereumAccount: (state) => state.ethereumAccount,

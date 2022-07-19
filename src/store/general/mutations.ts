@@ -11,6 +11,7 @@ export type ConnectPayload = {
   astarBaseContractAddress: string;
   stakerStatus: number;
   isRegistered: boolean;
+  registeredEvm: string;
 };
 
 export interface GeneralMutations<S = State> {
@@ -22,6 +23,7 @@ export interface GeneralMutations<S = State> {
   changeIsRegistered(state: S, registered: boolean): void;
   setError(state: S, errorMessage: string): void;
   setRegistered(state: S, registered: boolean): void;
+  setRegisteredEvm(state: S, registeredEvm: string): void;
   setCurrentNetworkStatus(state: S, networkStatus: ConnectionType): void;
   setSubstrateAccounts(state: S, type: SubstrateAccount[]): void;
   setCurrentNetworkIdx(state: S, networkIdx: number): void;
@@ -49,6 +51,7 @@ const mutation: MutationTree<State> & GeneralMutations = {
     state.registerContract = payload.registerContract;
     state.stakerStatus = payload.stakerStatus;
     state.isRegistered = payload.isRegistered;
+    state.registeredEvm = payload.registeredEvm;
     (state.astarBaseContractAddress = payload.astarBaseContractAddress), (state.isLoading = false);
     state.errorMessage = '';
   },
@@ -87,6 +90,9 @@ const mutation: MutationTree<State> & GeneralMutations = {
   },
   setRegistered(state, registered) {
     state.registered = registered;
+  },
+  setRegisteredEvm(state, registeredEvm) {
+    state.registeredEvm = registeredEvm;
   },
   setCurrentNetworkStatus(state, networkStatus) {
     state.currentNetworkStatus = networkStatus;
