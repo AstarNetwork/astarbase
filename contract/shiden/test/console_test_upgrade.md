@@ -1,11 +1,12 @@
-npx hardhat run --network astar scripts/upgrade.js
-npx hardhat console --network astar
-> const newAstarBase = await ethers.getContractFactory("AstarBaseV3")
+npx hardhat run --network shiden scripts/upgrade.js
+npx hardhat console --network shiden
+> const newAstarBase = await ethers.getContractFactory("AstarBaseV4")
 undefined
-> const astarbase = await newAstarBase.attach("0x8E2fa5A4D4e4f0581B69aF2f8F2Ef2CF205aE8F0")
+> const astarbase = await newAstarBase.attach("0x25257be737210F72DA4F51aCB66903A7520e59d6")
 undefined
-> await astarbase.version()
 > const tx = await astarbase.getVersion()
 > receipt = await tx.wait()
 > receipt.events[0].data
-> implAddr = await upgrades.erc1967.getImplementationAddress("0x8E2fa5A4D4e4f0581B69aF2f8F2Ef2CF205aE8F0")
+> await astarbase.version()
+> implAddr = await upgrades.erc1967.getImplementationAddress("0x25257be737210F72DA4F51aCB66903A7520e59d6")
+'0x3504beF3F419B9525d0648B0a330aCD1B20D8b37'
