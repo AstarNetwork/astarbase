@@ -41,10 +41,10 @@ module.exports = {
       chainId: 81,
       accounts: [`0x${process.env.OLD_TEST_KEY}`]
     },
-    astar: {
-      url: 'https://evm.astar.network',
-      chainId: 592,
-      accounts: [`0x${process.env.SUDO_KEY}`]
-    }
+    // astar: {
+    //   url: 'https://evm.astar.network',
+    //   chainId: 592,
+    //   accounts: [`0x${process.env.SUDO_KEY}`]
+    // }
   },
 };

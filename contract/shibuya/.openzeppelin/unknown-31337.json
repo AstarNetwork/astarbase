@@ -927,7 +927,7 @@
             "label": "DAPPS_STAKING",
             "offset": 0,
             "slot": "111",
-            "type": "t_contract(DappsStaking)2018",
+            "type": "t_contract(DappsStaking)2676",
             "contract": "AstarBase",
             "src": "contracts/AstarBase.sol:25"
           },
@@ -935,7 +935,7 @@
             "label": "SR25519Contract",
             "offset": 0,
             "slot": "112",
-            "type": "t_contract(SR25519)2094",
+            "type": "t_contract(SR25519)3268",
             "contract": "AstarBase",
             "src": "contracts/AstarBase.sol:26"
           },
@@ -943,7 +943,7 @@
             "label": "ECDSAContract",
             "offset": 0,
             "slot": "113",
-            "type": "t_contract(ECDSA)2057",
+            "type": "t_contract(ECDSA)2964",
             "contract": "AstarBase",
             "src": "contracts/AstarBase.sol:27"
           }
@@ -973,15 +973,15 @@
             "label": "bytes",
             "numberOfBytes": "32"
           },
-          "t_contract(DappsStaking)2018": {
+          "t_contract(DappsStaking)2676": {
             "label": "contract DappsStaking",
             "numberOfBytes": "20"
           },
-          "t_contract(ECDSA)2057": {
+          "t_contract(ECDSA)2964": {
             "label": "contract ECDSA",
             "numberOfBytes": "20"
           },
-          "t_contract(SR25519)2094": {
+          "t_contract(SR25519)3268": {
             "label": "contract SR25519",
             "numberOfBytes": "20"
           },
