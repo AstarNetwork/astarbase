@@ -9,14 +9,8 @@
           {{ $t('register.connectMetaMask') }}
         </button>
         <button v-else class="btn" @click="disconnect">
-          {{ $t('register.connectedMetaMask') }}
+          {{ $t('register.connectedMetaMask', { value: getShortenAddress(account) }) }}
         </button>
-      </div>
-    </div>
-
-    <div v-if="isConnected">
-      <div class="tw-text-lg info-green">
-        {{ $t('common.address', { value: getShortenAddress(account) }) }}
       </div>
     </div>
     <!-- Todo: fix `:disabled` -->

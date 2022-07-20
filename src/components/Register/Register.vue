@@ -2,9 +2,7 @@
   <div class="columns">
     <div class="first">
       <div class="header">
-        <div class="tw-text-4xl tw-font-bold tw-text-indigo-500">
-          <img width="50" src="/icons/shiden.webp" class="tw-inline-block" /> Shiden Pass
-        </div>
+        <img width="350" class="logo-head" src="/icons/ShidenPass-logo.png" />
       </div>
       <div class="info">
         <div>
@@ -15,29 +13,44 @@
           The ShidenPass registration is completely free (excluding a small gas fee). The first step
           you need to connect with your two wallets, the native and EVM wallet. For example your
           Polkadot.js wallet and Metamask. The second step is to sign and register. Please check the
-          rpc endpoint for Shiden is https://evm.shiden.astar.network in metamask.
-          <br /><br /><br />
+          rpc endpoint for Shiden is https://evm.shiden.astar.network in metamask <br /><br /><br />
           <span class="blue">
             (*) Shiden Native address is sometimes referred as Polkadot address.
           </span>
           <br />
-          <span class="blue">(**) Shiden EVM address is also known as MetaMask Address.</span>
+          <span class="blue">(**) Shiden EVM address is also known as MetaMask Address.</span
+          ><br /><br />
+          <span class="red">
+            Note: ShidenPass can only be created once every Native address. If you wish to have a
+            different EVM address to be registered you would need an unregistered Native
+            address.</span
+          >
         </div>
       </div>
     </div>
     <div class="container">
       <div class="stakerStatus">
-        <div v-if="stakerStatus > 0">Your status: Staker</div>
-        <div v-else>
-          <div v-if="isRegistered">Your status: Pass Holder</div>
-          <div v-else>Your status: Not Registered</div>
-        </div>
-        <!-- <div v-if="stakerStatus > 0 || isRegistered">
-          <div class="tw-text-3xl">Shiden Pass</div>
+        <div v-if="stakerStatus > 0 || isRegistered">
+          <img src="/icons/ShidenPass-logo.png" />
         </div>
         <div v-else>
-          <div class="tw-text-3xl tw-gray-100">Shiden Pass</div>
-        </div> -->
+          <img src="/icons/ShidenPass-logo.png" />
+        </div>
+        <div class="tw-mt-4">
+          <div v-if="stakerStatus > 0">Your status : Staker</div>
+          <div v-else>
+            <div v-if="isRegistered">Your status : Registered</div>
+            <div v-else>Your status : Not Registered</div>
+          </div>
+        </div>
+        <div v-if="substrateAccount" class="tw-mt-4">
+          <span>{{ $t('common.native') }}</span>
+          <span class="tw-ml-4">{{ getShortenAddress(substrateAccount) }}</span>
+        </div>
+        <div v-if="ethereumAccount" class="tw-mt-2">
+          <span>{{ $t('common.evm') }}</span>
+          <span class="tw-ml-4">{{ getShortenAddress(ethereumAccount) }}</span>
+        </div>
       </div>
       <SubstrateWallet />
       <EthereumWallet />
@@ -50,6 +63,7 @@
 import { useStore } from 'src/store';
 import { useConnectWallet } from 'src/hooks';
 import { computed, defineComponent, watch } from 'vue';
+import { getShortenAddress } from 'src/modules/address';
 import EthereumWallet from './EthereumWallet.vue';
 import SubstrateWallet from './SubstrateWallet.vue';
 import ModalMintNft from './modals/ModalMintNft.vue';
@@ -63,6 +77,7 @@ export default defineComponent({
   setup() {
     const store = useStore();
     const ethereumAccount = computed(() => store.getters['general/ethereumAccount']);
+    const substrateAccount = computed(() => store.getters['general/substrateAccount']);
     const stakerStatus = computed(() => store.getters['general/stakerStatus']);
     const isRegistered = computed(() => store.getters['general/isRegistered']);
 
@@ -88,8 +103,10 @@ export default defineComponent({
       setCloseModal,
       openMintNFT,
       ethereumAccount,
+      substrateAccount,
       stakerStatus,
       isRegistered,
+      getShortenAddress,
     };
   },
 });

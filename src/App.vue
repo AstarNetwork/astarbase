@@ -56,6 +56,10 @@ export default defineComponent({
 </script>
 
 <style>
+:root {
+  color-scheme: light only !important;
+}
+
 ::-webkit-scrollbar {
   width: 7px;
 }

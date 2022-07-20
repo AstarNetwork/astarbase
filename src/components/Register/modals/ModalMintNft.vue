@@ -17,9 +17,7 @@
                 {{ $t('register.successfullyRegistered') }}
               </div>
               <div class="tw-mr-3 tw-mb-2">
-                <div class="tw-text-4xl tw-font-bold tw-text-indigo-500">
-                  <img width="50" src="/icons/shiden.webp" class="tw-inline-block" /> Shiden Pass
-                </div>
+                <img src="/icons/ShidenPass-logo.png" />
               </div>
             </div>
             <!-- <div class="tw-text-md tw-text-black-800 tw-text-center">
