@@ -1,34 +1,34 @@
 export default {
   common: {
-    astarBase: 'Astar Base',
+    astarBase: 'Shiden Base',
     address: 'Address: {value}',
-    shidenPass: 'Astar Pass',
+    shidenPass: 'Shiden Pass',
     native: 'Native',
     evm: 'EVM',
   },
   register: {
-    polkadotConnectLabel: '1. Connect Your Astar Native Wallet',
+    polkadotConnectLabel: '1. Connect Your Shiden Native Wallet',
     evmConnectLabel: '2. Connect Your EVM Wallet',
-    registerLabel: '3. Register to AstarPass',
+    registerLabel: '3. Register to ShidenPass',
     connectWallet: 'Connect to Native Wallet',
     connectedWallet: 'Connected to {value}',
     goToMint: 'Go to Minting Site',
-    mintNftCTA: 'You can mint a NFT for free if you stake ASTR with your native account',
+    mintNftCTA: 'You can mint a NFT for free if you stake SDN with your native account',
     successfullyRegistered: 'Successfully Registered for',
     stakedDapps: 'Staked dApps',
     connectMetaMask: 'Connect MetaMask',
     connectedMetaMask: 'Connected to {value}',
-    register: 'Register to AstarPass',
+    register: 'Register to ShidenPass',
     registered:
-      'Congratulations! You now hold the AstarPass. Use it in the Astar ecosystem to claim rewards. Note, AstarPass is valid as long as you are an active staker in',
+      'Congratulations! You now hold the ShidenPass. Use it in the Shiden ecosystem to claim rewards. Note, ShidenPass is valid as long as you are an active staker in',
     mintNft: 'Registered',
     wallet: {
       select: 'Please select a wallet to connect to this app',
       chooseAccount: 'Choose Account',
       math: {
-        supportsNetwork: 'Math Wallet supports Astar network only',
+        supportsNetwork: 'Math Wallet supports Shiden network only',
         switchNetwork:
-          "Switch your network to 'Astar' in the Math Wallet extension and refresh this page",
+          "Switch your network to 'Shiden' in the Math Wallet extension and refresh this page",
       },
     },
     installWallet: {

@@ -2,25 +2,26 @@
   <div class="columns">
     <div class="first">
       <div class="header">
-        <img class="logo-head" src="/icons/AstarPass-logo.png" />
+        <img width="350" class="logo-head" src="/icons/ShidenPass-logo.png" />
       </div>
       <div class="info">
         <div>
-          AstarPass is the mapping between your Astar <span class="blue">Native Address*</span> and
-          your <span class="blue">Astar EVM address**</span>. Holding the AstarPass will allow
-          different projects in the Astar Network to offer something extra for you.<br /><br />
-          The AstarPass registration is completely free (excluding a small gas fee). The first step
+          ShidenPass is the mapping between your Shiden
+          <span class="blue">Native Address*</span> and your
+          <span class="blue">Shiden EVM address**</span>. Holding the ShidenPass will allow
+          different projects in the Shiden Network to offer something extra for you.<br /><br />
+          The ShidenPass registration is completely free (excluding a small gas fee). The first step
           you need to connect with your two wallets, the native and EVM wallet. For example your
           Polkadot.js wallet and Metamask. The second step is to sign and register. Please check the
-          rpc endpoint for Astar is https://evm.astar.network in metamask <br /><br /><br />
+          rpc endpoint for Shiden is https://evm.shiden.astar.network in metamask <br /><br /><br />
           <span class="blue">
-            (*) Astar Native address is sometimes referred as Polkadot address.
+            (*) Shiden Native address is sometimes referred as Polkadot address.
           </span>
           <br />
-          <span class="blue">(**) Astar EVM address is also known as MetaMask Address.</span
+          <span class="blue">(**) Shiden EVM address is also known as MetaMask Address.</span
           ><br /><br />
           <span class="red">
-            Note: AstarPass can only be created once every Native address. If you wish to have a
+            Note: ShidenPass can only be created once every Native address. If you wish to have a
             different EVM address to be registered you would need an unregistered Native
             address.</span
           >
@@ -30,10 +31,10 @@
     <div class="container">
       <div class="stakerStatus">
         <div v-if="stakerStatus > 0 || isRegistered">
-          <img src="/icons/AstarPass-logo.png" />
+          <img src="/icons/ShidenPass-logo.png" />
         </div>
         <div v-else>
-          <img src="/icons/AstarPass-logo-gray.png" />
+          <img src="/icons/ShidenPass-logo.png" />
         </div>
         <div class="tw-mt-4">
           <div v-if="stakerStatus > 0">Your status : Staker</div>

@@ -17,7 +17,7 @@
                 {{ $t('register.successfullyRegistered') }}
               </div>
               <div class="tw-mr-3 tw-mb-2">
-                <img src="/icons/AstarPass-logo.png" />
+                <img src="/icons/ShidenPass-logo.png" />
               </div>
             </div>
             <!-- <div class="tw-text-md tw-text-black-800 tw-text-center">

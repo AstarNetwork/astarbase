@@ -5,6 +5,7 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "./DappsStakingDummy.sol";
 import "./SR25519Dummy.sol";
+import "./ECDSADummy.sol";
 
 /// @author The Astar Network Team
 /// @title Astarbase. Mapping of Stakers ss58 <> H160
@@ -18,9 +19,11 @@ contract AstarBase is Ownable {
     mapping(bytes32 => address) public ss58Map;
     DappsStaking public constant DAPPS_STAKING = DappsStaking(0x0000000000000000000000000000000000005001);
     SR25519 public constant SR25519Contract = SR25519(0x0000000000000000000000000000000000005002);
+    ECDSA public constant ECDSAContract = ECDSA(0x0000000000000000000000000000000000005003);
     string MSG_PREFIX = "Sign this to register to AstarBase for:";
     uint256 public unregisterFee = 1 ether;
     address public beneficiary = 0x91986602d9c0d8A4f5BFB5F39a7Aa2cD73Db73B7; // Faucet on all Astar networks
+    event SignerExtracted(address signer);
 
     constructor() {
         paused = false;
@@ -40,6 +43,12 @@ contract AstarBase is Ownable {
         bytes memory addressInBytes = abi.encodePacked(msg.sender);
         bytes memory fullMessage = bytes.concat(PREFIX, messageBytes, ss58PublicKey, addressInBytes, POSTFIX);
         bool address_verified = SR25519Contract.verify(ss58PublicKey, signedMsg, fullMessage);
+
+        // ECDSA verify
+        if (!address_verified) {
+            address_verified = ECDSAContract.verify(ss58PublicKey, signedMsg, fullMessage);
+        }
+
         require(address_verified, "Signed message not confirmed");
 
         addressMap[msg.sender] = ss58PublicKey;
