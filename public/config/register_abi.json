@@ -59,6 +59,19 @@
   },
   {
     "inputs": [],
+    "name": "ECDSAContract",
+    "outputs": [
+      {
+        "internalType": "contract ECDSA",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "SR25519Contract",
     "outputs": [
       {
@@ -122,6 +135,62 @@
     "type": "function"
   },
   {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "evmAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "stakingContract",
+        "type": "address"
+      }
+    ],
+    "name": "checkStakerStatusOnContract",
+    "outputs": [
+      {
+        "internalType": "uint128",
+        "name": "",
+        "type": "uint128"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "evmAddress",
+        "type": "address"
+      }
+    ],
+    "name": "externalAstarBaseCheck",
+    "outputs": [
+      {
+        "internalType": "bytes",
+        "name": "",
+        "type": "bytes"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "externalAstarbaseAddress",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [],
     "name": "getVersion",
     "outputs": [],
@@ -151,7 +220,7 @@
         "type": "bool"
       }
     ],
-    "stateMutability": "view",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -248,12 +317,30 @@
     "inputs": [
       {
         "internalType": "address",
+        "name": "_externalAstarbaseAddress",
+        "type": "address"
+      }
+    ],
+    "name": "setExternalAstarbaseAddress",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
         "name": "dapps",
         "type": "address"
       },
       {
         "internalType": "address",
         "name": "sr25529",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "ecdsa",
         "type": "address"
       }
     ],
