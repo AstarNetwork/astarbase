@@ -16,17 +16,6 @@
           </button>
         </div>
       </div>
-
-      <div v-if="substrateAddress">
-        <div v-if="stakedDapps.length > 0">
-          <span class="tw-text-lg">
-            {{ $t('register.stakedDapps') }}
-          </span>
-        </div>
-        <li v-for="dapp in stakedDapps" :key="dapp">
-          {{ dapp }}
-        </li>
-      </div>
     </div>
 
     <modal-connect-wallet
@@ -50,7 +39,7 @@
 </template>
 
 <script lang="ts">
-import { useConnectWallet, useStakingDapps } from 'src/hooks';
+import { useConnectWallet } from 'src/hooks';
 import { defineComponent, watch } from 'vue';
 import ModalConnectWallet from './modals/ModalConnectWallet.vue';
 import ModalInstallWallet from './modals/ModalInstallWallet.vue';
@@ -64,7 +53,6 @@ export default defineComponent({
     ModalAccount,
   },
   setup() {
-    const { stakedDapps } = useStakingDapps();
     const {
       WalletModalOption,
       modalConnectWallet,
@@ -99,7 +87,6 @@ export default defineComponent({
       modalName,
       selectedWallet,
       modalAccountSelect,
-      stakedDapps,
       setCloseModal,
       setWalletModal,
       openSelectModal,

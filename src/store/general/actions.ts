@@ -1,10 +1,12 @@
-import { StateInterface } from './../index';
 import { ActionTree } from 'vuex';
 import Web3EthContract from 'web3-eth-contract';
 import Web3 from 'web3';
+import { decodeAddress } from '@polkadot/util-crypto';
+import { StateInterface } from './../index';
 import { Config } from '../../types/config';
 import { ConnectPayload } from './mutations';
 import { GeneralStateInterface as State } from './index';
+import { LOCAL_STORAGE } from 'src/config/localStorage';
 
 const UNRECOGNIZED_CHAIN_ID_ERROR_CODE = 4902;
 const toastTimeout = 5000;
@@ -51,9 +53,65 @@ const switchNetwork = async (ethereum: any, chainConfig: Config) => {
 };
 
 const actions: ActionTree<State, StateInterface> = {
+  async connectNative({ commit }, { account }) {
+    let registeredEvm = '';
+    const { ethereum } = window as any;
+    const isMetamaskInstalled = ethereum && ethereum.isMetaMask;
+    if (isMetamaskInstalled) {
+      (Web3EthContract as any).setProvider(ethereum);
+      const web3 = new Web3(ethereum);
+
+      const configResponse = await fetch('/config/register_config.json', {
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+      });
+      const config: Config = await configResponse.json();
+
+      // Switch network or create a new configuration if needed.
+      await switchNetwork(ethereum, config);
+
+      // Create a registerContract contract instance
+      const abiResponse = await fetch('/config/register_abi.json', {
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+      });
+      const abi = await abiResponse.json();
+
+      const registerContract = new web3.eth.Contract(abi, config.astarBaseContractAddress);
+
+      if (account) {
+        const publicKey = decodeAddress(account, undefined, 5);
+
+        try {
+          const registeredAddress = await registerContract.methods.ss58Map(publicKey).call();
+
+          if (
+            registeredAddress &&
+            registeredAddress !== '0x0000000000000000000000000000000000000000'
+          ) {
+            registeredEvm = registeredAddress;
+          }
+
+          console.log('registeredEvm', registeredEvm);
+          commit('setRegisteredEvm', registeredEvm);
+        } catch (error: any) {
+          console.error(error);
+        }
+      } else {
+        console.log('account not given');
+      }
+    } else {
+      commit('connectFailed', 'Install Metamask first.');
+    }
+  },
   async connect({ commit }) {
     const { ethereum } = window as any;
     const isMetamaskInstalled = ethereum && ethereum.isMetaMask;
+    const { SELECTED_ADDRESS } = LOCAL_STORAGE;
 
     const configResponse = await fetch('/config/register_config.json', {
       headers: {
@@ -90,8 +148,6 @@ const actions: ActionTree<State, StateInterface> = {
         web3.eth.handleRevert = true;
 
         const registerContract = new web3.eth.Contract(abi, config.astarBaseContractAddress);
-
-        // TODO create Astar base contract here and put it to vuex
 
         const stakerStatus = await registerContract.methods.checkStakerStatus(account).call();
         const isRegistered = await registerContract.methods.isRegistered(account).call();

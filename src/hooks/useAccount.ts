@@ -14,6 +14,7 @@ export const useAccount = () => {
 
   const disconnectAccount = () => {
     store.commit('general/setCurrentAddress', null);
+    store.commit('general/setRegisteredEvm', '');
     substrateAddress.value = '';
     substrateAccountName.value = '';
     localStorage.removeItem(SELECTED_ADDRESS);

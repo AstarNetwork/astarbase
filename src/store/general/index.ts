@@ -41,6 +41,7 @@ export interface GeneralStateInterface {
   metaExtensions: Extensions;
   extensionCount: number;
   registered: boolean;
+  registeredEvm: string;
 }
 
 const generalModule: Module<GeneralStateInterface, StateInterface> = {
@@ -72,6 +73,7 @@ const generalModule: Module<GeneralStateInterface, StateInterface> = {
     extensionCount: 0,
     currentNetworkIdx: endpointKey.ASTAR,
     registered: false,
+    registeredEvm: '',
     currentTheme:
       window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
         ? 'DARK'
