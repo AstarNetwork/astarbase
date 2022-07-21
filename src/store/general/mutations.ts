@@ -11,7 +11,6 @@ export type ConnectPayload = {
   astarBaseContractAddress: string;
   stakerStatus: number;
   isRegistered: boolean;
-  registeredEvm: string;
 };
 
 export interface GeneralMutations<S = State> {
@@ -51,7 +50,6 @@ const mutation: MutationTree<State> & GeneralMutations = {
     state.registerContract = payload.registerContract;
     state.stakerStatus = payload.stakerStatus;
     state.isRegistered = payload.isRegistered;
-    state.registeredEvm = payload.registeredEvm;
     (state.astarBaseContractAddress = payload.astarBaseContractAddress), (state.isLoading = false);
     state.errorMessage = '';
   },

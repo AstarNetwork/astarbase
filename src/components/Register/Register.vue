@@ -36,24 +36,29 @@
           <img src="/icons/AstarPass-logo-gray.png" />
         </div>
         <div class="tw-mt-4">
-          <div v-if="stakerStatus > 0">Your status : Staker</div>
+          <div v-if="!!registeredEvm">Your status : Registered</div>
           <div v-else>
-            <div v-if="isRegistered">Your status : Registered</div>
-            <div v-else>Your status : Not Registered</div>
+            <div v-if="stakerStatus > 0">Your status : Staker</div>
+            <div v-else>
+              <div v-if="isRegistered">Your status : Registered</div>
+              <div v-else>Your status : Not Registered</div>
+            </div>
           </div>
         </div>
-        <div v-if="substrateAccount" class="tw-mt-4">
-          <span>{{ $t('common.native') }}</span>
-          <span class="tw-ml-4">{{ getShortenAddress(substrateAccount) }}</span>
-        </div>
-        <div v-if="registeredEvm" class="tw-mt-2">
-          <span>{{ $t('common.evm') }}</span>
-          <span class="tw-ml-4">{{ getShortenAddress(registeredEvm) }}</span>
-        </div>
-        <div v-else>
-          <div v-if="ethereumAccount" class="tw-mt-2">
+        <div v-if="isRegistered || !!registeredEvm">
+          <div v-if="substrateAccount" class="tw-mt-4">
+            <span>{{ $t('common.native') }}</span>
+            <span class="tw-ml-4">{{ getShortenAddress(substrateAccount) }}</span>
+          </div>
+          <div v-if="registeredEvm" class="tw-mt-2">
             <span>{{ $t('common.evm') }}</span>
-            <span class="tw-ml-4">{{ getShortenAddress(ethereumAccount) }}</span>
+            <span class="tw-ml-4">{{ getShortenAddress(registeredEvm) }}</span>
+          </div>
+          <div v-else>
+            <div v-if="ethereumAccount" class="tw-mt-2">
+              <span>{{ $t('common.evm') }}</span>
+              <span class="tw-ml-4">{{ getShortenAddress(ethereumAccount) }}</span>
+            </div>
           </div>
         </div>
       </div>

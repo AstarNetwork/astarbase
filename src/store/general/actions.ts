@@ -53,6 +53,61 @@ const switchNetwork = async (ethereum: any, chainConfig: Config) => {
 };
 
 const actions: ActionTree<State, StateInterface> = {
+  async connectNative({ commit }, { account }) {
+    let registeredEvm = '';
+    const { ethereum } = window as any;
+    const isMetamaskInstalled = ethereum && ethereum.isMetaMask;
+    if (isMetamaskInstalled) {
+      (Web3EthContract as any).setProvider(ethereum);
+      const web3 = new Web3(ethereum);
+
+      const configResponse = await fetch('/config/register_config.json', {
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+      });
+      const config: Config = await configResponse.json();
+
+      // Switch network or create a new configuration if needed.
+      await switchNetwork(ethereum, config);
+
+      // Create a registerContract contract instance
+      const abiResponse = await fetch('/config/register_abi.json', {
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+      });
+      const abi = await abiResponse.json();
+
+      const registerContract = new web3.eth.Contract(abi, config.astarBaseContractAddress);
+
+      if (account) {
+        const publicKey = decodeAddress(account, undefined, 5);
+
+        try {
+          const registeredAddress = await registerContract.methods.ss58Map(publicKey).call();
+
+          if (
+            registeredAddress &&
+            registeredAddress !== '0x0000000000000000000000000000000000000000'
+          ) {
+            registeredEvm = registeredAddress;
+          }
+
+          console.log('registeredEvm', registeredEvm);
+          commit('setRegisteredEvm', registeredEvm);
+        } catch (error: any) {
+          console.error(error);
+        }
+      } else {
+        console.log('account not given');
+      }
+    } else {
+      commit('connectFailed', 'Install Metamask first.');
+    }
+  },
   async connect({ commit }) {
     const { ethereum } = window as any;
     const isMetamaskInstalled = ethereum && ethereum.isMetaMask;
@@ -92,8 +147,6 @@ const actions: ActionTree<State, StateInterface> = {
 
         web3.eth.handleRevert = true;
 
-        let registeredEvm = '';
-
         const registerContract = new web3.eth.Contract(abi, config.astarBaseContractAddress);
 
         const stakerStatus = await registerContract.methods.checkStakerStatus(account).call();
@@ -102,36 +155,12 @@ const actions: ActionTree<State, StateInterface> = {
         console.log('stakerStatus', stakerStatus);
         console.log('isRegistered', isRegistered);
 
-        const substrateAddress = localStorage.getItem(SELECTED_ADDRESS);
-
-        console.log(substrateAddress);
-
-        if (substrateAddress) {
-          const publicKey = decodeAddress(substrateAddress, undefined, 5);
-
-          try {
-            const registeredAddress = await registerContract.methods.ss58Map(publicKey).call();
-
-            if (
-              registeredAddress &&
-              registeredAddress !== '0x0000000000000000000000000000000000000000'
-            ) {
-              registeredEvm = registeredAddress;
-            }
-
-            console.log('registeredEvm', registeredEvm);
-          } catch (error: any) {
-            console.error(error);
-          }
-        }
-
         commit('connectSuccess', {
           ethereumAccount: account,
           registerContract,
           astarBaseContractAddress: config.astarBaseContractAddress,
           stakerStatus,
           isRegistered,
-          registeredEvm,
         } as ConnectPayload);
 
         // Register listeners
@@ -172,7 +201,6 @@ const actions: ActionTree<State, StateInterface> = {
     commit('changeEthereumAccount', '');
     commit('changeStakerStatus', 0);
     commit('changeIsRegistered', false);
-    commit('setRegisteredEvm', '');
   },
   showAlertMsg({ commit }, { msg, alertType }) {
     commit('setShowAlertMsg', true);
