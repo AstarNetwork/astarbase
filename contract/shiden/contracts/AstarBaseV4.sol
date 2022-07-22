@@ -12,7 +12,7 @@ import "./AstarBaseExt.sol";
 
 /// @author The Astar Network Team
 /// @title Astarbase. A voluntary mapping of accounts ss58 <> H160
-contract AstarBaseV4
+contract AstarBaseV5
  is Initializable, OwnableUpgradeable {
     using CountersUpgradeable for CountersUpgradeable.Counter;
     CountersUpgradeable.Counter public registeredCnt;
@@ -54,8 +54,8 @@ contract AstarBaseV4
     /// @notice Check upgradable contract version.
     /// @notice Change this version value for each new contract upgrade
     function getVersion() public {
-        version = 4;
-        emit ContractVersion(4);
+        version = 5;
+        emit ContractVersion(5);
     }
 
     /// @notice Register senders' address with corresponding SS58 address and store to mapping
@@ -65,7 +65,9 @@ contract AstarBaseV4
     ///                   MSG_PREFIX + ss58PublicKey + msg.sender
     function register(bytes calldata ss58PublicKey, bytes calldata signedMsg) external {
         require(!paused, "The contract is paused");
-        require(ss58PublicKey.length != 0, "Can't register ss58PublicKey with 0");
+        require(keccak256(ss58PublicKey) != keccak256(abi.encodePacked(uint(0))),   
+            "Can't register ss58PublicKey with 0"
+        );
         require(ss58Map[ss58PublicKey] == address(0), "Already used ss58 Public Key");
         require(addressMap[msg.sender].length == 0, "Already registered evm address");
 
@@ -169,6 +171,12 @@ contract AstarBaseV4
             // register to avoid check in external astarbase next time
             registerExecute(evmAddress, ss58PublicKey);
         }
+        else{
+            // if ss58PublicKey32 was 0, it will be encoded as 0x000...000
+            // this will cause chack in isRegister to show len(0)>0 
+            delete ss58PublicKey;
+        }
+
         return ss58PublicKey;
     }
 
