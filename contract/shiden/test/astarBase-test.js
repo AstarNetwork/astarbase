@@ -9,13 +9,14 @@ use(solidity);
 let ab;
 
 // Start test block
-describe('AstarBaseV4 functions', function () {
+describe('AstarBaseV5 functions', function () {
   let owner;
   let bob;
 
   // These constants are used in Mock contracts
   const validSs58PublicKey = '0x1111111111111111111111111111111111111111111111111111111111111111';
   const invalidPublicKey = '0x0111111111111111111111111111111111111111111111111111111111111110';
+  const zeroPublicKey =    '0x0000000000000000000000000000000000000000000000000000000000000000';
   const validECDSAPublicKey = '0x2222222222222222222222222222222222222222222222222222222222222222';
   const stakedOnContract = '0xaAaAaAaaAaAaAaaAaAAAAAAAAaaaAaAaAaaAaaAa';
   const notStakedContract = '0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB';
@@ -31,7 +32,7 @@ describe('AstarBaseV4 functions', function () {
 
     AstarBase = await ethers.getContractFactory('AstarBase');
     AstarBaseExternal = await ethers.getContractFactory('AstarBaseExt');
-    NewAstarBase = await ethers.getContractFactory('AstarBaseV4');
+    NewAstarBase = await ethers.getContractFactory('AstarBaseV5');
     DappsS = await ethers.getContractFactory('DappsStakingMock');
     Sr25519 = await ethers.getContractFactory('SR25519Mock');
     Ecdsa = await ethers.getContractFactory('ECDSAMock');
@@ -65,7 +66,18 @@ describe('AstarBaseV4 functions', function () {
 
       await ab.setExternalAstarbaseAddress(abExternal.address);
       expect(await ab.callStatic.isRegistered(bob.address)).to.be.true;
+      expect(await ab.addressMap(bob.address)).to.equal('0x');
     });
+
+    it('isRegiser, including external, returns false', async function () {
+      // this should return false since there is no externalAstarbaseAddress set
+      expect(await ab.callStatic.isRegistered(bob.address)).to.be.false;
+      // set external database 
+      await ab.setExternalAstarbaseAddress(abExternal.address);
+      // user Bob is not registered neither in external nor in internal contract
+      expect(await ab.callStatic.isRegistered(bob.address)).to.be.false;
+    });
+
   });
 
   describe('General checks', function () {
@@ -104,13 +116,13 @@ describe('AstarBaseV4 functions', function () {
       expect(await ab.callStatic.isRegistered(bob.address)).to.be.true;
     });
 
-    // it('register fails, ss5 public key is 0', async function () {
-    //   await expect(ab.connect(bob).register(0, validSignedMsg)).to.revertedWith(
-    //     "Can't register ss58PublicKey with 0"
-    //   );
-    //   expect(await ab.registeredCnt()).to.equal(0);
-    //   expect(await ab.callStatic.isRegistered(bob.address)).to.be.false;
-    // });
+    it('register fails, ss5 public key is 0', async function () {
+      await expect(ab.connect(bob).register(zeroPublicKey, validSignedMsg)).to.revertedWith(
+        "Can't register ss58PublicKey with 0"
+      );
+      expect(await ab.registeredCnt()).to.equal(0);
+      expect(await ab.callStatic.isRegistered(bob.address)).to.be.false;
+    });
 
     it('register fails, double use of evm address', async function () {
       await register_and_verify(validSs58PublicKey, validSignedMsg, bob);

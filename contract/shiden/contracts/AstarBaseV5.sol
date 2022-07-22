@@ -12,7 +12,7 @@ import "./AstarBaseExt.sol";
 
 /// @author The Astar Network Team
 /// @title Astarbase. A voluntary mapping of accounts ss58 <> H160
-contract AstarBaseV4
+contract AstarBaseV5
  is Initializable, OwnableUpgradeable {
     using CountersUpgradeable for CountersUpgradeable.Counter;
     CountersUpgradeable.Counter public registeredCnt;
@@ -54,8 +54,8 @@ contract AstarBaseV4
     /// @notice Check upgradable contract version.
     /// @notice Change this version value for each new contract upgrade
     function getVersion() public {
-        version = 4;
-        emit ContractVersion(4);
+        version = 5;
+        emit ContractVersion(5);
     }
 
     /// @notice Register senders' address with corresponding SS58 address and store to mapping
@@ -65,7 +65,9 @@ contract AstarBaseV4
     ///                   MSG_PREFIX + ss58PublicKey + msg.sender
     function register(bytes calldata ss58PublicKey, bytes calldata signedMsg) external {
         require(!paused, "The contract is paused");
-        require(ss58PublicKey.length != 0, "Can't register ss58PublicKey with 0");
+        require(keccak256(ss58PublicKey) != keccak256(abi.encodePacked(uint(0))),   
+            "Can't register ss58PublicKey with 0"
+        );
         require(ss58Map[ss58PublicKey] == address(0), "Already used ss58 Public Key");
         require(addressMap[msg.sender].length == 0, "Already registered evm address");
 
@@ -134,7 +136,7 @@ contract AstarBaseV4
 
     /// @notice Check if given address was registered
     /// @param evmAddress, EVM address used for registration
-    function isRegistered(address evmAddress) public returns (bool) {
+    function isRegistered(address evmAddress) public view returns (bool) {
         require(evmAddress != address(0), "Bad input address");
         bytes memory ss58PublicKey = addressMap[evmAddress];
 
@@ -156,19 +158,19 @@ contract AstarBaseV4
 
     /// @notice sets external Astarbase contract address - applicable for Shiden only
     ///         The external (old) Astarbase used bytes32 for private key
-    /// @param evmAddress, EVM address of external Astarbase contract
-    function externalAstarBaseCheck(address evmAddress) public returns (bytes memory){
+    /// @param evmAddress, EVM address of external Astarbase user
+    function externalAstarBaseCheck(address evmAddress) public view returns (bytes memory){
         require(externalAstarbaseAddress != address(0), "Unknown external Astarbase address");
-
-        bytes memory ss58PublicKey = new bytes(32);
 
         AstarBaseExt externalAstarBase = AstarBaseExt(externalAstarbaseAddress);
         bytes32 ss58PublicKey32 = externalAstarBase.addressMap(evmAddress);
-        ss58PublicKey = abi.encodePacked(ss58PublicKey32);
-        if (ss58PublicKey32 != 0){
-            // register to avoid check in external astarbase next time
-            registerExecute(evmAddress, ss58PublicKey);
+        bytes memory ss58PublicKey = abi.encodePacked(ss58PublicKey32);
+        if (ss58PublicKey32 == bytes32(0)){
+            // if ss58PublicKey32 was 0, it will be encoded as 0x000...000
+            // this will cause check in isRegister() to show len(0)>0 
+            ss58PublicKey = "";
         }
+
         return ss58PublicKey;
     }
 
