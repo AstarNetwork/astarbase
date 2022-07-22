@@ -66,6 +66,7 @@ describe('AstarBaseV4 functions', function () {
 
       await ab.setExternalAstarbaseAddress(abExternal.address);
       expect(await ab.callStatic.isRegistered(bob.address)).to.be.true;
+      expect(await ab.addressMap(bob.address)).to.equal('0x');
     });
 
     it('isRegiser, including external, returns false', async function () {

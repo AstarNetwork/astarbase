@@ -136,7 +136,7 @@ contract AstarBaseV5
 
     /// @notice Check if given address was registered
     /// @param evmAddress, EVM address used for registration
-    function isRegistered(address evmAddress) public returns (bool) {
+    function isRegistered(address evmAddress) public view returns (bool) {
         require(evmAddress != address(0), "Bad input address");
         bytes memory ss58PublicKey = addressMap[evmAddress];
 
@@ -158,23 +158,17 @@ contract AstarBaseV5
 
     /// @notice sets external Astarbase contract address - applicable for Shiden only
     ///         The external (old) Astarbase used bytes32 for private key
-    /// @param evmAddress, EVM address of external Astarbase contract
-    function externalAstarBaseCheck(address evmAddress) public returns (bytes memory){
+    /// @param evmAddress, EVM address of external Astarbase user
+    function externalAstarBaseCheck(address evmAddress) public view returns (bytes memory){
         require(externalAstarbaseAddress != address(0), "Unknown external Astarbase address");
-
-        bytes memory ss58PublicKey = new bytes(32);
 
         AstarBaseExt externalAstarBase = AstarBaseExt(externalAstarbaseAddress);
         bytes32 ss58PublicKey32 = externalAstarBase.addressMap(evmAddress);
-        ss58PublicKey = abi.encodePacked(ss58PublicKey32);
-        if (ss58PublicKey32 != 0){
-            // register to avoid check in external astarbase next time
-            registerExecute(evmAddress, ss58PublicKey);
-        }
-        else{
+        bytes memory ss58PublicKey = abi.encodePacked(ss58PublicKey32);
+        if (ss58PublicKey32 == bytes32(0)){
             // if ss58PublicKey32 was 0, it will be encoded as 0x000...000
-            // this will cause chack in isRegister to show len(0)>0 
-            delete ss58PublicKey;
+            // this will cause check in isRegister() to show len(0)>0 
+            ss58PublicKey = "";
         }
 
         return ss58PublicKey;
