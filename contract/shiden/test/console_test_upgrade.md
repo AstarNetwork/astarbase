@@ -1,6 +1,6 @@
 npx hardhat run --network shiden scripts/upgrade.js
 npx hardhat console --network shiden
-> const newAstarBase = await ethers.getContractFactory("AstarBaseV4")
+> const newAstarBase = await ethers.getContractFactory("AstarBaseV5")
 undefined
 > const astarbase = await newAstarBase.attach("0x25257be737210F72DA4F51aCB66903A7520e59d6")
 undefined
@@ -9,4 +9,4 @@ undefined
 > receipt.events[0].data
 > await astarbase.version()
 > implAddr = await upgrades.erc1967.getImplementationAddress("0x25257be737210F72DA4F51aCB66903A7520e59d6")
-'0x3504beF3F419B9525d0648B0a330aCD1B20D8b37'
+'0xE1a1203c12C64daB255519a9fF635E08645e8739'

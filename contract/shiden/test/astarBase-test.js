@@ -9,7 +9,7 @@ use(solidity);
 let ab;
 
 // Start test block
-describe('AstarBaseV4 functions', function () {
+describe('AstarBaseV5 functions', function () {
   let owner;
   let bob;
 
