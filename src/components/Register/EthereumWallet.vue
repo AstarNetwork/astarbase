@@ -5,7 +5,12 @@
         <label>{{ $t('register.evmConnectLabel') }}</label>
       </div>
       <div>
-        <button v-if="!isConnected" :disabled="!!registeredEvm" class="btn" @click="connect">
+        <button
+          v-if="!isConnected"
+          :disabled="!!registeredEvm || !substrateAddress"
+          class="btn"
+          @click="connect"
+        >
           {{ $t('register.connectMetaMask') }}
         </button>
         <button v-else class="btn" @click="disconnect">
@@ -46,7 +51,7 @@
 import { useStore } from 'src/store';
 import { computed, defineComponent } from 'vue';
 import { getShortenAddress } from 'src/modules/address';
-import { useRegister } from 'src/hooks';
+import { useAccount, useRegister } from 'src/hooks';
 
 export default defineComponent({
   setup() {
@@ -57,6 +62,7 @@ export default defineComponent({
     const isRegistered = computed(() => store.getters['general/isRegistered']);
     const registeredEvm = computed(() => store.getters['general/registeredEvm']);
     const { register } = useRegister();
+    const { substrateAddress } = useAccount();
 
     const connect = () => {
       store.dispatch('general/connect');
@@ -82,6 +88,7 @@ export default defineComponent({
       getShortenAddress,
       mintNft,
       registeredEvm,
+      substrateAddress,
     };
   },
 });
