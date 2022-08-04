@@ -5,7 +5,7 @@
         <label>{{ $t('register.evmConnectLabel') }}</label>
       </div>
       <div>
-        <button v-if="!isConnected" class="btn" @click="connect">
+        <button v-if="!isConnected" :disabled="!!registeredEvm" class="btn" @click="connect">
           {{ $t('register.connectMetaMask') }}
         </button>
         <button v-else class="btn" @click="disconnect">
@@ -19,7 +19,7 @@
         <label>{{ $t('register.registerLabel') }}</label>
       </div>
       <div>
-        <button :disabled="!isConnected" class="btn" @click="register">
+        <button :disabled="!isConnected || registeredEvm" class="btn" @click="register">
           {{ $t('register.register') }}
         </button>
       </div>
@@ -55,6 +55,7 @@ export default defineComponent({
     const isConnected = computed(() => store.getters['general/isMetamaskConnected']);
     const account = computed(() => store.getters['general/ethereumAccount']);
     const isRegistered = computed(() => store.getters['general/isRegistered']);
+    const registeredEvm = computed(() => store.getters['general/registeredEvm']);
     const { register } = useRegister();
 
     const connect = () => {
@@ -80,6 +81,7 @@ export default defineComponent({
       register,
       getShortenAddress,
       mintNft,
+      registeredEvm,
     };
   },
 });

@@ -100,6 +100,7 @@ export default defineComponent({
 
     const selectAccount = (account: string) => {
       store.commit('general/setCurrentAddress', account);
+      store.dispatch('general/connectNative', { account });
       emit('update:is-open', false);
     };
 

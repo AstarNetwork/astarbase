@@ -16,7 +16,7 @@ export const useStakingDapps = () => {
       store.commit('general/setLoading', true);
       stakedDapps.value = await getStakingArray({ api, address: substrateAddress.value });
     } catch (error: any) {
-      console.error(error.messages);
+      console.error(error);
     } finally {
       store.commit('general/setLoading', false);
     }
