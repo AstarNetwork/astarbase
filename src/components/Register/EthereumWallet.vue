@@ -19,7 +19,7 @@
         <label>{{ $t('register.registerLabel') }}</label>
       </div>
       <div>
-        <button :disabled="!isConnected" class="btn" @click="register">
+        <button :disabled="!isConnected || registeredEvm" class="btn" @click="register">
           {{ $t('register.register') }}
         </button>
       </div>
