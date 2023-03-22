@@ -3,11 +3,18 @@ name: Deploy Shidenpass to AWS S3 on merge
   push:
     branches:
       - shiden
+  pull_request:
+    branches:
+      - shiden
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16.x'
+          registry-url: 'https://registry.npmjs.org'
       - run: yarn && yarn build
       - uses: aws-actions/configure-aws-credentials@v1
         with:
