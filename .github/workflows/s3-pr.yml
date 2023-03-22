@@ -17,4 +17,4 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
       - name: Deploy app build to S3 bucket
-        run: aws s3 sync ./dist/spa  s3://astarbase --delete
+        run: aws s3 sync ./dist/spa  s3://shibuyapass --delete
