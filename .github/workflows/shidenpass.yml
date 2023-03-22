@@ -2,10 +2,10 @@ name: Deploy Shidenpass to AWS S3 on merge
 'on':
   push:
     branches:
-      - main
+      - shiden
   pull_request:
     branches:
-      - main
+      - shiden
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
