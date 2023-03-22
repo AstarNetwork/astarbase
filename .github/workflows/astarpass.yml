@@ -1,4 +1,4 @@
-name: Deploy Shidenpass to AWS S3 on merge
+name: Deploy Astarpass to AWS S3 on merge
 'on':
   push:
     branches:
