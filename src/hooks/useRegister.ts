@@ -4,15 +4,13 @@ import { Contract } from 'web3-eth-contract';
 import { stringToHex } from '@polkadot/util';
 import { getInjector, getSelectedAccount } from 'src/modules/wallet/utils';
 import { decodeAddress } from '@polkadot/util-crypto';
-import { isHex, u8aToHex } from '@polkadot/util';
+import { u8aToHex } from '@polkadot/util';
 import { init, recover } from './ecdsa_recover';
 
 const ecdsaSignMsg = '<Bytes>Sign to register for astarpass</Bytes>';
 const signMessage = stringToHex('Sign this to register to AstarBase for:');
 const PREFIX = '3c42797465733e';
 const POSTFIX = '3c2f42797465733e';
-const GAS_PRICE = '10000000000';
-const GAS_LIMIT = '300000';
 
 export const useRegister = () => {
   const store = useStore();
@@ -73,8 +71,6 @@ export const useRegister = () => {
       .send({
         to: astarBaseContractAddress.value,
         from: account.value,
-        gasLimit: GAS_LIMIT,
-        gasPrice: GAS_PRICE,
       })
       .once('error', (err: any) => {
         console.error(err);
